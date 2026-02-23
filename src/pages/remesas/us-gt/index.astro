@@ -1,0 +1,276 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a Guatemala con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Compara costos de remesas EE.UU.–Guatemala. Bitcoin Lightning cuesta menos de $0.50 USD vs $7–$25 de bancos. Guía 2026 con opciones paso a paso.";
+const canonical = "https://free-bitcoin.lat/remesas/us-gt/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → Guatemala", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Cuánto representan las remesas en la economía de Guatemala?",
+    a: "Las remesas representan aproximadamente el <strong>18–20% del PIB de Guatemala</strong>, una de las proporciones más altas del mundo. En 2024 superaron los $21,000 millones de dólares según el Banco de Guatemala. Esta dependencia hace que reducir los costos de envío tenga un impacto económico enorme en las familias guatemaltecas.",
+  },
+  {
+    q: "¿Cómo puede recibir el destinatario en quetzales?",
+    a: "Con Bitcoin Lightning, el destinatario puede convertir los satoshis a quetzales (GTQ) usando plataformas P2P locales como Binance P2P, o a través de apps como Bitso o Airtm que tienen cobertura en Guatemala. También puede recibir directamente en USD si tiene una cuenta dolarizada.",
+  },
+  {
+    q: "¿Es seguro usar Bitcoin para remesas a Guatemala?",
+    a: "Sí, con proveedores establecidos como Strike, Muun o Airtm. Los riesgos principales son: elegir proveedores sin reputación (siempre usa apps con reseñas verificadas), errores al copiar direcciones (verifica siempre el primer y último carácter) y volatilidad del precio de Bitcoin (Strike convierte instantáneamente, eliminando este riesgo).",
+  },
+];
+
+const sources = [
+  { label: "Banco de Guatemala – Estadísticas de remesas 2024", url: "https://www.banguat.gob.gt/" },
+  { label: "Banco Mundial – Precios de remesas", url: "https://remittanceprices.worldbank.org/" },
+  { label: "FOMIN/BID – Remesas hacia Guatemala", url: "https://publications.iadb.org/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → Guatemala</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a Guatemala: guía 2026</h1>
+      <p class="hero-lead">
+        Guatemala recibe más de $21,000 millones en remesas al año, equivalentes al 19% de su PIB. Sin embargo, las familias guatemaltecas pierden cientos de millones de dólares anuales en comisiones y diferenciales cambiarios. Bitcoin Lightning permite enviar dinero de Estados Unidos a Guatemala por menos de $0.50 USD, frente a los $7–$25 que cobran los métodos convencionales.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning por $200</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">19%</span>
+        <span class="stat-label">Remesas / PIB Guatemala</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 1 min</span>
+        <span class="stat-label">Velocidad Lightning</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$21 mil M</span>
+        <span class="stat-label">Remesas recibidas 2024</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Compara los costos de envío EE.UU.–Guatemala</h2>
+      <p>
+        La siguiente tabla muestra el costo estimado de enviar $200 USD a Guatemala según el método elegido. Ajusta el monto para ver cómo cambian los costos absolutos: los métodos basados en Bitcoin tienen costo fijo muy bajo, mientras que los bancos y casas de cambio tradicionales suelen cobrar un porcentaje del total.
+      </p>
+      <RemittanceCalculator
+        corridor="us-gt"
+        fromCountry="EE.UU."
+        toCountry="Guatemala"
+        toCurrency="GTQ"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-contexto">
+      <h2 id="sec-contexto">El impacto económico de las remesas en Guatemala</h2>
+
+      <p>
+        Guatemala es uno de los países del mundo con mayor dependencia de las remesas respecto a su PIB. Las transferencias del exterior, principalmente desde la comunidad guatemalteca en Estados Unidos, sostienen el consumo y la inversión de millones de familias en departamentos como Huehuetenango, San Marcos, Quetzaltenango y Alta Verapaz.
+      </p>
+
+      <p>
+        El problema es el costo. Según el Banco Mundial, el costo promedio de enviar $200 desde EE.UU. a Guatemala ronda el 4–6% del total, lo que representa entre $8 y $12 perdidos en cada transacción. Multiplicado por los millones de envíos anuales, la cifra es significativa. Con Bitcoin Lightning, ese costo baja a menos del 0.25%, ahorrando dinero real a las familias que más lo necesitan.
+      </p>
+
+      <p>
+        Para el destinatario en Guatemala, la recepción puede hacerse en quetzales (GTQ) a través de plataformas P2P locales o en dólares si tiene cuenta dolarizada. No existe regulación específica que limite a particulares recibir criptomonedas en Guatemala.
+      </p>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-como">
+      <h2 id="sec-como">Cómo enviar con Bitcoin Lightning a Guatemala</h2>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>Instala Strike o Muun en EE.UU.</h3>
+            <p>
+              <strong>Strike</strong> es la opción más sencilla para el remitente en EE.UU. Opera en todos los estados y permite cargar dólares con tarjeta o ACH. <strong>Muun Wallet</strong> es una alternativa sin KYC para montos pequeños.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>El destinatario prepara su wallet Lightning</h3>
+            <p>
+              En Guatemala, el destinatario puede usar <strong>Muun Wallet</strong>, <strong>Phoenix Wallet</strong> o <strong>Wallet of Satoshi</strong>. Cualquiera de estas apps permite recibir satoshis sin KYC y convertirlos luego en quetzales usando plataformas P2P o exchanges locales.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Envía y confirma en segundos</h3>
+            <p>
+              Usa la dirección Lightning del destinatario (por ejemplo <span class="mono">nombre@walletofsatoshi.com</span>) o un invoice (factura Lightning). El pago llega en menos de 60 segundos con una comisión total menor a $0.50 USD.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–Guatemala" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--c-primary);
+  }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+  .step-content h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+  }
+  .step-content p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .step-item { flex-direction: column; }
+  }
+</style>

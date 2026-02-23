@@ -1,0 +1,74 @@
+---
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Build JSON-LD BreadcrumbList schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: `https://free-bitcoin.lat${item.href}` } : {}),
+  })),
+};
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(breadcrumbSchema)}
+/>
+
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+  <ol role="list">
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        return (
+          <li>
+            {!isLast && item.href ? (
+              <>
+                <a href={item.href}>{item.label}</a>
+                <span class="sep" aria-hidden="true">/</span>
+              </>
+            ) : (
+              <span aria-current={isLast ? "page" : undefined}>{item.label}</span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .breadcrumbs [aria-current="page"] {
+    color: var(--c-text);
+    font-weight: 500;
+  }
+</style>

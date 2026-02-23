@@ -1,0 +1,266 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import { webAppSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Calculadora de Remesas Bitcoin 2026 – EE.UU. a LatAm | free-bitcoin.lat";
+const description =
+  "Calcula el costo real de enviar dinero de EE.UU. a México, Guatemala, Honduras, El Salvador, Colombia, Perú y Bolivia con Bitcoin vs métodos tradicionales.";
+const canonical = "https://free-bitcoin.lat/calculadoras/remesas/";
+
+const corridors = [
+  { value: "us-mx", label: "EE.UU. → México" },
+  { value: "us-gt", label: "EE.UU. → Guatemala" },
+  { value: "us-hn", label: "EE.UU. → Honduras" },
+  { value: "us-sv", label: "EE.UU. → El Salvador" },
+  { value: "us-co", label: "EE.UU. → Colombia" },
+  { value: "us-pe", label: "EE.UU. → Perú" },
+  { value: "us-bo", label: "EE.UU. → Bolivia" },
+];
+
+const faqs = [
+  {
+    q: "¿Cuánto ahorro realmente enviando remesas con Bitcoin?",
+    a: "Los métodos tradicionales (Western Union, MoneyGram, bancos) cobran entre 5% y 12% de comisión más spread cambiario. Con Bitcoin por Lightning Network la comisión es menor a $0.01 USD. En una remesa de $300 mensuales, puedes ahorrar entre $15 y $36 dólares cada mes, más de $180-$432 al año.",
+  },
+  {
+    q: "¿El receptor necesita saber de Bitcoin para recibir la remesa?",
+    a: "No necesariamente. Servicios como Strike (disponible en México y El Salvador) y Bitso Transfer permiten que el receptor reciba pesos o colones en su cuenta bancaria o en efectivo, mientras el emisor paga en dólares con bitcoin como riel de transporte. El receptor puede no saber nada de crypto.",
+  },
+  {
+    q: "¿Cuánto tiempo tarda una remesa por Bitcoin?",
+    a: "Con Lightning Network, menos de 10 segundos. Con Bitcoin on-chain, entre 10 y 60 minutos dependiendo del fee pagado. Comparado con las transferencias bancarias internacionales (2-5 días hábiles) o Western Union (minutos pero con costo alto), Lightning es la opción más rápida y barata.",
+  },
+  {
+    q: "¿Es legal enviar remesas con Bitcoin desde EE.UU. a LatAm?",
+    a: "Sí. Las remesas son legales en ambos lados. El emisor en EE.UU. debe usar un exchange regulado (licencia MSB) como Strike o Coinbase. En el lado del receptor, en la mayoría de los países LatAm recibir cripto o su equivalente en moneda local es legal. Sin embargo, las regulaciones cambian; verifica siempre la situación actual en tu país.",
+  },
+];
+
+const jsonLd = [
+  webAppSchema({
+    name: "Calculadora de Remesas Bitcoin LatAm",
+    description,
+    url: canonical,
+  }),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Calculadoras", item: "https://free-bitcoin.lat/calculadoras/" },
+    { name: "Calculadora Remesas", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <nav class="breadcrumb-nav" aria-label="Miga de pan">
+      <a href="/">Inicio</a> › <a href="/calculadoras/">Calculadoras</a> › <span>Remesas</span>
+    </nav>
+
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Calculadora de Remesas Bitcoin 2026</h1>
+
+    <p class="lead">
+      América Latina recibe más de <strong>145 mil millones de dólares</strong> en remesas al año
+      (Banco Mundial, 2024), pero gran parte de ese dinero se pierde en comisiones bancarias y
+      spreads cambiarios. Esta calculadora compara el costo real de enviar dinero con Bitcoin
+      frente a los métodos tradicionales en los principales corredores de LatAm.
+    </p>
+
+    <!-- Corridor selector -->
+    <section class="section" aria-labelledby="corridor-heading">
+      <h2 id="corridor-heading">Selecciona el corredor de remesas</h2>
+
+      <div class="corridor-selector">
+        <label for="corridor-select" class="corridor-label">Corredor:</label>
+        <select id="corridor-select" class="corridor-select" aria-label="Seleccionar corredor de remesas">
+          {corridors.map((c) => <option value={c.value}>{c.label}</option>)}
+        </select>
+      </div>
+
+      <div id="calculator-wrapper">
+        <RemittanceCalculator corridor="us-mx" />
+      </div>
+    </section>
+
+    <!-- Links to individual corridor pages -->
+    <section class="section" aria-labelledby="corridors-heading">
+      <h2 id="corridors-heading">Guías por corredor</h2>
+      <p>Páginas detalladas con tasas actuales y proveedores recomendados para cada corredor:</p>
+      <ul class="corridor-links">
+        <li><a href="/remesas/mexico/">Remesas a México desde EE.UU.</a></li>
+        <li><a href="/remesas/guatemala/">Remesas a Guatemala desde EE.UU.</a></li>
+        <li><a href="/remesas/honduras/">Remesas a Honduras desde EE.UU.</a></li>
+        <li><a href="/remesas/el-salvador/">Remesas a El Salvador desde EE.UU.</a></li>
+        <li><a href="/remesas/colombia/">Remesas a Colombia desde EE.UU.</a></li>
+        <li><a href="/remesas/peru/">Remesas a Perú desde EE.UU.</a></li>
+        <li><a href="/remesas/bolivia/">Remesas a Bolivia desde EE.UU.</a></li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Preguntas frecuentes sobre remesas Bitcoin</h2>
+      <div class="faq" role="list">
+        {
+          faqs.map((item, i) => (
+            <div class="faq-item" role="listitem">
+              <button class="faq-question" aria-expanded="false" data-faq-trigger aria-controls={`rem-faq-${i}`}>
+                <span>{item.q}</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="faq-answer" id={`rem-faq-${i}`} role="region" aria-label={item.q} set:html={item.a} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Los datos de comisiones y tasas son aproximados y se actualizan periódicamente. Los costos
+      reales pueden variar según el proveedor, monto y método de pago. No constituyen asesoría
+      financiera.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-6);
+    max-width: 720px;
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--c-primary);
+  }
+
+  .corridor-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .corridor-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-text);
+    white-space: nowrap;
+  }
+
+  .corridor-select {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    cursor: pointer;
+    min-width: 220px;
+  }
+
+  .corridor-select:focus {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 2px;
+  }
+
+  .corridor-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .corridor-links a {
+    color: var(--c-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .corridor-links a:hover {
+    text-decoration: underline;
+  }
+
+  p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((t) => t.replaceWith(t.cloneNode(true)));
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest(".faq-item");
+        if (!item) return;
+        const isOpen = item.classList.contains("open");
+        const answer = document.getElementById(trigger.getAttribute("aria-controls") ?? "");
+        if (isOpen) {
+          item.classList.remove("open");
+          trigger.setAttribute("aria-expanded", "false");
+          if (answer) answer.style.display = "none";
+        } else {
+          item.classList.add("open");
+          trigger.setAttribute("aria-expanded", "true");
+          if (answer) answer.style.display = "block";
+        }
+      });
+    });
+  }
+  initFAQ();
+  document.addEventListener("astro:page-load", initFAQ);
+
+  // Corridor selector: reload page with ?corridor= param
+  document.addEventListener("DOMContentLoaded", () => {
+    const sel = document.getElementById("corridor-select") as HTMLSelectElement | null;
+    if (!sel) return;
+    // Set from URL param if present
+    const params = new URLSearchParams(window.location.search);
+    const corridorParam = params.get("corridor");
+    if (corridorParam) {
+      sel.value = corridorParam;
+    }
+    sel.addEventListener("change", () => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("corridor", sel.value);
+      window.location.href = url.toString();
+    });
+  });
+</script>

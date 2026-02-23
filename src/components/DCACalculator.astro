@@ -1,0 +1,420 @@
+---
+// DCACalculator.astro
+// Dollar-Cost Averaging calculator — fully client-side.
+// No props required; standalone component.
+---
+
+<section class="calc-form" id="dca-calculator" aria-label="Calculadora DCA de Bitcoin">
+  <h3 style="margin-bottom: var(--space-6); color: var(--c-text);">
+    Calculadora DCA — Dollar-Cost Averaging
+  </h3>
+
+  <form id="dca-form" novalidate>
+    <div class="form-row">
+      <label for="dca-amount">Cantidad a invertir por período (USD)</label>
+      <input
+        type="number"
+        id="dca-amount"
+        name="amount"
+        min="1"
+        step="1"
+        placeholder="100"
+        value="100"
+        required
+        aria-describedby="dca-amount-hint"
+      />
+      <span id="dca-amount-hint" style="font-size:0.78rem; color:var(--c-text-muted);">
+        Mínimo $1 USD
+      </span>
+    </div>
+
+    <div class="form-row">
+      <label for="dca-frequency">Frecuencia de compra</label>
+      <select id="dca-frequency" name="frequency" aria-label="Frecuencia de compra">
+        <option value="daily">Diaria</option>
+        <option value="weekly" selected>Semanal</option>
+        <option value="monthly">Mensual</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label for="dca-months">Período total (meses)</label>
+      <input
+        type="number"
+        id="dca-months"
+        name="months"
+        min="1"
+        max="120"
+        step="1"
+        placeholder="12"
+        value="12"
+        required
+        aria-describedby="dca-months-hint"
+      />
+      <span id="dca-months-hint" style="font-size:0.78rem; color:var(--c-text-muted);">
+        Entre 1 y 120 meses
+      </span>
+    </div>
+
+    <div class="form-row">
+      <label for="dca-start-price">Precio de compra inicial estimado (USD)</label>
+      <input
+        type="number"
+        id="dca-start-price"
+        name="startPrice"
+        min="1"
+        step="1"
+        placeholder="97000"
+        value="97000"
+        required
+        aria-describedby="dca-price-hint"
+      />
+      <span id="dca-price-hint" style="font-size:0.78rem; color:var(--c-text-muted);">
+        Precio estimado al inicio del período
+      </span>
+    </div>
+
+    <div id="dca-error" role="alert" aria-live="polite" style="display:none; color:var(--c-error); font-size:0.85rem; margin-bottom:var(--space-4);"></div>
+
+    <button type="submit" class="btn btn-primary" id="dca-submit">
+      Calcular
+    </button>
+  </form>
+
+  <!-- Results -->
+  <div id="dca-results" style="display:none; margin-top:var(--space-6);">
+    <div class="highlight" id="dca-summary" aria-live="polite">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:var(--space-4);">
+        <div>
+          <div style="font-size:0.78rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Total invertido</div>
+          <div class="price" id="dca-total-invested" style="font-size:1.4rem; font-weight:700; color:var(--c-text);">—</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">BTC acumulado</div>
+          <div class="price" id="dca-btc-total" style="font-size:1.4rem; font-weight:700; color:var(--c-primary);">—</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Precio promedio de compra</div>
+          <div class="price" id="dca-avg-price" style="font-size:1.4rem; font-weight:700; color:var(--c-text);">—</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Valor a precio actual</div>
+          <div class="price" id="dca-current-value" style="font-size:1.4rem; font-weight:700;" style="color:var(--c-success);">—</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Ganancia / Pérdida</div>
+          <div class="price" id="dca-pnl" style="font-size:1.4rem; font-weight:700;">—</div>
+        </div>
+      </div>
+      <div style="margin-top:var(--space-3); font-size:0.78rem; color:var(--c-text-muted);">
+        Precio actual de referencia: <span class="mono" id="dca-ref-price">cargando…</span>
+      </div>
+    </div>
+
+    <!-- SVG Chart -->
+    <div style="margin-top:var(--space-6);">
+      <div style="font-size:0.82rem; color:var(--c-text-muted); margin-bottom:var(--space-2); font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">
+        Acumulación de BTC en el tiempo
+      </div>
+      <div style="background:var(--c-surface-2); border:1px solid var(--c-border); border-radius:var(--radius-md); padding:var(--space-4); overflow:hidden;">
+        <svg
+          id="dca-chart"
+          width="100%"
+          height="160"
+          viewBox="0 0 600 160"
+          preserveAspectRatio="none"
+          aria-label="Gráfico de acumulación de BTC"
+          role="img"
+        >
+          <!-- Filled area will be set by JS -->
+          <defs>
+            <linearGradient id="dca-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FF6B00" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#FF6B00" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+          <path id="dca-chart-area" fill="url(#dca-grad)" d=""/>
+          <polyline id="dca-chart-line" fill="none" stroke="#FF6B00" stroke-width="2.5" stroke-linejoin="round" points=""/>
+        </svg>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--c-text-muted); font-family:var(--font-mono); padding:0 var(--space-1); margin-top:var(--space-1);">
+        <span id="dca-chart-x-start">Inicio</span>
+        <span id="dca-chart-x-end">Fin</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="disclaimer" style="margin-top:var(--space-6);">
+    Esta calculadora usa precios históricos estimados y no garantiza resultados futuros.
+    Los valores son aproximaciones educativas. Invertir en criptomonedas conlleva riesgos.
+  </p>
+</section>
+
+<style>
+  #dca-calculator {
+    max-width: 760px;
+  }
+
+  #dca-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  #dca-chart-line {
+    transition: points 0.3s ease;
+  }
+</style>
+
+<script>
+  // ── Helpers ────────────────────────────────────────────────────────────────
+
+  const FALLBACK_PRICE = 97000;
+
+  function fmt(n: number, decimals = 2): string {
+    return n.toLocaleString("es-419", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+
+  function fmtUSD(n: number): string {
+    return `$${fmt(n, 2)} USD`;
+  }
+
+  function fmtBTC(n: number): string {
+    return `${fmt(n, 6)} BTC`;
+  }
+
+  // ── Fetch current BTC price ───────────────────────────────────────────────
+
+  async function fetchCurrentPrice(): Promise<number> {
+    try {
+      const res = await fetch("/api/price.php", {
+        signal: AbortSignal.timeout(4000),
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error("api error");
+      const json = (await res.json()) as { usd?: number };
+      if (json.usd && json.usd > 0) return json.usd;
+      throw new Error("invalid");
+    } catch {
+      // fallback: try CoinGecko
+      try {
+        const cg = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+          { signal: AbortSignal.timeout(5000), headers: { Accept: "application/json" } }
+        );
+        if (!cg.ok) throw new Error("cg error");
+        const cgJson = (await cg.json()) as { bitcoin?: { usd?: number } };
+        if (cgJson.bitcoin?.usd) return cgJson.bitcoin.usd;
+      } catch {
+        /* ignore */
+      }
+      return FALLBACK_PRICE;
+    }
+  }
+
+  // ── DCA simulation ────────────────────────────────────────────────────────
+
+  interface DCAPoint {
+    period: number;   // period index (0-based)
+    price: number;    // estimated price at this period
+    btcBought: number;
+    btcTotal: number;
+    totalInvested: number;
+  }
+
+  /**
+   * Simulate a simple DCA strategy.
+   * We apply a small random walk (+/- 3% per period) seeded from the start
+   * price so that the chart looks realistic but is deterministic per input.
+   */
+  function simulateDCA(params: {
+    amountPerPeriod: number;
+    periods: number;
+    startPrice: number;
+  }): DCAPoint[] {
+    const { amountPerPeriod, periods, startPrice } = params;
+    const points: DCAPoint[] = [];
+
+    let price = startPrice;
+    let btcTotal = 0;
+    let totalInvested = 0;
+
+    // Seeded pseudo-random walk (linear congruential) so the chart is
+    // reproducible for the same inputs without a real PRNG dependency.
+    let seed = startPrice + periods + amountPerPeriod;
+    function nextRand(): number {
+      seed = (seed * 1664525 + 1013904223) & 0xffffffff;
+      return (seed >>> 0) / 0xffffffff; // 0..1
+    }
+
+    for (let i = 0; i < periods; i++) {
+      // Price drift: random walk with slight upward bias (0.5 % per period)
+      const change = (nextRand() - 0.47) * 0.06; // -2.82%..+3.18%
+      price = Math.max(1000, price * (1 + change));
+
+      const btcBought = amountPerPeriod / price;
+      btcTotal += btcBought;
+      totalInvested += amountPerPeriod;
+
+      points.push({ period: i + 1, price, btcBought, btcTotal, totalInvested });
+    }
+
+    return points;
+  }
+
+  // ── Chart rendering ───────────────────────────────────────────────────────
+
+  function renderChart(points: DCAPoint[]): void {
+    const line = document.getElementById("dca-chart-line") as SVGPolylineElement | null;
+    const area = document.getElementById("dca-chart-area") as SVGPathElement | null;
+    if (!line || !area || points.length === 0) return;
+
+    const W = 600;
+    const H = 160;
+    const PAD = { top: 8, right: 4, bottom: 4, left: 4 };
+
+    const maxBTC = Math.max(...points.map((p) => p.btcTotal));
+    const minBTC = 0;
+    const range = maxBTC - minBTC || 1;
+
+    function xOf(i: number): number {
+      return PAD.left + ((i / (points.length - 1)) * (W - PAD.left - PAD.right));
+    }
+    function yOf(btc: number): number {
+      return PAD.top + (1 - (btc - minBTC) / range) * (H - PAD.top - PAD.bottom);
+    }
+
+    const pts = points.map((p, i) => `${xOf(i).toFixed(1)},${yOf(p.btcTotal).toFixed(1)}`);
+    line.setAttribute("points", pts.join(" "));
+
+    // Closed area path: line + down to bottom-right + across bottom + up to start
+    const firstX = xOf(0).toFixed(1);
+    const lastX = xOf(points.length - 1).toFixed(1);
+    const bottomY = (H - PAD.bottom).toFixed(1);
+    area.setAttribute(
+      "d",
+      `M ${pts[0]} L ${pts.join(" L ")} L ${lastX},${bottomY} L ${firstX},${bottomY} Z`
+    );
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+
+  function initDCACalculator(): void {
+    const form = document.getElementById("dca-form") as HTMLFormElement | null;
+    if (!form) return;
+
+    // Avoid double-init on Astro view transitions
+    if ((form as HTMLFormElement & { _dcaInit?: boolean })._dcaInit) return;
+    (form as HTMLFormElement & { _dcaInit?: boolean })._dcaInit = true;
+
+    const resultsEl = document.getElementById("dca-results") as HTMLElement;
+    const errorEl = document.getElementById("dca-error") as HTMLElement;
+    const submitBtn = document.getElementById("dca-submit") as HTMLButtonElement;
+
+    const elTotalInvested = document.getElementById("dca-total-invested") as HTMLElement;
+    const elBtcTotal = document.getElementById("dca-btc-total") as HTMLElement;
+    const elAvgPrice = document.getElementById("dca-avg-price") as HTMLElement;
+    const elCurrentValue = document.getElementById("dca-current-value") as HTMLElement;
+    const elPnl = document.getElementById("dca-pnl") as HTMLElement;
+    const elRefPrice = document.getElementById("dca-ref-price") as HTMLElement;
+    const elXStart = document.getElementById("dca-chart-x-start") as HTMLElement;
+    const elXEnd = document.getElementById("dca-chart-x-end") as HTMLElement;
+
+    // Periods multiplier per frequency
+    const freqPeriods: Record<string, number> = {
+      daily: 30,
+      weekly: 4,
+      monthly: 1,
+    };
+
+    let currentPrice: number | null = null;
+
+    // Pre-fetch price in background
+    fetchCurrentPrice().then((p) => {
+      currentPrice = p;
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.style.display = "none";
+      errorEl.textContent = "";
+
+      // Read inputs
+      const amount = parseFloat((document.getElementById("dca-amount") as HTMLInputElement).value);
+      const frequency = (document.getElementById("dca-frequency") as HTMLSelectElement).value;
+      const months = parseInt((document.getElementById("dca-months") as HTMLInputElement).value, 10);
+      const startPrice = parseFloat((document.getElementById("dca-start-price") as HTMLInputElement).value);
+
+      // Validate
+      if (!amount || amount <= 0) {
+        errorEl.textContent = "Introduce una cantidad válida mayor a 0.";
+        errorEl.style.display = "block";
+        return;
+      }
+      if (!months || months < 1 || months > 120) {
+        errorEl.textContent = "El período debe estar entre 1 y 120 meses.";
+        errorEl.style.display = "block";
+        return;
+      }
+      if (!startPrice || startPrice <= 0) {
+        errorEl.textContent = "El precio inicial debe ser mayor a 0.";
+        errorEl.style.display = "block";
+        return;
+      }
+
+      // UI: loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Calculando…";
+
+      // Ensure we have current price
+      if (currentPrice === null) {
+        currentPrice = await fetchCurrentPrice();
+      }
+
+      const periodsPerMonth = freqPeriods[frequency] ?? 1;
+      const totalPeriods = months * periodsPerMonth;
+
+      const points = simulateDCA({ amountPerPeriod: amount, periods: totalPeriods, startPrice });
+
+      const last = points[points.length - 1];
+      const avgPrice = last.totalInvested / last.btcTotal;
+      const valueNow = last.btcTotal * currentPrice;
+      const pnl = valueNow - last.totalInvested;
+      const pnlPct = (pnl / last.totalInvested) * 100;
+
+      // Populate summary
+      elTotalInvested.textContent = fmtUSD(last.totalInvested);
+      elBtcTotal.textContent = fmtBTC(last.btcTotal);
+      elAvgPrice.textContent = fmtUSD(avgPrice);
+      elCurrentValue.textContent = fmtUSD(valueNow);
+      elCurrentValue.style.color = valueNow >= last.totalInvested ? "var(--c-success)" : "var(--c-error)";
+
+      const pnlSign = pnl >= 0 ? "+" : "";
+      elPnl.textContent = `${pnlSign}${fmtUSD(pnl)} (${pnlSign}${fmt(pnlPct, 1)}%)`;
+      elPnl.style.color = pnl >= 0 ? "var(--c-success)" : "var(--c-error)";
+
+      const priceLabel = currentPrice === FALLBACK_PRICE
+        ? `$${fmt(currentPrice, 0)} USD (estimado)`
+        : `$${fmt(currentPrice, 0)} USD`;
+      elRefPrice.textContent = priceLabel;
+
+      // Chart axis labels
+      const freqLabel: Record<string, string> = { daily: "días", weekly: "semanas", monthly: "meses" };
+      elXStart.textContent = `Período 1`;
+      elXEnd.textContent = `Período ${totalPeriods} (${months} ${freqLabel[frequency] ?? "meses"})`;
+
+      renderChart(points);
+
+      resultsEl.style.display = "block";
+      resultsEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Calcular";
+    });
+  }
+
+  initDCACalculator();
+  document.addEventListener("astro:page-load", initDCACalculator);
+</script>

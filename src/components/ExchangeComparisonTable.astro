@@ -1,0 +1,186 @@
+---
+interface Exchange {
+  name: string;
+  url: string;
+  fees: string;
+  kycLevel: "Ninguno" | "Básico" | "Completo";
+  paymentMethods: string[];
+  bestFor: string;
+  isAffiliate: boolean;
+}
+
+interface Props {
+  exchanges: Exchange[];
+  caption?: string;
+}
+
+const { exchanges, caption } = Astro.props;
+
+const kycConfig: Record<string, { label: string; badgeClass: string }> = {
+  Ninguno: { label: "Sin KYC", badgeClass: "badge-green" },
+  Básico: { label: "KYC básico", badgeClass: "badge-yellow" },
+  Completo: { label: "KYC completo", badgeClass: "badge-red" },
+};
+---
+
+<div class="exchange-comparison">
+  <div class="table-wrap">
+    <table aria-label={caption ?? "Comparación de exchanges de Bitcoin"}>
+      {
+        caption && (
+          <caption class="table-caption">{caption}</caption>
+        )
+      }
+      <thead>
+        <tr>
+          <th scope="col">Exchange</th>
+          <th scope="col">Comisiones</th>
+          <th scope="col">KYC</th>
+          <th scope="col">Métodos de pago</th>
+          <th scope="col">Mejor para</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          exchanges.map((exchange) => {
+            const kyc = kycConfig[exchange.kycLevel] ?? {
+              label: exchange.kycLevel,
+              badgeClass: "",
+            };
+            return (
+              <tr>
+                <td>
+                  <div class="exchange-name-cell">
+                    <strong>{exchange.name}</strong>
+                    {exchange.isAffiliate && (
+                      <span
+                        class="affiliate-tag"
+                        title="Enlace de afiliado"
+                        aria-label="Enlace de afiliado"
+                      >
+                        AD
+                      </span>
+                    )}
+                  </div>
+                </td>
+                <td>
+                  <span class="mono">{exchange.fees}</span>
+                </td>
+                <td>
+                  <span class={`badge ${kyc.badgeClass}`}>{kyc.label}</span>
+                </td>
+                <td>
+                  <div class="payment-methods">
+                    {exchange.paymentMethods.map((method) => (
+                      <span class="payment-tag">{method}</span>
+                    ))}
+                  </div>
+                </td>
+                <td>
+                  <span class="best-for">{exchange.bestFor}</span>
+                </td>
+                <td>
+                  <a
+                    href={exchange.url}
+                    target="_blank"
+                    rel={
+                      exchange.isAffiliate
+                        ? "noopener noreferrer sponsored"
+                        : "noopener noreferrer"
+                    }
+                    class="btn btn-primary btn-sm"
+                    aria-label={`Ir a ${exchange.name}${exchange.isAffiliate ? " (enlace de afiliado)" : ""} (abre en nueva pestaña)`}
+                  >
+                    Ir al sitio
+                  </a>
+                </td>
+              </tr>
+            );
+          })
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="affiliate-disclosure">
+    <strong>Divulgación:</strong> Algunos enlaces en esta tabla son enlaces de afiliado marcados con
+    "AD". Si te registras a través de ellos, recibimos una pequeña comisión sin costo
+    adicional para ti. Esto nos ayuda a mantener el sitio gratuito. La clasificación
+    refleja nuestro análisis independiente, no el valor de las comisiones recibidas.
+  </p>
+</div>
+
+<style>
+  .exchange-comparison {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .table-caption {
+    text-align: left;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-3);
+    caption-side: top;
+  }
+
+  .exchange-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .affiliate-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    background: rgba(255, 107, 0, 0.12);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    color: var(--c-primary);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.4em;
+    letter-spacing: 0.04em;
+    cursor: help;
+  }
+
+  .payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .payment-tag {
+    display: inline-block;
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    padding: 0.15em 0.5em;
+    color: var(--c-text-muted);
+    white-space: nowrap;
+  }
+
+  .best-for {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    th:nth-child(4),
+    td:nth-child(4) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    th:nth-child(5),
+    td:nth-child(5) {
+      display: none;
+    }
+  }
+</style>

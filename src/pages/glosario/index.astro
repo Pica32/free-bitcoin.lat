@@ -1,0 +1,479 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+const title = "Glosario Bitcoin y Cripto 2026 – Términos en Español | free-bitcoin.lat";
+const description =
+  "Glosario completo de Bitcoin y criptomonedas en español 2026. Más de 40 definiciones: blockchain, halving, wallet, DeFi, HODL, Lightning Network y más.";
+const canonical = "https://free-bitcoin.lat/glosario/";
+
+const terms = [
+  {
+    term: "Address (Dirección)",
+    def: "Una dirección Bitcoin es un identificador alfanumérico (similar a un número de cuenta bancaria) al que se puede enviar bitcoin. Comienza con 1, 3 o bc1 dependiendo del tipo. Puedes tener tantas direcciones como quieras; se recomienda usar una nueva por cada transacción para mayor privacidad.",
+  },
+  {
+    term: "Altcoin",
+    def: "Cualquier criptomoneda que no sea Bitcoin. El término proviene de 'alternative coin'. Ejemplos: Ethereum (ETH), Litecoin (LTC), XRP, Solana (SOL). Hay miles de altcoins; la gran mayoría no tiene valor a largo plazo. Bitcoin es la única criptomoneda con suministro fijo, mayor descentralización y el historial de seguridad más largo.",
+  },
+  {
+    term: "AML (Anti-Money Laundering)",
+    def: "Normativa antilavado de dinero. Los exchanges regulados deben implementar procedimientos AML para detectar y reportar transacciones sospechosas a las autoridades. Es parte del marco regulatorio que exige KYC a los usuarios.",
+  },
+  {
+    term: "ASIC",
+    def: "Application-Specific Integrated Circuit: chip diseñado exclusivamente para minar Bitcoin. Son miles de veces más eficientes que CPUs o GPUs para calcular el algoritmo SHA-256 que usa Bitcoin. Los principales fabricantes son Bitmain (Antminer), MicroBT (Whatsminer) y Canaan.",
+  },
+  {
+    term: "ATH (All-Time High)",
+    def: "El precio máximo histórico que ha alcanzado un activo. Por ejemplo, el ATH de Bitcoin fue aproximadamente $108.000 USD en diciembre de 2024. Cuando se supera un ATH, se dice que el activo está en 'price discovery' (descubrimiento de precio), ya que no hay resistencias históricas.",
+  },
+  {
+    term: "Bear Market (Mercado bajista)",
+    def: "Período prolongado de caída de precios, generalmente definido como una bajada superior al 20% desde el máximo. En Bitcoin, los bear markets históricos han durado entre 12 y 24 meses y han tenido caídas del 70-85% desde el ATH. Son períodos de acumulación para inversores de largo plazo.",
+  },
+  {
+    term: "Bitcoin (BTC)",
+    def: "La primera y más importante criptomoneda. Creada en 2009 por Satoshi Nakamoto, es una red de pagos peer-to-peer descentralizada y un activo digital con suministro máximo de 21 millones. La unidad mínima es el satoshi (0.00000001 BTC). Bitcoin con mayúscula se refiere al protocolo; bitcoin con minúscula, a la moneda.",
+  },
+  {
+    term: "Blockchain",
+    def: "Base de datos distribuida organizada en bloques encadenados criptográficamente. Cada bloque contiene transacciones verificadas y un hash del bloque anterior, haciendo imposible alterar datos sin rehacer toda la cadena. Miles de nodos mantienen copias idénticas, eliminando la necesidad de un servidor central.",
+  },
+  {
+    term: "Block Reward (Recompensa de bloque)",
+    def: "La cantidad de bitcoin que recibe un minero al añadir un bloque a la blockchain. Comenzó en 50 BTC en 2009 y se reduce a la mitad cada 210.000 bloques (~4 años) en el evento llamado halving. Tras el halving de abril 2024, la recompensa es de 3,125 BTC por bloque.",
+  },
+  {
+    term: "Bull Market (Mercado alcista)",
+    def: "Período de tendencia alcista prolongada en el precio de un activo. En Bitcoin, los bull markets han ocurrido típicamente en los 12-18 meses posteriores al halving y han generado retornos de 10x-100x desde el fondo del bear market anterior.",
+  },
+  {
+    term: "CBDC (Moneda Digital de Banco Central)",
+    def: "Versión digital de una moneda fiat emitida y controlada por un banco central. A diferencia de Bitcoin, las CBDCs son centralizadas, programables y permiten a los gobiernos rastrear y controlar el gasto. Varios países en LatAm (Brasil con el Drex, México, etc.) están desarrollando CBDCs.",
+  },
+  {
+    term: "CEX (Intercambio Centralizado)",
+    def: "Exchange centralizado donde una empresa gestiona la custodia de los fondos. Ejemplos: Binance, Coinbase, Bitso, Ripio. Son fáciles de usar pero conllevan riesgo de custodia (si el exchange quiebra o es hackeado, puedes perder tus fondos). 'Not your keys, not your coins.'",
+  },
+  {
+    term: "Cold Wallet (Cartera fría)",
+    def: "Wallet cuyas claves privadas nunca están conectadas a internet. Puede ser una hardware wallet (Ledger, Trezor) o incluso una billetera de papel generada offline. Es el método más seguro para almacenar Bitcoin a largo plazo. Contrasta con hot wallet.",
+  },
+  {
+    term: "Comisión de red (Fee)",
+    def: "Pago que realiza el emisor de una transacción a los mineros para que incluyan su transacción en el próximo bloque. En Bitcoin on-chain varía según la congestión de la red (sat/vByte). En Lightning Network las comisiones son de fracciones de satoshi. Los mineros priorizan transacciones con fees más altos.",
+  },
+  {
+    term: "Confirmación",
+    def: "Cada vez que un nuevo bloque se añade a la blockchain por encima de la transacción, se dice que tiene una confirmación más. A más confirmaciones, más segura e irreversible es la transacción. La mayoría de exchanges requieren 3-6 confirmaciones para acreditar depósitos de Bitcoin (~30-60 minutos).",
+  },
+  {
+    term: "Criptoactivo",
+    def: "Término general usado en regulación y finanzas para referirse a cualquier activo digital que usa criptografía: bitcoin, altcoins, tokens, NFTs, stablecoins. La CNBV (México), CMF (Chile) y otros reguladores de LatAm usan este término en sus marcos normativos.",
+  },
+  {
+    term: "DCA (Dollar Cost Averaging)",
+    def: "Estrategia de inversión que consiste en comprar una cantidad fija en dinero a intervalos regulares, independientemente del precio. Reduce el riesgo de entrar al mercado en un máximo y genera un precio promedio de compra más favorable en activos volátiles como Bitcoin.",
+  },
+  {
+    term: "DeFi (Finanzas Descentralizadas)",
+    def: "Ecosistema de aplicaciones financieras construidas sobre blockchains (principalmente Ethereum) que operan sin intermediarios centralizados. Incluye préstamos, intercambios descentralizados (DEX), yield farming y más. Mayor riesgo técnico que Bitcoin, pero con mayores posibilidades de rendimiento.",
+  },
+  {
+    term: "DEX (Intercambio Descentralizado)",
+    def: "Exchange que opera mediante smart contracts, sin custodiar fondos. Los usuarios hacen swap directamente desde sus wallets. Ejemplos: Uniswap, PancakeSwap. Mayor privacidad que los CEX pero menor liquidez y sin soporte al cliente.",
+  },
+  {
+    term: "FOMO (Fear Of Missing Out)",
+    def: "Miedo a perderse una oportunidad de ganancia. En cripto, el FOMO lleva a muchos inversores a comprar en máximos durante los bull markets, impulsados por noticias positivas y la presión social. Es una de las principales razones por las que los principiantes compran caro y venden barato.",
+  },
+  {
+    term: "FUD (Fear, Uncertainty, Doubt)",
+    def: "Miedo, incertidumbre y duda. Información negativa, verdadera o falsa, que genera pánico en el mercado. El FUD puede ser genuino (regulaciones nuevas, hackeos) o manipulado (noticias falsas para bajar el precio y comprar barato). Mantener una estrategia DCA de largo plazo protege contra el FUD.",
+  },
+  {
+    term: "Halving",
+    def: "Evento programado en el código de Bitcoin que reduce a la mitad la recompensa por bloque cada 210.000 bloques (~4 años). El objetivo es controlar la emisión de nuevos BTC y garantizar el suministro máximo de 21 millones. Los halvings históricos (2012, 2016, 2020, 2024) han precedido bull markets.",
+  },
+  {
+    term: "Hash",
+    def: "Función matemática que transforma cualquier cantidad de datos en una cadena de longitud fija (en Bitcoin, 256 bits usando SHA-256). Los mineros calculan billones de hashes por segundo para encontrar uno que cumpla las condiciones del protocolo y así ganar la recompensa de bloque.",
+  },
+  {
+    term: "HODL",
+    def: "Término de la comunidad Bitcoin que significa mantener (hold) bitcoin a largo plazo sin vender, independientemente de la volatilidad. Originado en 2013 por un error tipográfico de 'hold' en un foro. La estrategia HODL históricamente ha superado al trading activo para la mayoría de los inversores.",
+  },
+  {
+    term: "Hot Wallet (Cartera caliente)",
+    def: "Wallet conectada a internet (app móvil, extensión de navegador, wallet de exchange). Más conveniente para uso diario pero con mayor superficie de ataque que una cold wallet. Recomendada solo para pequeñas cantidades de uso frecuente.",
+  },
+  {
+    term: "KYC (Know Your Customer)",
+    def: "Proceso de verificación de identidad exigido por reguladores financieros. Los exchanges regulados solicitan documento de identidad, selfie y a veces prueba de domicilio. Su objetivo es prevenir lavado de dinero y financiamiento del terrorismo (AML). Bitcoin en sí no requiere KYC; solo lo exigen las plataformas centralizadas.",
+  },
+  {
+    term: "Layer 2 (Capa 2)",
+    def: "Protocolo construido sobre una blockchain base (Layer 1) para escalar su capacidad. Bitcoin tiene Lightning Network como principal Layer 2. Ethereum tiene Optimism, Arbitrum y otros rollups. Las Layer 2 permiten transacciones más rápidas y baratas sin sacrificar la seguridad de la cadena base.",
+  },
+  {
+    term: "Lightning Network",
+    def: "Red de canales de pago construida sobre Bitcoin. Permite transacciones instantáneas con comisiones de fracciones de centavo. Funciona abriendo un canal entre dos partes (transacción on-chain), realizando pagos off-chain a velocidad de internet y cerrando el canal cuando se desee (segunda transacción on-chain).",
+  },
+  {
+    term: "Mempool",
+    def: "Pool de transacciones pendientes que esperan ser incluidas en un bloque por los mineros. Durante períodos de alta demanda, la mempool se congestiona y las comisiones suben. Puedes ver el estado en tiempo real en mempool.space para elegir el fee adecuado.",
+  },
+  {
+    term: "Minería (Mining)",
+    def: "Proceso mediante el cual computadoras especializadas (mineros) compiten para resolver problemas matemáticos y añadir bloques a la blockchain. Los mineros son recompensados con nuevos bitcoins (block reward) más las comisiones de las transacciones incluidas. Protege la red y crea nuevas monedas de forma predecible.",
+  },
+  {
+    term: "Multisig (Multi-firma)",
+    def: "Esquema de seguridad que requiere múltiples claves privadas para autorizar una transacción. Por ejemplo, un multisig 2-de-3 requiere que 2 de 3 firmantes aprueben el gasto. Muy usado por empresas, instituciones y usuarios avanzados que quieren eliminar el punto único de fallo.",
+  },
+  {
+    term: "Nodo (Node)",
+    def: "Computadora que descarga y verifica toda la blockchain de Bitcoin. Los nodos completos (full nodes) son los guardianes de las reglas del protocolo. No se puede cambiar las reglas de Bitcoin sin el consenso de los nodos. Correr un nodo propio da máxima privacidad y soberanía.",
+  },
+  {
+    term: "On-chain",
+    def: "Transacciones o datos registrados directamente en la blockchain de Bitcoin. Son permanentes e inmutables pero más lentas y costosas que las soluciones off-chain (Lightning Network). Las transferencias grandes o ahorros se recomiendan on-chain por su seguridad máxima.",
+  },
+  {
+    term: "P2P (Peer-to-Peer)",
+    def: "Transacciones directas entre personas sin intermediarios. Los mercados P2P de Bitcoin (LocalBitcoins, Bisq, Paxful) permiten comprar y vender BTC directamente con otros usuarios usando métodos de pago locales. En LatAm, P2P es frecuente para evitar restricciones bancarias.",
+  },
+  {
+    term: "PSAV (Precio de Satoshi)",
+    def: "Término informal para el precio de un satoshi en moneda local. Con Bitcoin a $100.000 USD, 1 satoshi = $0.001 USD. Usarlo ayuda a entender que no necesitas comprar un bitcoin completo: puedes comprar 100.000 satoshis con $100 USD.",
+  },
+  {
+    term: "Satoshi (unidad)",
+    def: "La unidad mínima de Bitcoin: 1 satoshi = 0.00000001 BTC (10⁻⁸ BTC). Nombrado en honor al creador Satoshi Nakamoto. Con el precio de Bitcoin por encima de $100.000, los satoshis permiten manejar micropagos cotidianos. En Lightning Network los pagos suelen expresarse en satoshis.",
+  },
+  {
+    term: "Seed Phrase (Frase semilla)",
+    def: "Conjunto de 12 o 24 palabras en inglés que representa la copia de seguridad maestra de una wallet. Quien tenga la seed phrase tiene acceso total a los fondos. Debe guardarse en papel (o grabada en metal) en un lugar físico seguro, nunca en formato digital ni compartida con nadie.",
+  },
+  {
+    term: "Spread",
+    def: "Diferencia entre el precio de compra y el precio de venta de un activo en un exchange. Los exchanges ganan dinero cobrando un spread además de comisiones explícitas. En exchanges P2P y en mercados informales de LatAm, el spread puede ser del 2-10%, comparado con 0.1-0.5% en exchanges institucionales.",
+  },
+  {
+    term: "Stablecoin",
+    def: "Criptomoneda cuyo valor está vinculado a un activo estable, generalmente el dólar estadounidense. Las más usadas son USDT (Tether) y USDC (Circle). Muy populares en LatAm como alternativa al dólar físico. Riesgo: el emisor puede congelar fondos y no están descentralizadas como Bitcoin.",
+  },
+  {
+    term: "Token",
+    def: "Activo digital emitido sobre una blockchain existente (no tiene su propia cadena). Los tokens ERC-20 (Ethereum), TRC-20 (Tron) o SPL (Solana) son ejemplos. USDT y la mayoría de las altcoins son técnicamente tokens. Diferencia con moneda: las monedas (BTC, ETH) tienen su propia blockchain.",
+  },
+  {
+    term: "USDT (Tether)",
+    def: "La stablecoin más utilizada del mundo, con valor vinculado al dólar USD. Disponible en múltiples redes: TRC-20 (Tron, comisiones bajas, popular en LatAm), ERC-20 (Ethereum, comisiones altas), entre otras. Muy usada para remesas y como 'dólar digital' en países con restricciones cambiarias como Argentina y Venezuela.",
+  },
+  {
+    term: "Volatilidad",
+    def: "Medida de la variación del precio de un activo en el tiempo. Bitcoin es altamente volátil comparado con activos tradicionales: es normal ver movimientos del 5-20% en días. La volatilidad disminuye a medida que la capitalización de mercado crece, pero sigue siendo alta respecto a acciones o bonos.",
+  },
+  {
+    term: "Wallet (Cartera)",
+    def: "Aplicación o dispositivo que gestiona claves privadas y permite enviar/recibir bitcoin. No almacena bitcoin físicamente (que siempre está en la blockchain); gestiona las claves que prueban propiedad. Existen hot wallets (conectadas) y cold wallets (offline). Las mejores son no custodiales (tú controlas las claves).",
+  },
+  {
+    term: "Whale (Ballena)",
+    def: "Individuo o entidad con una cantidad muy grande de Bitcoin (generalmente +1.000 BTC o +$100M). Las ballenas pueden mover el mercado con compras o ventas masivas. Herramientas on-chain como Whale Alert monitorizan sus movimientos en tiempo real.",
+  },
+  {
+    term: "Whitepaper",
+    def: "Documento técnico que describe el diseño y funcionamiento de un protocolo. El whitepaper de Bitcoin, publicado por Satoshi Nakamoto el 31 de octubre de 2008, se titula 'Bitcoin: A Peer-to-Peer Electronic Cash System' y tiene solo 9 páginas. Disponible en bitcoin.org/bitcoin.pdf.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    inLanguage: "es",
+    publisher: {
+      "@type": "Organization",
+      name: "free-bitcoin.lat",
+      url: "https://free-bitcoin.lat",
+    },
+  },
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Glosario", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Glosario Bitcoin y cripto 2026</h1>
+
+    <p class="lead">
+      Más de 40 términos del ecosistema Bitcoin y criptomonedas definidos en español claro.
+      Usa el buscador para encontrar rápidamente cualquier término.
+    </p>
+
+    <!-- Search input -->
+    <div class="search-wrap" role="search">
+      <label for="glossary-search" class="sr-only">Buscar término</label>
+      <input
+        type="search"
+        id="glossary-search"
+        class="glossary-search"
+        placeholder="Buscar término… ej: halving, wallet, DCA"
+        aria-label="Buscar en el glosario"
+        aria-controls="terms-list"
+        autocomplete="off"
+      />
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      <span id="search-count" class="search-count" aria-live="polite"></span>
+    </div>
+
+    <!-- Terms list -->
+    <section aria-label="Lista de términos del glosario">
+      <div id="terms-list" class="terms-list" role="list" aria-label="Términos del glosario">
+        {
+          terms.map((entry) => (
+            <div
+              class="term-item card"
+              role="listitem"
+              data-term={entry.term.toLowerCase()}
+              id={`term-${entry.term.split(" ")[0].toLowerCase().replace(/[^a-z]/g, "")}`}
+            >
+              <h2 class="term-name">{entry.term}</h2>
+              <p class="term-def">{entry.def}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div id="no-results" class="no-results" hidden aria-live="polite">
+        <p>No se encontraron términos para "<span id="search-query"></span>".</p>
+        <p>Prueba con otra palabra o <button class="link-btn" id="clear-search">limpia la búsqueda</button>.</p>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Este glosario es con fines educativos. Las definiciones son simplificaciones para audiencias
+      no técnicas. El ecosistema Bitcoin evoluciona constantemente; consulta fuentes primarias para
+      definiciones técnicas precisas.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 640px;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Search */
+  .search-wrap {
+    position: relative;
+    max-width: 540px;
+    margin-bottom: var(--space-8);
+  }
+
+  .glossary-search {
+    width: 100%;
+    background: var(--c-surface-1);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    padding: var(--space-3) var(--space-4) var(--space-3) 2.8rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .glossary-search:focus {
+    outline: none;
+    border-color: var(--c-primary);
+  }
+
+  .glossary-search::placeholder {
+    color: var(--c-text-muted);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--c-text-muted);
+    pointer-events: none;
+  }
+
+  .search-count {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  /* Terms */
+  .terms-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .term-item {
+    scroll-margin-top: 5rem;
+    transition: border-color 0.2s;
+  }
+
+  .term-item:target {
+    border-color: var(--c-primary);
+  }
+
+  .term-name {
+    font-size: 1.05rem;
+    color: var(--c-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .term-def {
+    color: var(--c-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: var(--space-10) 0;
+    color: var(--c-text-muted);
+  }
+
+  .no-results p {
+    margin-bottom: var(--space-2);
+  }
+
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--c-primary);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: inherit;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  /* Accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  /* Highlight matched text */
+  .highlight-match {
+    background: rgba(255, 107, 0, 0.25);
+    color: var(--c-text);
+    border-radius: 2px;
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById("glossary-search") as HTMLInputElement | null;
+  const termItems = document.querySelectorAll<HTMLElement>(".term-item");
+  const noResults = document.getElementById("no-results");
+  const searchQuery = document.getElementById("search-query");
+  const searchCount = document.getElementById("search-count");
+  const clearBtn = document.getElementById("clear-search");
+
+  function filterTerms(query: string) {
+    const q = query.trim().toLowerCase();
+    let visible = 0;
+
+    termItems.forEach((item) => {
+      const termName = item.querySelector(".term-name");
+      const termDef = item.querySelector(".term-def");
+      const termText = item.dataset.term ?? "";
+      const defText = termDef?.textContent?.toLowerCase() ?? "";
+
+      const matches = !q || termText.includes(q) || defText.includes(q);
+
+      item.hidden = !matches;
+      if (matches) visible++;
+
+      // Restore original text
+      if (termName) termName.innerHTML = termName.textContent ?? "";
+      if (termDef) termDef.innerHTML = termDef.textContent ?? "";
+
+      // Highlight match
+      if (q && matches) {
+        if (termName) {
+          termName.innerHTML = highlight(termName.textContent ?? "", q);
+        }
+        if (termDef) {
+          termDef.innerHTML = highlight(termDef.textContent ?? "", q);
+        }
+      }
+    });
+
+    if (noResults) noResults.hidden = visible > 0 || !q;
+    if (searchQuery) searchQuery.textContent = query;
+    if (searchCount) {
+      searchCount.textContent = q ? `${visible} resultado${visible !== 1 ? "s" : ""}` : "";
+    }
+  }
+
+  function highlight(text: string, query: string): string {
+    if (!query) return text;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return text.replace(
+      new RegExp(escaped, "gi"),
+      (match) => `<mark class="highlight-match">${match}</mark>`
+    );
+  }
+
+  searchInput?.addEventListener("input", (e) => {
+    filterTerms((e.target as HTMLInputElement).value);
+  });
+
+  clearBtn?.addEventListener("click", () => {
+    if (searchInput) {
+      searchInput.value = "";
+      filterTerms("");
+      searchInput.focus();
+    }
+  });
+
+  // URL param: ?q=...
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q && searchInput) {
+      searchInput.value = q;
+      filterTerms(q);
+    }
+  });
+</script>

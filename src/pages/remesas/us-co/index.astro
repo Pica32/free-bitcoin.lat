@@ -1,0 +1,257 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a Colombia con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Guía completa para enviar remesas de EE.UU. a Colombia en 2026. Bitcoin Lightning desde $0.50 vs $8–$28 de métodos tradicionales. COP actualizado.";
+const canonical = "https://free-bitcoin.lat/remesas/us-co/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → Colombia", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Cómo puede el receptor convertir Bitcoin a pesos colombianos?",
+    a: "En Colombia existe un ecosistema crypto bien desarrollado. El receptor puede usar <strong>Buda.com</strong>, <strong>Bitso</strong>, <strong>Binance P2P</strong> o <strong>Paxful</strong> para vender Bitcoin o satoshis y recibir pesos en su cuenta bancaria (Nequi, Bancolombia, Davivienda). El proceso P2P tarda entre 10 y 30 minutos.",
+  },
+  {
+    q: "¿Está regulado el Bitcoin en Colombia?",
+    a: "La Superintendencia Financiera de Colombia ha autorizado pilotos para exchanges regulados pero no ha declarado Bitcoin como moneda de curso legal. El uso por particulares está permitido. En 2024, Colombia avanzó en regulación con la exigencia de registro a los exchanges que operen en el país. Los usuarios individuales no tienen restricciones para recibir o comprar crypto.",
+  },
+  {
+    q: "¿Cuánto varían los tipos de cambio USD/COP en P2P vs banco?",
+    a: "Los bancos colombianos suelen ofrecer tipos de cambio con un spread del 3–5% por encima o debajo de la Tasa Representativa del Mercado (TRM). En plataformas P2P, el spread es generalmente del 0.5–2%, lo que hace la conversión más favorable para el receptor.",
+  },
+];
+
+const sources = [
+  { label: "Banco de la República Colombia – Balanza de pagos y remesas", url: "https://www.banrep.gov.co/" },
+  { label: "Superintendencia Financiera Colombia – Circular cripto 2024", url: "https://www.superfinanciera.gov.co/" },
+  { label: "Banco Mundial – Precios de remesas globales", url: "https://remittanceprices.worldbank.org/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → Colombia</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a Colombia: guía 2026</h1>
+      <p class="hero-lead">
+        Colombia recibe más de $10,000 millones de dólares en remesas anuales, principalmente desde Estados Unidos, España y Venezuela. La diáspora colombiana en EE.UU. es una de las más numerosas de América Latina. Con Bitcoin Lightning puedes enviar dinero a Colombia desde $0.50 USD de costo total, frente a los $8–$28 que cobran los métodos bancarios y casas de cambio tradicionales.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning por $200</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">3%</span>
+        <span class="stat-label">Remesas / PIB Colombia aprox.</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 1 min</span>
+        <span class="stat-label">Velocidad Lightning</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$10 mil M</span>
+        <span class="stat-label">Remesas recibidas 2024</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Compara los costos: EE.UU. → Colombia (COP)</h2>
+      <p>
+        En Colombia, el diferencial cambiario es uno de los factores de costo más importantes. Los bancos aplican un spread sobre la TRM (Tasa Representativa del Mercado) que puede costar entre un 2 y un 5% adicional al costo de comisión. Las plataformas P2P permiten negociar directamente con la contraparte, obteniendo mejores tipos.
+      </p>
+      <RemittanceCalculator
+        corridor="us-co"
+        fromCountry="EE.UU."
+        toCountry="Colombia"
+        toCurrency="COP"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-ecosistema">
+      <h2 id="sec-ecosistema">El ecosistema crypto en Colombia</h2>
+
+      <p>
+        Colombia tiene uno de los ecosistemas de criptomonedas más desarrollados de América Latina. Plataformas como <strong>Buda.com</strong> operan desde hace años con integración directa a los sistemas bancarios colombianos (Nequi, PSE, Bancolombia). Binance P2P tiene alta liquidez para el par BTC/COP y USDT/COP, lo que facilita la conversión del receptor.
+      </p>
+
+      <p>
+        La Superintendencia Financiera de Colombia ha avanzado en regulación del sector con pilotos controlados. Aunque Bitcoin no es moneda de curso legal, su uso por ciudadanos está permitido y el marco regulatorio es relativamente claro comparado con otros países de la región.
+      </p>
+
+      <p>
+        Para el remitente en EE.UU., <strong>Strike</strong> es la mejor opción para iniciar el envío. El receptor en Colombia puede recibir satoshis en su wallet Lightning y convertirlos a COP usando Buda.com, Bitso (disponible en Colombia desde 2023) o plataformas P2P como Binance P2P, donde el par USDT/COP tiene alta liquidez.
+      </p>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-como">
+      <h2 id="sec-como">Opciones para recibir en Colombia</h2>
+
+      <div class="option-grid">
+        <div class="card option-card">
+          <h3>Binance P2P (recomendado)</h3>
+          <p>El par USDT/COP tiene altísima liquidez. El receptor vende USDT a precios competitivos y recibe COP directamente en su cuenta bancaria (Nequi, Bancolombia, Davivienda) en menos de 30 minutos.</p>
+          <div class="option-meta">
+            <span class="badge badge-green">Spread: 0.5–1.5%</span>
+            <span>10–30 min</span>
+          </div>
+        </div>
+        <div class="card option-card">
+          <h3>Buda.com</h3>
+          <p>Exchange regulado con presencia en Colombia, Chile, Perú y Argentina. Permite depósito/retiro en COP vía PSE o transferencia bancaria. Comisión de trading del 0.8%.</p>
+          <div class="option-meta">
+            <span class="badge badge-green">Regulado</span>
+            <span>1–2 horas</span>
+          </div>
+        </div>
+        <div class="card option-card">
+          <h3>Airtm</h3>
+          <p>Plataforma popular en Colombia que usa crypto internamente. El receptor puede retirar en COP a cuenta bancaria o en efectivo. Costo total ~3% sobre el monto.</p>
+          <div class="option-meta">
+            <span class="badge badge-yellow">Costo: ~3%</span>
+            <span>1–24 horas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–Colombia" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a { color: var(--c-text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--c-primary); }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  .option-card {
+    padding: var(--space-6);
+  }
+  .option-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-3);
+  }
+  .option-card p {
+    font-size: 0.88rem;
+    margin-bottom: var(--space-3);
+  }
+  .option-meta {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    flex-wrap: wrap;
+  }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

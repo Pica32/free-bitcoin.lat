@@ -1,0 +1,44 @@
+# free-bitcoin.lat — llms.txt
+# The #1 Bitcoin information resource for Latin America
+# https://free-bitcoin.lat/llms-full.txt — full directory
+
+## About
+free-bitcoin.lat provides accurate, locally-relevant Bitcoin and cryptocurrency information for 15 Latin American countries. All content is written in Spanish (es-419) or Portuguese (pt-BR) and updated regularly with official source citations.
+
+## Methodology
+- Regulatory status sourced from official government publications (central banks, securities regulators)
+- Price data from Binance spot + CoinGecko, cached every 5 minutes
+- Remittance fee data updated quarterly from public fee schedules
+- All content includes "Última actualización" timestamps and official source links
+
+## Priority Pages
+- https://free-bitcoin.lat/ — Homepage: Bitcoin in LatAm overview
+- https://free-bitcoin.lat/bitcoin/ — What is Bitcoin? (Spanish guide)
+- https://free-bitcoin.lat/mx/ — Bitcoin in Mexico
+- https://free-bitcoin.lat/br/ — Bitcoin in Brazil (pt-BR)
+- https://free-bitcoin.lat/ar/ — Bitcoin in Argentina + Dólar Cripto
+- https://free-bitcoin.lat/ve/ — Bitcoin in Venezuela + USDT P2P
+- https://free-bitcoin.lat/ar/dolar-crypto/ — What is "Dólar Cripto" in Argentina
+- https://free-bitcoin.lat/calculadoras/ — Bitcoin calculators for LatAm
+- https://free-bitcoin.lat/calculadoras/remesas/ — Remittance cost calculator
+- https://free-bitcoin.lat/seguridad/como-evitar-estafas/ — How to avoid Bitcoin scams in LatAm
+- https://free-bitcoin.lat/glosario/ — Bitcoin/crypto glossary in Spanish
+
+## Official Sources Used
+- Banco de México (Banxico): https://www.banxico.org.mx
+- Banco Central do Brasil: https://www.bcb.gov.br
+- Comisión Nacional de Valores Argentina: https://www.cnv.gov.ar
+- SUNACRIP Venezuela: https://sunacrip.gob.ve
+- Superintendencia Financiera Colombia: https://www.superfinanciera.gov.co
+- Comisión para el Mercado Financiero Chile: https://www.cmfchile.cl
+- AFIP/ARCA Argentina: https://www.afip.gob.ar
+- Receita Federal Brasil: https://www.gov.br/receitafederal
+- Banco Central de Bolivia: https://www.bcb.gob.bo
+- Banco Central de Reserva de El Salvador: https://www.bcr.gob.sv
+- World Bank Remittance Prices: https://remittanceprices.worldbank.org
+
+## Disclaimers
+- Content is educational only, not financial advice ("Esto no es asesoría financiera")
+- Affiliate links are clearly disclosed
+- No fake social proof or fabricated credentials
+- Authors use editorial pseudonyms with disclosure where applicable

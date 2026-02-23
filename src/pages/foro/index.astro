@@ -1,0 +1,310 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+const title = "Foro Bitcoin América Latina – Comunidad Cripto LatAm | free-bitcoin.lat";
+const description =
+  "Foro de Bitcoin y criptomonedas para América Latina. Discusiones por país sin registro. Comunidad anónima sobre MX, BR, AR, VE y 11 países más.";
+const canonical = "https://free-bitcoin.lat/foro/";
+
+const categories = [
+  { slug: "latam", name: "General LatAm", flag: "🌎", desc: "Discusiones generales sobre Bitcoin en toda LatAm" },
+  { slug: "mx", name: "México", flag: "🇲🇽", desc: "Bitso, DIOT, SAT, Banco de México" },
+  { slug: "br", name: "Brasil", flag: "🇧🇷", desc: "Mercado Bitcoin, Receita Federal, Real digital" },
+  { slug: "ar", name: "Argentina", flag: "🇦🇷", desc: "Cepo, dólar cripto, AFIP, premium BTC" },
+  { slug: "ve", name: "Venezuela", flag: "🇻🇪", desc: "Petro, Sunacrip, P2P, USDT/VES" },
+  { slug: "co", name: "Colombia", flag: "🇨🇴", desc: "Buda, Binance Colombia, regulación cripto" },
+  { slug: "cl", name: "Chile", flag: "🇨🇱", desc: "Buda, Orionx, CMF, regulación 2025" },
+  { slug: "pe", name: "Perú", flag: "🇵🇪", desc: "SUNAT, exchanges locales, remesas" },
+  { slug: "sv", name: "El Salvador", flag: "🇸🇻", desc: "Ley Bitcoin, Chivo Wallet, turismo cripto" },
+  { slug: "gt", name: "Guatemala", flag: "🇬🇹", desc: "Remesas, regulación, adopción local" },
+  { slug: "bo", name: "Bolivia", flag: "🇧🇴", desc: "ASFI, legalidad, P2P en Bolivia" },
+  { slug: "py", name: "Paraguay", flag: "🇵🇾", desc: "Minería BTC, Itaipú, regulación PY" },
+  { slug: "uy", name: "Uruguay", flag: "🇺🇾", desc: "Marco regulatorio avanzado, fintech LatAm" },
+  { slug: "ec", name: "Ecuador", flag: "🇪🇨", desc: "Dolarización, adopción cripto en Ecuador" },
+  { slug: "pa", name: "Panamá", flag: "🇵🇦", desc: "Hub financiero, ley cripto Panamá" },
+  { slug: "hn", name: "Honduras", flag: "🇭🇳", desc: "Próspera, remesas, adopción Bitcoin" },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Foro", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Foro Bitcoin América Latina</h1>
+
+    <p class="lead">
+      Comunidad anónima para discutir Bitcoin y criptomonedas en América Latina. No necesitas
+      registrarte. Selecciona tu país o entra al foro general de LatAm.
+    </p>
+
+    <!-- Categories grid -->
+    <section class="section" aria-labelledby="categories-heading">
+      <h2 id="categories-heading">Foros por país</h2>
+      <div class="categories-grid" role="list">
+        {
+          categories.map((cat) => (
+            <a
+              href={`/foro/${cat.slug}/`}
+              class="card category-card"
+              role="listitem"
+              aria-label={`Foro ${cat.name}`}
+            >
+              <span class="category-flag" aria-hidden="true">{cat.flag}</span>
+              <div class="category-info">
+                <h3 class="category-name">{cat.name}</h3>
+                <p class="category-desc">{cat.desc}</p>
+              </div>
+              <svg class="category-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" aria-labelledby="how-heading">
+      <h2 id="how-heading">¿Cómo funciona el foro?</h2>
+      <div class="grid-3 how-grid">
+        <div class="card how-card">
+          <span class="how-icon" aria-hidden="true">🔒</span>
+          <h3>Sin registro</h3>
+          <p>
+            No necesitas cuenta ni correo electrónico. Usa un apodo opcional o publica
+            completamente anónimo. No almacenamos datos personales.
+          </p>
+        </div>
+        <div class="card how-card">
+          <span class="how-icon" aria-hidden="true">🔢</span>
+          <h3>Captcha simple</h3>
+          <p>
+            Para evitar spam, respondemos una operación matemática sencilla al crear un hilo
+            o respuesta. Sin cookies de terceros ni servicios de rastreo.
+          </p>
+        </div>
+        <div class="card how-card">
+          <span class="how-icon" aria-hidden="true">👁️</span>
+          <h3>Moderación básica</h3>
+          <p>
+            Los hilos que promuevan estafas, contenido ilegal o spam son eliminados. Reporta
+            contenido inapropiado usando el botón de reporte en cada hilo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rules -->
+    <section class="section" aria-labelledby="rules-heading">
+      <h2 id="rules-heading">Reglas del foro</h2>
+      <div class="card rules-card">
+        <ol class="rules-list">
+          <li>
+            <strong>No estafas:</strong> Está prohibido publicar links a proyectos fraudulentos,
+            esquemas Ponzi, sorteos falsos o cualquier tipo de pump and dump.
+          </li>
+          <li>
+            <strong>No spam:</strong> No publiques el mismo contenido repetidamente ni hagas
+            publicidad no solicitada de exchanges o proyectos.
+          </li>
+          <li>
+            <strong>Respeto básico:</strong> Critica ideas, no personas. No se permiten insultos,
+            amenazas ni discriminación.
+          </li>
+          <li>
+            <strong>Contenido relevante:</strong> Mantén las discusiones relacionadas con Bitcoin,
+            criptomonedas y finanzas en LatAm.
+          </li>
+          <li>
+            <strong>No solicitar dinero:</strong> No publiques solicitudes de donaciones o préstamos
+            directos.
+          </li>
+          <li>
+            <strong>No información personal:</strong> No compartas tus claves privadas, seed phrases
+            ni datos personales bajo ningún motivo.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Security notice -->
+    <section class="section" aria-labelledby="security-heading">
+      <h2 id="security-heading">Aviso de seguridad</h2>
+      <div class="card security-card">
+        <p>
+          <strong>Nunca compartas tu seed phrase o claves privadas en este foro ni en ningún
+          lugar de internet.</strong> Ningún moderador ni administrador de este sitio te pedirá
+          jamás esa información. Si alguien lo hace, es una estafa.
+        </p>
+        <p>
+          Desconfía de ofertas de "ayuda técnica" que requieran acceso remoto a tu dispositivo,
+          de airdrops que pidan claves y de cualquier oferta de Bitcoin gratis a cambio de enviar
+          primero una cantidad.
+        </p>
+        <p>
+          Este foro es un espacio de educación y comunidad. Las opiniones expresadas por los
+          usuarios son personales y no representan consejo financiero o de inversión.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-5);
+    color: var(--c-primary);
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 640px;
+    margin-bottom: var(--space-6);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  /* Categories grid */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .category-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+    padding: var(--space-4);
+  }
+
+  .category-card:hover {
+    border-color: var(--c-primary);
+    transform: translateX(2px);
+    text-decoration: none;
+  }
+
+  .category-flag {
+    font-size: 1.8rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .category-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .category-name {
+    font-size: 0.95rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 0 0 var(--space-1);
+  }
+
+  .category-desc {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .category-arrow {
+    color: var(--c-text-muted);
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+
+  .category-card:hover .category-arrow {
+    color: var(--c-primary);
+  }
+
+  /* How it works */
+  .how-grid {
+    margin-top: var(--space-4);
+  }
+
+  .how-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .how-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .how-card h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .how-card p {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  /* Rules */
+  .rules-card {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .rules-list {
+    list-style-position: outside;
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .rules-list li {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .rules-list strong {
+    color: var(--c-text);
+  }
+
+  /* Security */
+  .security-card {
+    border-left: 4px solid var(--c-primary);
+  }
+
+  .security-card p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .security-card p:last-child {
+    margin-bottom: 0;
+  }
+</style>

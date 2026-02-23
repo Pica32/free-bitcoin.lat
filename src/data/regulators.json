@@ -1,0 +1,167 @@
+{
+  "mx": {
+    "name": "Banxico + CNBV",
+    "fullName": "Banco de México / Comisión Nacional Bancaria y de Valores",
+    "website": "https://www.banxico.org.mx",
+    "status": "yellow",
+    "statusLabel": "Regulado con restricciones",
+    "lastUpdate": "2026-02-23",
+    "summary": "La Ley FinTech de 2018 regula las Instituciones de Tecnología Financiera (ITF). La Circular 4/2019 de Banxico restringe las operaciones con activos virtuales al público. Bitcoin no es moneda de curso legal.",
+    "keyLaw": "Ley para Regular las Instituciones de Tecnología Financiera (Ley FinTech)",
+    "year": 2018
+  },
+  "br": {
+    "name": "Banco Central do Brasil",
+    "fullName": "Banco Central do Brasil / Receita Federal",
+    "website": "https://www.bcb.gov.br",
+    "status": "green",
+    "statusLabel": "Marco regulatorio aprobado",
+    "lastUpdate": "2026-02-23",
+    "summary": "La Lei 14.478/2022 creó el marco regulatorio. El Banco Central emitió la Resolução 520/2025. La Receita Federal exige declaración de criptoactivos via DeCripto (IN RFB 2.291/2025).",
+    "keyLaw": "Lei 14.478/2022",
+    "year": 2022
+  },
+  "ar": {
+    "name": "CNV",
+    "fullName": "Comisión Nacional de Valores",
+    "website": "https://www.cnv.gov.ar",
+    "status": "yellow",
+    "statusLabel": "Regulación en desarrollo",
+    "lastUpdate": "2026-02-23",
+    "summary": "La CNV publicó la RG 994/2024 creando el registro de PSAV. La RG 1058 (mayo 2025) define el flujo TAD. AFIP/ARCA considera las ganancias de cripto como ingreso gravable.",
+    "keyLaw": "RG CNV 994/2024 (PSAV)",
+    "year": 2024
+  },
+  "ve": {
+    "name": "SUNACRIP",
+    "fullName": "Superintendencia Nacional de Criptoactivos y Actividades Conexas",
+    "website": "https://sunacrip.gob.ve",
+    "status": "yellow",
+    "statusLabel": "Regulado con alta incertidumbre",
+    "lastUpdate": "2026-02-23",
+    "summary": "SUNACRIP regula los criptoactivos. PDVSA usa USDT en operaciones petroleras bajo presión de sanciones. La minería fue restringida en mayo 2024. Alto riesgo regulatorio.",
+    "keyLaw": "Ley Constituyente de Criptoactivos (2018)",
+    "year": 2018
+  },
+  "co": {
+    "name": "SFC",
+    "fullName": "Superintendencia Financiera de Colombia",
+    "website": "https://www.superfinanciera.gov.co",
+    "status": "yellow",
+    "statusLabel": "Marco en construcción",
+    "lastUpdate": "2026-02-23",
+    "summary": "El piloto sandbox de la SFC finalizó en junio 2024. El Proyecto de ley 510/2025 (PSAV) está en trámite. La DIAN trabaja en intercambio de información (finales 2025).",
+    "keyLaw": "Proyecto ley 510/2025",
+    "year": 2025
+  },
+  "cl": {
+    "name": "CMF",
+    "fullName": "Comisión para el Mercado Financiero",
+    "website": "https://www.cmfchile.cl",
+    "status": "yellow",
+    "statusLabel": "Ley aprobada, normas en detalle",
+    "lastUpdate": "2026-02-23",
+    "summary": "La Ley 21.521 regula activos digitales. CMF emitió NCG 502. El SII actualizó la FAQ de impuestos cripto en 2025. Marco más claro que la mayoría de la región.",
+    "keyLaw": "Ley 21.521",
+    "year": 2023
+  },
+  "pe": {
+    "name": "SBS",
+    "fullName": "Superintendencia de Banca, Seguros y AFP",
+    "website": "https://www.sbs.gob.pe",
+    "status": "yellow",
+    "statusLabel": "AML en vigor, marco incompleto",
+    "lastUpdate": "2026-02-23",
+    "summary": "La SBS emitió la Res 02648-2024 de AML para PSAV. La SMV advierte que no existe protección específica al inversionista cripto. Marco regulatorio incompleto.",
+    "keyLaw": "Resolución SBS 02648-2024",
+    "year": 2024
+  },
+  "sv": {
+    "name": "Banco Central de Reserva",
+    "fullName": "Banco Central de Reserva de El Salvador",
+    "website": "https://www.bcr.gob.sv",
+    "status": "green",
+    "statusLabel": "Bitcoin fue legal tender (ahora voluntario)",
+    "lastUpdate": "2026-02-23",
+    "summary": "El Salvador fue el primer país en adoptar Bitcoin como moneda de curso legal (2021). En enero 2025, la Ley Bitcoin fue enmendada vinculada al acuerdo con el FMI; la aceptación ahora es voluntaria.",
+    "keyLaw": "Ley Bitcoin (enmendada ene 2025)",
+    "year": 2021
+  },
+  "gt": {
+    "name": "SIB / Banguat",
+    "fullName": "Superintendencia de Bancos / Banco de Guatemala",
+    "website": "https://www.sib.gob.gt",
+    "status": "red",
+    "statusLabel": "Sin marco legal, advertencias",
+    "lastUpdate": "2026-02-23",
+    "summary": "La SIB advierte que Bitcoin no es moneda de curso legal. La Iniciativa 6538 está bajo discusión en el Congreso. Sin protección regulatoria al usuario.",
+    "keyLaw": "Iniciativa 6538 (en debate)",
+    "year": 2024
+  },
+  "bo": {
+    "name": "BCB",
+    "fullName": "Banco Central de Bolivia",
+    "website": "https://www.bcb.gob.bo",
+    "status": "yellow",
+    "statusLabel": "Ban levantado en 2024",
+    "lastUpdate": "2026-02-23",
+    "summary": "El BCB emitió la RD 082/2024 levantando la prohibición de cripto. Las transacciones aumentaron +530% en H1 2025 vs H1 2024. La escasez de USD impulsa adopción.",
+    "keyLaw": "Resolución de Directorio BCB 082/2024",
+    "year": 2024
+  },
+  "py": {
+    "name": "BCP",
+    "fullName": "Banco Central del Paraguay",
+    "website": "https://www.bcp.gov.py",
+    "status": "yellow",
+    "statusLabel": "Hub de minería, regulación incipiente",
+    "lastUpdate": "2026-02-23",
+    "summary": "Paraguay es un hub de minería de Bitcoin por energía barata. El Banco Central emite advertencias. Existen conflictos comunitarios por el impacto energético.",
+    "keyLaw": "Sin ley específica",
+    "year": 2024
+  },
+  "uy": {
+    "name": "BCU",
+    "fullName": "Banco Central del Uruguay",
+    "website": "https://www.bcu.gub.uy",
+    "status": "green",
+    "statusLabel": "Marco claro y progresista",
+    "lastUpdate": "2026-02-23",
+    "summary": "La Ley 20.345 (2024) creó un marco regulatorio claro. El BCU abrió consulta pública en 2025. Uruguay tiene uno de los entornos más favorables de la región.",
+    "keyLaw": "Ley 20.345 (2024)",
+    "year": 2024
+  },
+  "ec": {
+    "name": "BCE",
+    "fullName": "Banco Central del Ecuador",
+    "website": "https://www.bce.fin.ec",
+    "status": "red",
+    "statusLabel": "No autorizado como medio de pago",
+    "lastUpdate": "2026-02-23",
+    "summary": "El BCE declara que las criptomonedas no son moneda de curso legal ni medio de pago autorizado. Ecuador usa el USD como moneda oficial. Sin marco regulatorio específico.",
+    "keyLaw": "Sin ley específica",
+    "year": 2024
+  },
+  "pa": {
+    "name": "SMV",
+    "fullName": "Superintendencia del Mercado de Valores",
+    "website": "https://www.smv.gob.pa",
+    "status": "yellow",
+    "statusLabel": "Ley en debate (2026)",
+    "lastUpdate": "2026-02-23",
+    "summary": "El Proyecto de Ley 247 está en debate desde enero 2026. La SMV emite advertencias. Panamá usa el USD como moneda oficial, lo que reduce fricciones cambiarias.",
+    "keyLaw": "Proyecto de Ley 247 (en debate)",
+    "year": 2026
+  },
+  "hn": {
+    "name": "CNBS / BCH",
+    "fullName": "Comisión Nacional de Bancos y Seguros / Banco Central de Honduras",
+    "website": "https://www.cnbs.gob.hn",
+    "status": "red",
+    "statusLabel": "Restricciones activas",
+    "lastUpdate": "2026-02-23",
+    "summary": "La CNBS emitió la Circular 003/2024 con restricciones. El BCH advierte que no está regulado. Las remesas representan una parte muy alta del PIB (~20%), lo que impulsa interés en cripto.",
+    "keyLaw": "Circular CNBS 003/2024",
+    "year": 2024
+  }
+}

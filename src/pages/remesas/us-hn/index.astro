@@ -1,0 +1,259 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a Honduras con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Guía 2026 para enviar remesas de Estados Unidos a Honduras. Bitcoin Lightning desde $0.50 USD vs $8–$26 de métodos tradicionales. Comparación completa.";
+const canonical = "https://free-bitcoin.lat/remesas/us-hn/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → Honduras", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Qué porcentaje del PIB de Honduras representan las remesas?",
+    a: "Las remesas representan aproximadamente el <strong>26–28% del PIB de Honduras</strong>, la cifra más alta de Centroamérica y una de las más altas del mundo. En 2024 superaron los $10,000 millones de dólares. Son la principal fuente de divisas del país, superando las exportaciones de café, textiles y banano.",
+  },
+  {
+    q: "¿Cómo recibe el destinatario lempiras en Honduras?",
+    a: "El destinatario puede convertir los satoshis de Bitcoin a lempiras (HNL) a través de plataformas P2P como Binance P2P, Paxful o mediante exchanges locales. También puede mantenerlos en Bitcoin o USDT como reserva de valor. La conversión a efectivo es posible a través de redes de corresponsales.",
+  },
+  {
+    q: "¿Existe regulación de Bitcoin en Honduras?",
+    a: "Honduras no tiene una ley que prohíba el uso de Bitcoin por particulares. El Banco Central de Honduras (BCH) ha emitido advertencias sobre los riesgos de las criptomonedas, pero no existe una prohibición. Los usuarios deben declarar ganancias según las normas tributarias vigentes.",
+  },
+];
+
+const sources = [
+  { label: "Banco Central de Honduras – Estadísticas de remesas", url: "https://www.bch.hn/" },
+  { label: "Banco Mundial – Precios de remesas globales", url: "https://remittanceprices.worldbank.org/" },
+  { label: "BID – Informe de remesas Centroamérica 2024", url: "https://www.iadb.org/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → Honduras</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a Honduras: guía 2026</h1>
+      <p class="hero-lead">
+        Honduras es el país de América Latina con mayor dependencia de remesas en relación a su PIB: más del 27% de la economía depende de los envíos de la diáspora hondureña en Estados Unidos. Con más de $10,000 millones recibidos en 2024, reducir las comisiones de envío tiene un impacto directo y masivo en las familias hondureñas. Bitcoin Lightning ofrece la alternativa más barata: menos de $0.50 USD por envío frente a los $8–$26 de los métodos convencionales.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning por $200</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">27%</span>
+        <span class="stat-label">Remesas / PIB Honduras</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 1 min</span>
+        <span class="stat-label">Tiempo de llegada</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$10 mil M</span>
+        <span class="stat-label">Remesas recibidas 2024</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Compara los costos de envío EE.UU.–Honduras</h2>
+      <p>
+        Introduce el monto que deseas enviar para ver cuánto llega realmente según cada método. Las diferencias son especialmente notables en montos pequeños y medianos, que son los más comunes en las remesas familiares.
+      </p>
+      <RemittanceCalculator
+        corridor="us-hn"
+        fromCountry="EE.UU."
+        toCountry="Honduras"
+        toCurrency="HNL"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-contexto">
+      <h2 id="sec-contexto">Honduras y la importancia crítica de las remesas</h2>
+
+      <p>
+        La comunidad hondureña en Estados Unidos —estimada en más de 800,000 personas— envía regularmente dinero a sus familias en departamentos como Francisco Morazán, Cortés, Yoro, El Paraíso y Santa Bárbara. Estos fondos financian desde gastos básicos de alimentación y salud hasta educación universitaria y pequeños negocios.
+      </p>
+
+      <p>
+        El corredor EE.UU.–Honduras tiene uno de los mayores volúmenes de remesas de Centroamérica. Sin embargo, también es uno de los corredores donde los costos de transferencia pueden ser más elevados comparados con México o El Salvador. El promedio del sector ronda el 5–7% del monto enviado, según el Banco Mundial. Bitcoin Lightning puede reducir ese costo al 0.1–0.3%.
+      </p>
+
+      <p>
+        Para el receptor en Honduras, la principal vía de conversión a lempiras (HNL) es a través de plataformas P2P. A diferencia de México (SPEI) o El Salvador (Chivo/SPEI), Honduras no cuenta con una infraestructura de liquidación en tiempo real tan integrada con el ecosistema crypto. Sin embargo, existen múltiples agentes locales y plataformas que facilitan la conversión.
+      </p>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-como">
+      <h2 id="sec-como">Cómo enviar a Honduras con Lightning</h2>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>Descarga Strike en EE.UU. y carga dólares</h3>
+            <p>Verifica tu identidad con foto de ID, vincula tu tarjeta o cuenta bancaria ACH. El proceso tarda menos de 15 minutos la primera vez.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>El destinatario instala Muun o Phoenix en Honduras</h3>
+            <p>Ambas wallets funcionan en Honduras sin restricciones. Muun no requiere KYC. Phoenix requiere configurar un canal Lightning inicial, pero es la opción más autosuficiente para recibir sin depender de custodia.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Transfiere y convierte a lempiras</h3>
+            <p>El receptor recibe los satoshis y los convierte a lempiras usando Binance P2P o exchanges locales. La conversión suele tomar entre 10 y 30 minutos adicionales al envío en sí.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–Honduras" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a { color: var(--c-text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--c-primary); }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+  .step-content h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+  .step-content p { font-size: 0.9rem; margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .step-item { flex-direction: column; }
+  }
+</style>

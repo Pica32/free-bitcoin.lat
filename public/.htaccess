@@ -1,0 +1,121 @@
+# free-bitcoin.lat — Apache configuration for Wedos NoLimit shared hosting
+# =========================================================================
+
+Options -Indexes
+RewriteEngine On
+
+# --- 1. HTTPS redirect ---
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- 2. Non-www canonical (www → non-www) ---
+RewriteCond %{HTTP_HOST} ^www\.free-bitcoin\.lat$ [NC]
+RewriteRule ^ https://free-bitcoin.lat%{REQUEST_URI} [L,R=301]
+
+# --- 3. Remove .html extensions ---
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ /$1.html [L]
+
+# --- 4. Trailing slash for directories (Astro static output) ---
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.+)$ https://free-bitcoin.lat/$1/ [L,R=301]
+
+# =========================================================================
+# COMPRESSION (mod_deflate)
+# =========================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml text/xml
+    AddOutputFilterByType DEFLATE font/woff2 font/woff image/svg+xml
+</IfModule>
+
+# =========================================================================
+# CACHE HEADERS
+# =========================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Static assets: 1 year
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType image/svg+xml             "access plus 1 year"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType font/woff                 "access plus 1 year"
+
+    # HTML: 1 hour
+    ExpiresByType text/html                 "access plus 1 hour"
+
+    # XML / sitemap: 1 day
+    ExpiresByType application/xml           "access plus 1 day"
+    ExpiresByType text/xml                  "access plus 1 day"
+
+    # Default
+    ExpiresDefault                          "access plus 1 week"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Static assets immutable cache
+    <FilesMatch "\.(css|js|woff2|woff|svg|png|webp|jpg|jpeg)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # HTML: short cache
+    <FilesMatch "\.html$">
+        Header set Cache-Control "public, max-age=3600, stale-while-revalidate=86400"
+    </FilesMatch>
+
+    # API PHP: 5 min browser hint (actual cache is server-side)
+    <FilesMatch "\.php$">
+        Header set Cache-Control "public, max-age=300, stale-while-revalidate=900"
+    </FilesMatch>
+</IfModule>
+
+# =========================================================================
+# SECURITY HEADERS
+# =========================================================================
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # Content Security Policy
+    # - self for scripts/styles
+    # - Allow fetch to CoinGecko and our own API
+    # - Allow images from data: and https:
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.coingecko.com https://api.binance.com https://pydolarve.org https://bluelytics.com.ar https://open.er-api.com; img-src 'self' data: https:; font-src 'self'; frame-ancestors 'none';"
+</IfModule>
+
+# =========================================================================
+# MIME TYPES
+# =========================================================================
+<IfModule mod_mime.c>
+    AddType font/woff2 .woff2
+    AddType font/woff  .woff
+    AddType image/svg+xml .svg
+    AddType application/json .json
+</IfModule>
+
+# =========================================================================
+# PROTECT SENSITIVE FILES
+# =========================================================================
+<FilesMatch "(^\.htaccess|^\.env|\.git|composer\.json|package\.json)">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Block access to API cache and forum data directly
+<DirectoryMatch "/(cache|forum_data)/">
+    Order deny,allow
+    Deny from all
+</DirectoryMatch>
+
+# =========================================================================
+# CUSTOM ERROR PAGES (optional — create these files)
+# =========================================================================
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html

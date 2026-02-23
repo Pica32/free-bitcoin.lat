@@ -1,0 +1,290 @@
+---
+import "../styles/global.css";
+import CrossLinkBitcoinchurch from "../components/CrossLinkBitcoinchurch.astro";
+
+interface HreflangItem {
+  lang: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  hreflang?: HreflangItem[];
+  jsonLd?: object | object[];
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  hreflang = [],
+  jsonLd,
+  ogImage = "https://free-bitcoin.lat/og-default.png",
+} = Astro.props;
+
+const siteUrl = "https://free-bitcoin.lat";
+const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
+
+const jsonLdArray = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : [];
+
+const navLinks = [
+  { label: "Bitcoin", href: "/bitcoin/" },
+  { label: "Calculadoras", href: "/calculadoras/" },
+  { label: "Seguridad", href: "/seguridad/" },
+  { label: "Foro", href: "/foro/" },
+  { label: "Remesas", href: "/remesas/" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {hreflang.map((item) => (
+      <link rel="alternate" hreflang={item.lang} href={item.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={siteUrl + "/"} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:site_name" content="free-bitcoin.lat" />
+    <meta property="og:locale" content="es_419" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbsolute} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- JSON-LD -->
+    {jsonLdArray.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <!-- Additional head content slot -->
+    <slot name="head" />
+  </head>
+  <body>
+    <!-- Sticky Header -->
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav-inner" aria-label="Navegación principal">
+          <a href="/" class="nav-logo" aria-label="free-bitcoin.lat - Inicio">
+            <span>₿</span> free-bitcoin.lat
+          </a>
+          <ul class="nav-links" role="list">
+            {navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class={currentPath.startsWith(link.href) ? "active" : ""}
+                  aria-current={currentPath.startsWith(link.href) ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <button
+            class="nav-mobile-toggle"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <rect y="3" width="22" height="2" rx="1" fill="currentColor" />
+              <rect y="10" width="22" height="2" rx="1" fill="currentColor" />
+              <rect y="17" width="22" height="2" rx="1" fill="currentColor" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="mobile-menu" hidden>
+        <div class="container">
+          <ul role="list">
+            {navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class={currentPath.startsWith(link.href) ? "active" : ""}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" aria-label="Pie de página">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Column 1: Países -->
+          <div class="footer-col">
+            <h4>Países</h4>
+            <ul role="list">
+              <li><a href="/mx/">🇲🇽 México</a></li>
+              <li><a href="/br/">🇧🇷 Brasil</a></li>
+              <li><a href="/ar/">🇦🇷 Argentina</a></li>
+              <li><a href="/ve/">🇻🇪 Venezuela</a></li>
+              <li><a href="/co/">🇨🇴 Colombia</a></li>
+              <li><a href="/cl/">🇨🇱 Chile</a></li>
+              <li><a href="/pe/">🇵🇪 Perú</a></li>
+              <li><a href="/sv/">🇸🇻 El Salvador</a></li>
+              <li><a href="/gt/">🇬🇹 Guatemala</a></li>
+              <li><a href="/bo/">🇧🇴 Bolivia</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 2: Calculadoras -->
+          <div class="footer-col">
+            <h4>Calculadoras</h4>
+            <ul role="list">
+              <li><a href="/calculadoras/">Calculadora BTC</a></li>
+              <li><a href="/calculadoras/dca/">Calculadora DCA</a></li>
+              <li><a href="/calculadoras/remesas/">Calculadora Remesas</a></li>
+              <li><a href="/calculadoras/premium-btc/">Premium BTC/ARS</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Seguridad -->
+          <div class="footer-col">
+            <h4>Seguridad</h4>
+            <ul role="list">
+              <li><a href="/seguridad/como-evitar-estafas/">Cómo evitar estafas</a></li>
+              <li><a href="/seguridad/mejores-wallets/">Mejores wallets</a></li>
+              <li><a href="/glosario/">Glosario Bitcoin</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Acerca -->
+          <div class="footer-col">
+            <h4>Acerca</h4>
+            <ul role="list">
+              <li><a href="/acerca/">Sobre nosotros</a></li>
+              <li><a href="/contacto/">Contacto</a></li>
+              <li><a href="/privacidad/">Privacidad</a></li>
+            </ul>
+            <CrossLinkBitcoinchurch />
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <p>&copy; 2026 free-bitcoin.lat &mdash; Todos los derechos reservados.</p>
+          <p class="footer-disclaimer">
+            Esto no es asesoría financiera. La información en este sitio es solo
+            con fines educativos. Invertir en Bitcoin implica riesgos.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      .nav-mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--c-text);
+        cursor: pointer;
+        padding: var(--space-2);
+        border-radius: var(--radius-sm);
+        transition: color var(--transition-fast);
+      }
+      .nav-mobile-toggle:hover {
+        color: var(--c-primary);
+      }
+      .mobile-menu {
+        background: var(--c-surface-1);
+        border-top: 1px solid var(--c-border);
+        padding: var(--space-4) 0;
+      }
+      .mobile-menu ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+      }
+      .mobile-menu a {
+        display: block;
+        padding: var(--space-3) var(--space-2);
+        color: var(--c-text-muted);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: var(--radius-sm);
+        transition: color var(--transition-fast), background var(--transition-fast);
+      }
+      .mobile-menu a:hover,
+      .mobile-menu a.active {
+        color: var(--c-primary);
+        background: rgba(255, 107, 0, 0.08);
+        text-decoration: none;
+      }
+      .footer-disclaimer {
+        max-width: 480px;
+        text-align: right;
+      }
+      @media (max-width: 768px) {
+        .nav-mobile-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .footer-disclaimer {
+          text-align: left;
+        }
+      }
+    </style>
+
+    <script>
+      const toggleBtn = document.querySelector(".nav-mobile-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      if (toggleBtn && mobileMenu) {
+        toggleBtn.addEventListener("click", () => {
+          const isHidden = mobileMenu.hasAttribute("hidden");
+          if (isHidden) {
+            mobileMenu.removeAttribute("hidden");
+            toggleBtn.setAttribute("aria-expanded", "true");
+            toggleBtn.setAttribute("aria-label", "Cerrar menú");
+          } else {
+            mobileMenu.setAttribute("hidden", "");
+            toggleBtn.setAttribute("aria-expanded", "false");
+            toggleBtn.setAttribute("aria-label", "Abrir menú");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

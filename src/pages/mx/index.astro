@@ -1,0 +1,385 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import ForumPreview from "@components/ForumPreview.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Bitcoin en México 2026: Precio, Exchanges y Regulación | free-bitcoin.lat";
+const description = "Todo sobre Bitcoin en México 2026: precio BTC/MXN en tiempo real, regulación Banxico y CNBV, mejores exchanges, impuestos SAT y cómo comprar con SPEI u OXXO.";
+const canonical = "https://free-bitcoin.lat/mx/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "Tarjeta", "P2P"],
+    bestFor: "Volumen alto, pares MXN",
+    isAffiliate: true,
+  },
+  {
+    name: "Kraken",
+    url: "https://invite.kraken.com/JDNW/aywgmsis",
+    fees: "0.16% maker / 0.26% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "Wire", "Tarjeta"],
+    bestFor: "Seguridad, usuarios avanzados",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Básico" as const,
+    paymentMethods: ["SPEI", "P2P", "Tarjeta"],
+    bestFor: "Derivados, spot activo",
+    isAffiliate: true,
+  },
+  {
+    name: "Bitso",
+    url: "https://bitso.com/",
+    fees: "0.50% – 1.00%",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "OXXO", "Tarjeta"],
+    bestFor: "Principiantes en México",
+    isAffiliate: false,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal tener Bitcoin en México?",
+    a: "Sí, el uso personal de Bitcoin es completamente legal en México. La Ley FinTech de 2018 y la Circular Banxico 4/2019 regulan las plataformas (ITF) que operan con criptomonedas, pero no prohíben que ciudadanos compren, vendan o guarden BTC por su cuenta. Los exchanges deben estar registrados como Instituciones de Tecnología Financiera ante la CNBV.",
+  },
+  {
+    q: "¿Cuánto vale 1 Bitcoin en pesos mexicanos hoy?",
+    a: "El widget de precio en tiempo real en la parte superior de esta página muestra la cotización BTC/MXN actualizada cada 5 minutos. Para un historial detallado, conversor y análisis de volatilidad, visita nuestra página <a href='/mx/precio-bitcoin-mxn/'>Precio Bitcoin en MXN</a>.",
+  },
+  {
+    q: "¿Qué exchanges puedo usar en México?",
+    a: "Los más utilizados en México son Bitso (regulado como ITF), Binance (con SPEI disponible), Kraken y Bybit. Bitso es la opción local más conocida y acepta OXXO Pay. Binance ofrece los pares BTC/MXN con mayor liquidez. Ver comparativa completa en <a href='/mx/mejores-exchanges/'>mejores exchanges para México</a>.",
+  },
+  {
+    q: "¿Tengo que declarar Bitcoin al SAT?",
+    a: "Sí. Las ganancias obtenidas por la venta o intercambio de Bitcoin se consideran ingresos gravables conforme al ISR. Debes registrar cada operación (fecha, precio de compra, precio de venta) e incluirlas en tu Declaración Anual. Las plataformas ITF también informan operaciones al SAT. Más detalles en nuestra guía <a href='/mx/impuestos-bitcoin/'>Impuestos Bitcoin México</a>.",
+  },
+  {
+    q: "¿Puedo comprar Bitcoin con OXXO?",
+    a: "Sí. Bitso y Volabit permiten depósitos en efectivo mediante OXXO Pay. El límite habitual es de $5,000 MXN por operación. El proceso consiste en generar una referencia de pago en la plataforma, acudir a cualquier tienda OXXO y efectuar el pago en efectivo. Los fondos suelen acreditarse en 1 a 2 horas hábiles.",
+  },
+  {
+    q: "¿Las remesas con Bitcoin son legales en México?",
+    a: "Sí. Recibir criptomonedas como Bitcoin en México no tiene restricción legal para personas físicas. La Ley FinTech regula a las empresas que ofrecen este servicio, pero el receptor individual puede recibir BTC sin ningún trámite especial. La red Lightning reduce el costo de envío a prácticamente cero. Consulta nuestra calculadora en <a href='/remesas/us-mx/'>Remesas EE.UU. → México</a>.",
+  },
+];
+
+const sources = [
+  { label: "Banco de México (Banxico)", url: "https://www.banxico.org.mx" },
+  { label: "CNBV – Comisión Nacional Bancaria y de Valores", url: "https://www.cnbv.gob.mx" },
+  { label: "SAT – Servicio de Administración Tributaria", url: "https://www.sat.gob.mx" },
+  { label: "Banco Mundial – Precios de Remesas", url: "https://remittanceprices.worldbank.org" },
+  { label: "Ley FinTech (LRITF) – Diputados", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LRITF_090323.pdf" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Bitcoin en México 2026: guía completa",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    author: { "@type": "Organization", name: "free-bitcoin.lat" },
+    publisher: { "@type": "Organization", name: "free-bitcoin.lat", url: "https://free-bitcoin.lat" },
+    inLanguage: "es",
+    about: { "@type": "Thing", name: "Bitcoin en México" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a.replace(/<[^>]+>/g, "") },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "México", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "México" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="mx-hero">
+    <div class="container">
+      <div class="mx-hero-inner">
+        <div class="mx-hero-text">
+          <span class="hero-eyebrow">🇲🇽 México · BTC/MXN</span>
+          <h1>Bitcoin en México 2026: guía completa</h1>
+          <p class="hero-sub">
+            México es el mayor mercado de Bitcoin en América Latina por volumen de remesas y adopción.
+            La Ley FinTech de 2018 y la Circular Banxico 4/2019 regulan las ITF sin prohibir el uso
+            personal. El SAT exige declarar las ganancias como ingresos. En 2024 México recibió más de
+            63,000 millones de dólares en remesas, convirtiendo a Bitcoin y Lightning en una alternativa
+            real a Western Union y las transferencias bancarias.
+          </p>
+          <div class="hero-cta">
+            <a href="/mx/como-comprar-bitcoin/" class="btn btn-primary">Cómo comprar BTC</a>
+            <a href="/mx/impuestos-bitcoin/" class="btn btn-secondary">Impuestos SAT</a>
+          </div>
+        </div>
+        <div class="mx-hero-widget card">
+          <LivePriceWidget currency="MXN" currencySymbol="$" countryName="México" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <div class="reg-header">
+        <RegulatoryStatusBadge
+          status="yellow"
+          label="Regulado con restricciones"
+          lastUpdate="2026-02-23"
+          regulatorName="Banxico / CNBV"
+          regulatorUrl="https://www.banxico.org.mx"
+        />
+      </div>
+
+      <h2 id="regulacion-heading">Estado regulatorio en México 2026</h2>
+      <p class="last-updated">Última actualización: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            En México, el marco regulatorio para las criptomonedas está definido principalmente por la
+            <strong>Ley para Regular las Instituciones de Tecnología Financiera (Ley FinTech)</strong>,
+            publicada en el Diario Oficial de la Federación el 9 de marzo de 2018. Esta ley establece
+            que las empresas que operen con activos virtuales —incluyendo Bitcoin— deben obtener
+            autorización de la CNBV y registrarse como <em>Instituciones de Tecnología Financiera (ITF)</em>.
+          </p>
+          <p>
+            La <strong>Circular 4/2019 de Banxico</strong> complementa la Ley FinTech al definir qué
+            activos virtuales pueden ser utilizados por las ITF autorizadas. Banxico tiene la potestad
+            de aprobar o rechazar el uso de cada criptomoneda. Hasta 2026, Bitcoin es el activo virtual
+            más aceptado en la práctica, aunque Banxico ha mantenido una postura cautelosa respecto a
+            la adopción masiva dentro del sistema financiero regulado.
+          </p>
+          <p>
+            <strong>Bitcoin no es moneda de curso legal en México.</strong> A diferencia de El Salvador,
+            México no reconoce el BTC como medio de pago obligatorio. Sin embargo, ninguna norma prohíbe
+            que personas físicas o morales compren, vendan, guarden o intercambien Bitcoin por su propia
+            cuenta. La regulación recae sobre las plataformas intermediarias, no sobre el usuario final.
+          </p>
+          <p>
+            La <strong>CNBV</strong> (Comisión Nacional Bancaria y de Valores) supervisa el cumplimiento
+            de las obligaciones de las ITF, incluyendo controles anti lavado de dinero (AML), identificación
+            del cliente (KYC), y reportes de operaciones relevantes. El SAT (Servicio de Administración
+            Tributaria) requiere que las ganancias derivadas de criptomonedas se declaren como ingresos.
+          </p>
+
+          <div class="highlight">
+            <strong>Resumen para el usuario:</strong> Puedes comprar, guardar y vender Bitcoin legalmente
+            en México. Solo asegúrate de usar exchanges registrados como ITF y de declarar tus ganancias
+            ante el SAT. Ver guía completa: <a href="/mx/regulacion-cripto/">Regulación cripto en México</a>.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Navegación rápida</h3>
+            <ul class="quick-links" role="list">
+              <li><a href="/mx/precio-bitcoin-mxn/">Precio BTC/MXN en tiempo real</a></li>
+              <li><a href="/mx/como-comprar-bitcoin/">Cómo comprar Bitcoin en México</a></li>
+              <li><a href="/mx/impuestos-bitcoin/">Impuestos y SAT</a></li>
+              <li><a href="/mx/regulacion-cripto/">Regulación cripto México</a></li>
+              <li><a href="/mx/mejores-exchanges/">Mejores exchanges para México</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para México</h2>
+      <p class="section-sub">
+        Comparativa de plataformas disponibles en México con SPEI y OXXO. Todos los exchanges
+        internacionales listados aceptan depósitos por SPEI. Bitso es la única ITF mexicana
+        que acepta OXXO Pay de forma nativa.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges con disponibilidad en México — febrero 2026"
+      />
+
+      <div class="exchange-notes">
+        <p>
+          <strong>SPEI:</strong> Transferencia interbancaria inmediata disponible en Binance, Kraken, Bybit y Bitso.
+          Sin comisión de depósito. Tiempo de acreditación: 5 a 30 minutos en horario bancario.
+        </p>
+        <p>
+          <strong>OXXO Pay:</strong> Disponible en Bitso y Volabit. Límite aproximado de $5,000 MXN por operación.
+          Acepta efectivo en tiendas OXXO, 7-Eleven y farmacias participantes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo comprar -->
+  <section class="section" aria-labelledby="como-comprar-heading">
+    <div class="container">
+      <h2 id="como-comprar-heading">¿Cómo comprar Bitcoin en México?</h2>
+      <p>
+        El método más recomendado para mexicanos es usar un exchange regulado con transferencia SPEI.
+        Es gratuito, inmediato y disponible en cualquier banco mexicano. El proceso básico es:
+      </p>
+      <ol class="steps-list">
+        <li>Crear una cuenta en Binance o Bitso y completar el KYC (INE o pasaporte + selfie).</li>
+        <li>Depositar pesos mexicanos por SPEI a la CLABE asignada por la plataforma.</li>
+        <li>Comprar BTC en el par BTC/MXN usando una orden de mercado o límite.</li>
+        <li>Para mayor seguridad, retirar el BTC a tu propia wallet hardware (Ledger, Trezor).</li>
+      </ol>
+      <a href="/mx/como-comprar-bitcoin/" class="btn btn-primary" style="margin-top:1rem;display:inline-block;">
+        Ver guía completa paso a paso →
+      </a>
+    </div>
+  </section>
+
+  <!-- Remesas -->
+  <section class="section section-dark" aria-labelledby="remesas-heading">
+    <div class="container">
+      <div class="remesas-block highlight">
+        <div>
+          <h2 id="remesas-heading">Remesas con Bitcoin: la opción más barata</h2>
+          <p>
+            México es el tercer receptor de remesas más grande del mundo. En 2024, las familias mexicanas
+            recibieron más de 63,000 millones de dólares enviados principalmente desde Estados Unidos.
+            Una transferencia bancaria o Western Union cobra entre 3% y 8% de comisión. Bitcoin Lightning
+            puede transferir cualquier monto en segundos con comisiones menores al 0.1%.
+          </p>
+          <p>
+            Aplicaciones como Muun, Phoenix o Strike permiten enviar y recibir satoshis desde EE.UU. a
+            México en menos de un minuto. El receptor puede convertir de inmediato a pesos via Bitso o Tropykus.
+          </p>
+        </div>
+        <div>
+          <a href="/remesas/us-mx/" class="btn btn-primary">Calculadora remesas EE.UU. → México →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en México" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Forum Preview -->
+  <div class="container">
+    <ForumPreview country="mx" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal:</strong> Este contenido es solo informativo y no constituye asesoría financiera,
+      legal ni fiscal. Consulta a un contador o abogado especializado en México para tu situación particular.
+      La regulación puede cambiar. Última verificación: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .mx-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .mx-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+  .mx-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .mx-hero-widget { padding: var(--space-6); }
+  .reg-header { margin-bottom: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+  .quick-links a { font-size: 0.9rem; color: var(--c-text-muted); text-decoration: none; transition: color var(--transition-fast); }
+  .quick-links a:hover { color: var(--c-primary); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .exchange-notes { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+  .exchange-notes p { font-size: 0.875rem; color: var(--c-text-muted); }
+  .steps-list { padding-left: 1.5rem; display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-4); }
+  .steps-list li { color: var(--c-text); line-height: 1.6; }
+  .remesas-block { display: flex; flex-direction: column; gap: var(--space-6); }
+  .remesas-block p { color: var(--c-text-muted); line-height: 1.7; margin-bottom: var(--space-3); }
+  .section-dark { background: var(--c-surface-1); }
+  @media (max-width: 900px) {
+    .mx-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

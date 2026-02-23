@@ -1,0 +1,311 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Bolivia 2026: Ban Levantado, Precio BTC/BOB | free-bitcoin.lat";
+const description = "Bitcoin en Bolivia 2026: el BCB levanto el ban cripto en 2024 (RD 082/2024), transacciones +530%. Precio BTC/BOB, como comprar, exchanges y escasez de USD.";
+const canonical = "https://free-bitcoin.lat/bo/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["P2P BOB", "Transferencia", "Tarjeta"],
+    bestFor: "Mayor liquidez, P2P en bolivianos",
+    isAffiliate: true,
+  },
+  {
+    name: "KuCoin",
+    url: "https://www.kucoin.com/r/rf/QBSKA5LH",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Transferencia", "Tarjeta"],
+    bestFor: "Altcoins, bajo requisito KYC",
+    isAffiliate: true,
+  },
+  {
+    name: "CoinEx",
+    url: "https://www.coinex.com/register?rc=ksvwm",
+    fees: "0.20% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["USDT", "P2P", "Transferencia"],
+    bestFor: "Acceso global, KYC minimo",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal comprar Bitcoin en Bolivia en 2026?",
+    a: "Si. Desde el 26 de junio de 2024, la Resolucion de Directorio RD 082/2024 del Banco Central de Bolivia (BCB) levanto la prohibicion que existia desde 2020. Las personas y empresas bolivianas pueden ahora comprar, vender y usar criptomonedas legalmente. Las entidades financieras reguladas aun no pueden operar directamente con cripto, pero los usuarios individuales tienen plena libertad.",
+  },
+  {
+    q: "¿Por que crecieron +530% las transacciones cripto en Bolivia?",
+    a: "El crecimiento explosivo del primer semestre de 2025 se explica por dos factores: el levantamiento del ban (que habia reprimido la demanda acumulada por cuatro años) y la aguda escasez de dolares estadounidenses en el sistema financiero boliviano. Las empresas y personas usan USDT y BTC como alternativa al dolar fisico para importaciones y ahorro.",
+  },
+  {
+    q: "¿Como afecta la escasez de dolares al uso de cripto en Bolivia?",
+    a: "Bolivia enfrenta una severa escasez de reservas internacionales y dolares fisicos desde 2023. Los bolivianos que necesitan dolares para importar bienes o ahorrar en moneda dura han recurrido al USDT como alternativa practica. El cripto actua como un dolar digital accesible cuando el sistema bancario no puede proveer billetes fisicos.",
+  },
+  {
+    q: "¿Que exchanges funcionan en Bolivia?",
+    a: "Binance es el exchange mas usado por bolivianos, especialmente su funcion P2P que permite comprar con bolivianos (BOB). KuCoin y CoinEx son alternativas con menor requisito de verificacion. Hasta la fecha no existe un exchange local boliviano de relevancia, por lo que los usuarios dependen de plataformas internacionales.",
+  },
+  {
+    q: "¿Puedo recibir remesas en Bitcoin desde el exterior?",
+    a: "Si. Bolivia recibe una cantidad significativa de remesas, principalmente desde Argentina, España y Brasil. Recibir Bitcoin o USDT directamente en una wallet personal es completamente legal tras la RD 082/2024. Para convertir a bolivianos, la opcion mas practica es vender en Binance P2P a compradores locales que paguen en BOB.",
+  },
+];
+
+const sources = [
+  { label: "BCB – Banco Central de Bolivia (RD 082/2024)", url: "https://www.bcb.gob.bo" },
+  { label: "ASFI – Autoridad de Supervision del Sistema Financiero", url: "https://www.asfi.gob.bo" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+  { label: "Banco Mundial – Remesas Bolivia", url: "https://remittanceprices.worldbank.org" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Bolivia", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Bolivia" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="bo-hero">
+    <div class="container">
+      <div class="bo-hero-inner">
+        <div class="bo-hero-text">
+          <span class="hero-eyebrow">Bolivia · BTC/BOB · Ban levantado 2024</span>
+          <h1>Bitcoin en Bolivia 2026: ban levantado, precio BTC/BOB y como comprar</h1>
+          <p class="hero-sub">
+            En junio de 2024, el Banco Central de Bolivia revirtio la prohibicion de
+            criptomonedas con la RD 082/2024. En el primer semestre de 2025, las transacciones
+            cripto en Bolivia crecieron mas del <strong>530%</strong>. Dos motores explican
+            el auge: la demanda acumulada durante cuatro años de ban y la escasez de
+            dolares fisicos en el sistema financiero boliviano.
+          </p>
+          <div class="hero-cta">
+            <a href="/remesas/us-bo/" class="btn btn-primary">Remesas EE.UU. a Bolivia</a>
+          </div>
+        </div>
+        <div class="bo-hero-widget card">
+          <LivePriceWidget currency="BOB" currencySymbol="Bs." countryName="Bolivia" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="yellow"
+        label="Legal — RD BCB 082/2024"
+        lastUpdate="2026-02-23"
+        regulatorName="BCB – Banco Central de Bolivia"
+        regulatorUrl="https://www.bcb.gob.bo"
+      />
+
+      <h2 id="regulacion-heading">El ban levantado: historia regulatoria de cripto en Bolivia</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Bolivia fue durante años uno de los paises latinoamericanos con la postura mas
+            restrictiva hacia las criptomonedas. En 2020, el Banco Central de Bolivia prohibio
+            explicitamente a las instituciones financieras operar con criptomonedas, siguiendo
+            una prohibicion previa que ya databa de 2014. Esta posicion mantenia al pais al
+            margen del ecosistema cripto global.
+          </p>
+          <p>
+            El giro llego el <strong>26 de junio de 2024</strong> con la <strong>Resolucion de
+            Directorio RD 082/2024</strong> del BCB. La norma no legalizo el uso de cripto
+            para entidades financieras reguladas, pero elimino la prohibicion general,
+            permitiendo que personas y empresas fuera del sistema bancario formal puedan
+            comprar, vender y usar criptomonedas libremente.
+          </p>
+          <p>
+            El resultado fue inmediato: en el primer semestre de 2025 las transacciones
+            cripto registradas en Bolivia crecieron mas del <strong>530%</strong> respecto
+            al mismo periodo del año anterior. El USDT lidera el volumen, seguido de Bitcoin,
+            con Binance P2P como la plataforma dominante para transacciones en bolivianos.
+          </p>
+          <div class="highlight">
+            <strong>Estado actual 2026:</strong> Legal para uso personal. Las entidades
+            financieras supervisadas por ASFI no pueden ofrecer servicios cripto directamente,
+            pero cualquier boliviano puede comprar y guardar BTC o USDT sin restriccion legal.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Datos clave</h3>
+            <ul class="quick-links" role="list">
+              <li>Ban levantado: junio 2024 (RD 082/2024)</li>
+              <li>Crecimiento transacciones H1 2025: +530%</li>
+              <li>Regulador: BCB + ASFI</li>
+              <li>Remesas: <a href="/remesas/us-bo/">EE.UU. a Bolivia</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Escasez de USD -->
+  <section class="section section-dark" aria-labelledby="usd-heading">
+    <div class="container">
+      <h2 id="usd-heading">Escasez de dolares: el motor real de la adopcion cripto</h2>
+      <p>
+        Mas alla del aspecto legal, el verdadero combustible de la adopcion cripto en Bolivia
+        es la <strong>escasez de dolares fisicos</strong>. Desde 2023, Bolivia enfrenta una
+        crisis de reservas internacionales que limita la disponibilidad de dolares en el
+        sistema bancario. Las empresas que necesitan importar insumos y los ahorristas que
+        buscan dolarizarse han encontrado en el USDT una alternativa practica y accesible.
+      </p>
+      <p>
+        El USDT funciona como un dolar digital: no requiere contar con billetes fisicos,
+        se puede transferir globalmente en segundos y se guarda en una wallet personal sin
+        depender del sistema bancario. Para el boliviano promedio que quiere proteger sus
+        ahorros de la depreciacion del bolivar, esta es una solucion real y disponible hoy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges disponibles en Bolivia</h2>
+      <p class="section-sub">
+        Comparativa de las principales plataformas usadas por bolivianos en 2026.
+        Todos son exchanges internacionales; actualmente no hay un exchange local boliviano
+        de relevancia.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Bolivia — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision
+        sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Bolivia" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .bo-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .bo-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .bo-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .bo-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-dark p { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    border: 1px solid var(--c-border);
+    border-radius: 6px;
+    padding: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  @media (max-width: 900px) {
+    .bo-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

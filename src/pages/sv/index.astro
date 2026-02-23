@@ -1,0 +1,312 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en El Salvador 2026: Lightning, Chivo y Ley Bitcoin | free-bitcoin.lat";
+const description = "Bitcoin en El Salvador 2026: historia de la Ley Bitcoin (enmendada 2025 por acuerdo FMI), Chivo wallet, Lightning Network, remesas sin comision y estado actual.";
+const canonical = "https://free-bitcoin.lat/sv/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Transferencia USD", "P2P", "Tarjeta"],
+    bestFor: "Mayor liquidez, sin conversion de divisa",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia USD"],
+    bestFor: "Spot y derivados",
+    isAffiliate: true,
+  },
+  {
+    name: "Airtm",
+    url: "https://app.airtm.com/ivt/kokot5m1iwkq0",
+    fees: "Variable segun metodo",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P USD", "Wallet", "Transferencia"],
+    bestFor: "Remesas familiares, conversion USD/BTC",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Sigue siendo Bitcoin moneda legal en El Salvador en 2026?",
+    a: "Bitcoin ya no es de aceptacion obligatoria en El Salvador. En enero de 2025, como parte de un acuerdo con el Fondo Monetario Internacional (FMI) para un prestamo de 1.4 mil millones de dolares, El Salvador modifico su Ley Bitcoin: la aceptacion de BTC paso de ser obligatoria a voluntaria para los negocios. Bitcoin sigue siendo legal y los ciudadanos pueden usarlo, pero los comerciantes no estan obligados a aceptarlo.",
+  },
+  {
+    q: "¿Que es la wallet Chivo y sigue funcionando?",
+    a: "Chivo Wallet fue la billetera digital oficial lanzada por el gobierno salvadoreno en 2021 junto con la Ley Bitcoin. Ofrecio $30 en BTC de bono de bienvenida a ciudadanos que la descargaron. A principios de 2025, el gobierno redujo su apoyo a Chivo en el contexto del acuerdo con el FMI. La app continua funcionando pero el Estado ha dejado de ser el principal promotor del uso de BTC. La Lightning Network sigue siendo la forma mas eficiente de transaccionar BTC en el pais.",
+  },
+  {
+    q: "¿Como se envian remesas con Bitcoin a El Salvador?",
+    a: "El Salvador recibe remesas equivalentes a aproximadamente el 24% de su PIB, casi exclusivamente desde EE.UU. Con Lightning Network, un familiar en EE.UU. puede enviar satoshis a El Salvador en segundos con comisiones menores a un centavo. Aplicaciones como Strike, Muun y Phoenix facilitan el proceso. El receptor puede quedarse en BTC o convertir a dolares usando apps locales o Bitcoin Beach (Bitcoin Beach Wallet en El Zonte).",
+  },
+  {
+    q: "¿Por que El Salvador adoptó Bitcoin como moneda legal en 2021?",
+    a: "El gobierno del presidente Nayib Bukele presento la Ley Bitcoin en junio de 2021 y fue aprobada rapidamente por la Asamblea Legislativa. Los argumentos oficiales fueron: reducir el costo de las remesas (que representan ~24% del PIB), incluir financieramente a la poblacion sin cuenta bancaria (mayoria del pais), y atraer inversion en tecnologia. El experimento fue controversial: el FMI, el Banco Mundial y economistas criticaron la medida.",
+  },
+  {
+    q: "¿El Salvador perdio dinero con su inversion en Bitcoin?",
+    a: "El gobierno de El Salvador compro Bitcoin en multiples ocasiones entre 2021 y 2024, acumulando mas de 6.000 BTC. Hubo periodos en que las compras estaban en perdida latente (2022-2023 durante el bear market). En 2024, con el rally de BTC hacia nuevos maximos historicos, la posicion del gobierno registro ganancias sustanciales. El Salvador sigue acumulando BTC y mantiene su estrategia de reserva en Bitcoin.",
+  },
+];
+
+const sources = [
+  { label: "BCR – Banco Central de Reserva El Salvador", url: "https://www.bcr.gob.sv" },
+  { label: "FMI – Acuerdo El Salvador enero 2025", url: "https://www.imf.org/en/countries/SLV" },
+  { label: "Ley Bitcoin El Salvador (modificada 2025)", url: "https://www.asamblea.gob.sv" },
+  { label: "Banco Mundial – Remesas El Salvador", url: "https://remittanceprices.worldbank.org" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "El Salvador", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "El Salvador" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="sv-hero">
+    <div class="container">
+      <div class="sv-hero-inner">
+        <div class="sv-hero-text">
+          <span class="hero-eyebrow">El Salvador · BTC/USD · Lightning · Chivo</span>
+          <h1>Bitcoin en El Salvador 2026: Lightning, Chivo y la Ley Bitcoin enmendada</h1>
+          <p class="hero-sub">
+            El Salvador fue el primer pais del mundo en adoptar Bitcoin como moneda de
+            curso legal en 2021. En enero de 2025, como condicion del acuerdo con el FMI,
+            la Ley Bitcoin fue enmendada: la aceptacion paso de obligatoria a voluntaria.
+            Sin embargo, el ecosistema cripto salvadoreno —Lightning Network, Chivo, Bitcoin
+            Beach— sigue siendo el mas desarrollado de Centroamerica.
+          </p>
+          <div class="hero-cta">
+            <a href="/remesas/us-sv/" class="btn btn-primary">Remesas EE.UU. a El Salvador</a>
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-secondary" target="_blank" rel="noopener noreferrer sponsored">Comprar BTC</a>
+          </div>
+        </div>
+        <div class="sv-hero-widget card">
+          <LivePriceWidget currency="USD" currencySymbol="$" countryName="El Salvador" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="green"
+        label="Legal — Ley Bitcoin enmendada 2025"
+        lastUpdate="2026-02-23"
+        regulatorName="BCR – Banco Central de Reserva"
+        regulatorUrl="https://www.bcr.gob.sv"
+      />
+
+      <h2 id="regulacion-heading">La Ley Bitcoin: del hito historico a la enmienda del FMI</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            El 7 de septiembre de 2021, El Salvador se convirtio en el primer pais del mundo
+            en adoptar Bitcoin como <strong>moneda de curso legal</strong>, igualando al
+            dolar estadounidense. La medida fue aprobada en horas por la Asamblea Legislativa
+            controlada por el partido Nuevas Ideas. El gobierno lanzo Chivo Wallet con un
+            bono de $30 en BTC para incentivar la adopcion.
+          </p>
+          <p>
+            El experimento fue controversial desde el inicio. El FMI, el Banco Mundial y
+            economistas cuestionaron la volatilidad del BTC como moneda para transacciones
+            cotidianas y los riesgos para la estabilidad financiera. En 2022-2023, durante
+            el mercado bajista de cripto, las compras de BTC del gobierno mostraron perdidas
+            latentes significativas.
+          </p>
+          <p>
+            En <strong>enero de 2025</strong>, el gobierno de Bukele y el FMI alcanzaron un
+            acuerdo para un programa de financiamiento de 1.4 mil millones de dolares. Como
+            condicion, la Ley Bitcoin fue enmendada: la <strong>aceptacion de BTC paso de
+            obligatoria a voluntaria</strong> para los comercios. Bitcoin sigue siendo legal
+            en El Salvador, pero ya no es de curso legal forzoso.
+          </p>
+          <div class="highlight">
+            <strong>Estado 2026:</strong> Bitcoin es completamente legal en El Salvador.
+            Los ciudadanos pueden usarlo libremente. Los comercios pueden optar por
+            aceptarlo o no. La infraestructura Lightning, Chivo y las comunidades cripto
+            como Bitcoin Beach siguen activas.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Cronologia</h3>
+            <ul class="quick-links" role="list">
+              <li>Sep 2021: Ley Bitcoin (curso legal)</li>
+              <li>2022-2023: Bear market, criticas FMI</li>
+              <li>2024: Rally BTC, ganancias gobierno</li>
+              <li>Ene 2025: Enmienda (voluntario)</li>
+              <li>2026: Ecosistema maduro activo</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-top:var(--space-3)">
+            <h3>Remesas</h3>
+            <ul class="quick-links" role="list">
+              <li>~24% del PIB en remesas</li>
+              <li>Principal corredor: EE.UU.-SV</li>
+              <li><a href="/remesas/us-sv/">Calculadora remesas EE.UU.-SV</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightning y remesas -->
+  <section class="section section-dark" aria-labelledby="lightning-heading">
+    <div class="container">
+      <h2 id="lightning-heading">Lightning Network y remesas: el caso de uso real</h2>
+      <p>
+        Las <strong>remesas representan aproximadamente el 24% del PIB</strong> de El Salvador.
+        Para las familias salvadorenas, el costo de recibir dinero del exterior es una
+        carga economica significativa. Lightning Network ofrece una alternativa revolucionaria:
+        transferencias en segundos con comisiones de menos de un centavo de dolar,
+        sin intermediarios y disponibles las 24 horas.
+      </p>
+      <p>
+        El proyecto <strong>Bitcoin Beach</strong> en El Zonte se convirtio en caso de estudio
+        mundial: una comunidad entera adopto Bitcoin como medio de pago cotidiano usando
+        Lightning. Negocios locales, desde sodas hasta surf shops, aceptan BTC via Lightning.
+        Este experimento demostro que Bitcoin puede funcionar como moneda de uso diario
+        cuando hay suficiente educacion y ecosistema de soporte.
+      </p>
+      <p>
+        Al estar dolarizado y con Bitcoin legalmente aceptado, El Salvador es el pais
+        latinoamericano con la infraestructura cripto mas madura para remesas. El receptor
+        en El Salvador no necesita convertir: puede gastar en dolares o guardar en BTC.
+      </p>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges para El Salvador</h2>
+      <p class="section-sub">
+        Al operar en USD, El Salvador tiene acceso directo a exchanges internacionales.
+        Para remesas Lightning se recomiendan Strike, Muun o Phoenix adicionalmente.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para El Salvador — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en El Salvador" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .sv-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .sv-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .sv-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .sv-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .quick-links a { color: var(--c-text-muted); text-decoration: none; }
+  .quick-links a:hover { color: var(--c-primary); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-dark p { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .sv-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

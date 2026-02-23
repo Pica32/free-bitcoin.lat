@@ -1,0 +1,599 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+export function getStaticPaths() {
+  const countries = [
+    { slug: "latam", name: "General LatAm", flag: "🌎" },
+    { slug: "mx", name: "México", flag: "🇲🇽" },
+    { slug: "br", name: "Brasil", flag: "🇧🇷" },
+    { slug: "ar", name: "Argentina", flag: "🇦🇷" },
+    { slug: "ve", name: "Venezuela", flag: "🇻🇪" },
+    { slug: "co", name: "Colombia", flag: "🇨🇴" },
+    { slug: "cl", name: "Chile", flag: "🇨🇱" },
+    { slug: "pe", name: "Perú", flag: "🇵🇪" },
+    { slug: "sv", name: "El Salvador", flag: "🇸🇻" },
+    { slug: "gt", name: "Guatemala", flag: "🇬🇹" },
+    { slug: "bo", name: "Bolivia", flag: "🇧🇴" },
+    { slug: "py", name: "Paraguay", flag: "🇵🇾" },
+    { slug: "uy", name: "Uruguay", flag: "🇺🇾" },
+    { slug: "ec", name: "Ecuador", flag: "🇪🇨" },
+    { slug: "pa", name: "Panamá", flag: "🇵🇦" },
+    { slug: "hn", name: "Honduras", flag: "🇭🇳" },
+  ];
+
+  return countries.map((c) => ({
+    params: { country: c.slug },
+    props: { countryData: c },
+  }));
+}
+
+const { countryData } = Astro.props;
+const { country } = Astro.params;
+
+const title = `Foro Bitcoin ${countryData.name} – Comunidad Cripto | free-bitcoin.lat`;
+const description = `Discusiones sobre Bitcoin y criptomonedas en ${countryData.name}. Sin registro. Comunidad anónima sobre regulación, exchanges, P2P y más.`;
+const canonical = `https://free-bitcoin.lat/foro/${country}/`;
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Foro", item: "https://free-bitcoin.lat/foro/" },
+    { name: countryData.name, item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <nav class="breadcrumb-nav" aria-label="Miga de pan">
+      <a href="/">Inicio</a> › <a href="/foro/">Foro</a> › <span>{countryData.flag} {countryData.name}</span>
+    </nav>
+
+    <div class="forum-header">
+      <span class="forum-flag" aria-hidden="true">{countryData.flag}</span>
+      <div>
+        <p class="last-updated">Actualizado: febrero 2026</p>
+        <h1>Foro Bitcoin {countryData.name}</h1>
+        <p class="forum-subtitle">Comunidad anónima · Sin registro · Solo Bitcoin y cripto</p>
+      </div>
+    </div>
+
+    <!-- Thread list (client-side) -->
+    <section class="section" aria-labelledby="threads-heading">
+      <div class="section-header">
+        <h2 id="threads-heading">Hilos recientes</h2>
+        <a href="#new-thread" class="btn btn-primary btn-sm">+ Nuevo hilo</a>
+      </div>
+
+      <div id="threads-container" aria-live="polite" aria-label="Lista de hilos">
+        <div id="threads-loading" class="threads-state">
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Cargando hilos…</p>
+        </div>
+        <div id="threads-error" class="threads-state" hidden>
+          <p>No se pudo cargar los hilos. <button class="link-btn" id="retry-btn">Reintentar</button></p>
+        </div>
+        <div id="threads-empty" class="threads-state" hidden>
+          <p>No hay hilos aún en este foro. ¡Sé el primero en publicar!</p>
+        </div>
+        <ul id="threads-list" class="threads-list" hidden role="list" aria-label="Hilos del foro"></ul>
+      </div>
+    </section>
+
+    <!-- Create thread form -->
+    <section class="section" id="new-thread" aria-labelledby="new-thread-heading">
+      <h2 id="new-thread-heading">Crear nuevo hilo</h2>
+
+      <div class="card form-card">
+        <form id="create-thread-form" novalidate aria-label="Formulario para crear hilo">
+          <div class="form-group">
+            <label for="thread-title" class="form-label">
+              Título del hilo <span class="required" aria-label="requerido">*</span>
+            </label>
+            <input
+              type="text"
+              id="thread-title"
+              name="title"
+              class="form-input"
+              placeholder="Escribe el título de tu hilo"
+              maxlength="200"
+              required
+              aria-required="true"
+              aria-describedby="title-hint"
+            />
+            <span id="title-hint" class="form-hint">Máximo 200 caracteres. Sé descriptivo.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="thread-message" class="form-label">
+              Mensaje <span class="required" aria-label="requerido">*</span>
+            </label>
+            <textarea
+              id="thread-message"
+              name="message"
+              class="form-textarea"
+              placeholder="Escribe tu mensaje aquí…"
+              rows="6"
+              maxlength="5000"
+              required
+              aria-required="true"
+              aria-describedby="msg-hint"
+            ></textarea>
+            <span id="msg-hint" class="form-hint">Máximo 5000 caracteres. No compartas datos personales.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="thread-nickname" class="form-label">Apodo (opcional)</label>
+            <input
+              type="text"
+              id="thread-nickname"
+              name="nickname"
+              class="form-input"
+              placeholder="Anónimo"
+              maxlength="50"
+              aria-describedby="nick-hint"
+            />
+            <span id="nick-hint" class="form-hint">Si lo dejas vacío, aparecerás como "Anónimo".</span>
+          </div>
+
+          <div class="form-group captcha-group">
+            <label for="captcha-input" class="form-label">
+              Verificación anti-spam: <span id="captcha-question" class="captcha-question" aria-live="polite">Cargando…</span>
+              <span class="required" aria-label="requerido">*</span>
+            </label>
+            <input
+              type="number"
+              id="captcha-input"
+              name="captcha"
+              class="form-input captcha-input"
+              placeholder="Tu respuesta"
+              required
+              aria-required="true"
+              aria-describedby="captcha-desc"
+            />
+            <span id="captcha-desc" class="form-hint">Resuelve la operación matemática para continuar.</span>
+          </div>
+
+          <div id="form-error" class="form-error" hidden role="alert"></div>
+          <div id="form-success" class="form-success" hidden role="status"></div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+              Publicar hilo
+            </button>
+            <p class="form-disclaimer">
+              Al publicar, aceptas las <a href="/foro/#rules">reglas del foro</a>. No incluyas
+              información personal ni promuevas estafas.
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Rules reminder -->
+    <section class="section" aria-labelledby="rules-reminder">
+      <h2 id="rules-reminder">Recordatorio de reglas</h2>
+      <div class="card rules-reminder-card">
+        <ul class="rules-compact">
+          <li>No estafas ni esquemas de enriquecimiento rápido.</li>
+          <li>No spam ni publicidad no solicitada.</li>
+          <li>Respeto mutuo en todo momento.</li>
+          <li>No compartas seed phrases ni claves privadas.</li>
+          <li>Reporta contenido inapropiado usando el botón de reporte.</li>
+        </ul>
+        <a href="/foro/" class="link-back">← Ver todos los foros</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: var(--space-2) 0 var(--space-1);
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  .forum-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin: var(--space-4) 0 var(--space-6);
+  }
+
+  .forum-flag {
+    font-size: 3rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: var(--space-2);
+  }
+
+  .forum-subtitle {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  .section {
+    margin: var(--space-8) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .section-header h2 {
+    margin-bottom: 0;
+  }
+
+  .btn-sm {
+    font-size: 0.85rem;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--c-primary);
+  }
+
+  /* Thread states */
+  .threads-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-8) 0;
+    color: var(--c-text-muted);
+    text-align: center;
+  }
+
+  .spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid var(--c-border);
+    border-top-color: var(--c-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Thread list */
+  .threads-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Form */
+  .form-card {
+    max-width: 680px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .form-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+
+  .required {
+    color: var(--c-primary);
+    margin-left: 2px;
+  }
+
+  .form-input,
+  .form-textarea {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--c-primary);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-hint {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+  }
+
+  .captcha-group {
+    max-width: 360px;
+  }
+
+  .captcha-question {
+    color: var(--c-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+
+  .captcha-input {
+    max-width: 120px;
+  }
+
+  .captcha-input::-webkit-outer-spin-button,
+  .captcha-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  .form-error {
+    background: rgba(255, 50, 50, 0.1);
+    border: 1px solid rgba(255, 50, 50, 0.3);
+    color: #ff6464;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .form-success {
+    background: rgba(0, 200, 100, 0.1);
+    border: 1px solid rgba(0, 200, 100, 0.3);
+    color: #00c864;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .form-disclaimer {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    max-width: 360px;
+  }
+
+  .form-disclaimer a {
+    color: var(--c-primary);
+  }
+
+  /* Rules reminder */
+  .rules-reminder-card {
+    border-left: 4px solid var(--c-border);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .rules-compact {
+    list-style: disc;
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .rules-compact li {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+
+  .link-back {
+    font-size: 0.9rem;
+    color: var(--c-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .link-back:hover {
+    text-decoration: underline;
+  }
+
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--c-primary);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: inherit;
+    padding: 0;
+    text-decoration: underline;
+  }
+</style>
+
+<script define:vars={{ country }}>
+  // ── Captcha ──────────────────────────────────────────────────────────────────
+  let captchaAnswer = 0;
+
+  function generateCaptcha() {
+    const a = Math.floor(Math.random() * 15) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    const ops = [
+      { q: `${a} + ${b}`, ans: a + b },
+      { q: `${a + b} - ${b}`, ans: a },
+      { q: `${a} × ${b}`, ans: a * b },
+    ];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    captchaAnswer = op.ans;
+    const el = document.getElementById("captcha-question");
+    if (el) el.textContent = `¿Cuánto es ${op.q}?`;
+  }
+
+  // ── Thread loader ────────────────────────────────────────────────────────────
+  async function loadThreads() {
+    const loading = document.getElementById("threads-loading");
+    const errorEl = document.getElementById("threads-error");
+    const emptyEl = document.getElementById("threads-empty");
+    const listEl = document.getElementById("threads-list");
+
+    if (!loading || !errorEl || !emptyEl || !listEl) return;
+
+    loading.hidden = false;
+    errorEl.hidden = true;
+    emptyEl.hidden = true;
+    listEl.hidden = true;
+
+    try {
+      const res = await fetch(`/api/forum.php?action=list_threads&category=${country}`);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      loading.hidden = true;
+
+      if (!data.threads || data.threads.length === 0) {
+        emptyEl.hidden = false;
+        return;
+      }
+
+      listEl.innerHTML = "";
+      data.threads.forEach((thread) => {
+        const li = document.createElement("li");
+        li.className = "card thread-item";
+        li.innerHTML = `
+          <a href="/foro/${country}/${thread.id}/" class="thread-title">${escapeHtml(thread.title)}</a>
+          <div class="thread-meta">
+            <span class="thread-author">${escapeHtml(thread.nickname || "Anónimo")}</span>
+            <span class="thread-sep" aria-hidden="true">·</span>
+            <time datetime="${thread.created_at}">${formatDate(thread.created_at)}</time>
+            <span class="thread-sep" aria-hidden="true">·</span>
+            <span>${thread.reply_count ?? 0} respuesta${thread.reply_count !== 1 ? "s" : ""}</span>
+          </div>
+        `;
+        listEl.appendChild(li);
+      });
+      listEl.hidden = false;
+    } catch (e) {
+      loading.hidden = true;
+      errorEl.hidden = false;
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function formatDate(iso) {
+    try {
+      return new Intl.DateTimeFormat("es-419", { dateStyle: "medium" }).format(new Date(iso));
+    } catch {
+      return iso;
+    }
+  }
+
+  // ── Form submit ──────────────────────────────────────────────────────────────
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const errorEl = document.getElementById("form-error");
+    const successEl = document.getElementById("form-success");
+    const submitBtn = document.getElementById("submit-btn");
+
+    if (!errorEl || !successEl || !submitBtn) return;
+
+    errorEl.hidden = true;
+    successEl.hidden = true;
+
+    const title = form.querySelector("#thread-title").value.trim();
+    const message = form.querySelector("#thread-message").value.trim();
+    const nickname = form.querySelector("#thread-nickname").value.trim();
+    const captchaVal = parseInt(form.querySelector("#captcha-input").value, 10);
+
+    if (!title) {
+      showError(errorEl, "El título es obligatorio.");
+      return;
+    }
+    if (!message) {
+      showError(errorEl, "El mensaje es obligatorio.");
+      return;
+    }
+    if (isNaN(captchaVal) || captchaVal !== captchaAnswer) {
+      showError(errorEl, "Respuesta incorrecta al captcha. Intenta de nuevo.");
+      generateCaptcha();
+      form.querySelector("#captcha-input").value = "";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Publicando…";
+
+    try {
+      const res = await fetch("/api/forum.php?action=create_thread", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category: country, title, message, nickname }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Error al publicar.");
+      successEl.textContent = "¡Hilo creado exitosamente! Recarga la página para verlo.";
+      successEl.hidden = false;
+      form.reset();
+      generateCaptcha();
+      loadThreads();
+    } catch (err) {
+      showError(errorEl, err.message || "No se pudo publicar el hilo. Intenta más tarde.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Publicar hilo";
+    }
+  }
+
+  function showError(el, msg) {
+    el.textContent = msg;
+    el.hidden = false;
+    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  document.addEventListener("DOMContentLoaded", () => {
+    generateCaptcha();
+    loadThreads();
+    document.getElementById("create-thread-form")?.addEventListener("submit", handleSubmit);
+    document.getElementById("retry-btn")?.addEventListener("click", loadThreads);
+  });
+</script>

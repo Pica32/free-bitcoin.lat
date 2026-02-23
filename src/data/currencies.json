@@ -1,0 +1,17 @@
+{
+  "USD": { "symbol": "$", "name": "Dólar estadounidense", "country": "us", "decimals": 2 },
+  "MXN": { "symbol": "$", "name": "Peso mexicano", "country": "mx", "decimals": 2 },
+  "BRL": { "symbol": "R$", "name": "Real brasileño", "country": "br", "decimals": 2 },
+  "ARS": { "symbol": "$", "name": "Peso argentino", "country": "ar", "decimals": 2 },
+  "VES": { "symbol": "Bs.", "name": "Bolívar soberano", "country": "ve", "decimals": 2 },
+  "COP": { "symbol": "$", "name": "Peso colombiano", "country": "co", "decimals": 2 },
+  "CLP": { "symbol": "$", "name": "Peso chileno", "country": "cl", "decimals": 0 },
+  "PEN": { "symbol": "S/.", "name": "Sol peruano", "country": "pe", "decimals": 2 },
+  "SVC": { "symbol": "$", "name": "USD (El Salvador)", "country": "sv", "decimals": 2 },
+  "GTQ": { "symbol": "Q", "name": "Quetzal guatemalteco", "country": "gt", "decimals": 2 },
+  "BOB": { "symbol": "Bs.", "name": "Boliviano", "country": "bo", "decimals": 2 },
+  "PYG": { "symbol": "₲", "name": "Guaraní paraguayo", "country": "py", "decimals": 0 },
+  "UYU": { "symbol": "$", "name": "Peso uruguayo", "country": "uy", "decimals": 2 },
+  "PAB": { "symbol": "B/.", "name": "Balboa panameño / USD", "country": "pa", "decimals": 2 },
+  "HNL": { "symbol": "L", "name": "Lempira hondureño", "country": "hn", "decimals": 2 }
+}

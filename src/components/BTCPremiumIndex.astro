@@ -1,0 +1,430 @@
+---
+// BTCPremiumIndex.astro
+// Shows the BTC premium index for Argentina (AR) or Venezuela (VE).
+// Fetches /api/premium.php on the client side.
+
+interface Props {
+  country: "ar" | "ve";
+}
+
+const { country } = Astro.props;
+
+const widgetId = `premium-index-${country}`;
+
+const headings: Record<string, string> = {
+  ar: "Índice Premium BTC — Argentina",
+  ve: "Índice Premium BTC — Venezuela",
+};
+
+const rateLabels: Record<string, { official: string; crypto: string }> = {
+  ar: { official: "Dólar oficial (BNA)", crypto: "Dólar cripto (CCL/BTC)" },
+  ve: { official: "Tasa BCV (Bs.)", crypto: "P2P USDT (Bs.)" },
+};
+---
+
+<div
+  id={widgetId}
+  class="premium-widget"
+  data-country={country}
+  aria-label={headings[country]}
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <div class="premium-header">
+    <h3 class="premium-title">{headings[country]}</h3>
+    <span class="premium-flag" aria-hidden="true">
+      {country === "ar" ? "🇦🇷" : "🇻🇪"}
+    </span>
+  </div>
+
+  <!-- Loading state (replaced by JS) -->
+  <div class="premium-loading" id={`${widgetId}-loading`}>
+    <div class="skeleton-bar" style="height:1rem; width:60%; margin-bottom:0.75rem;"></div>
+    <div class="skeleton-bar" style="height:1rem; width:50%; margin-bottom:0.75rem;"></div>
+    <div class="skeleton-bar" style="height:2rem; width:40%;"></div>
+  </div>
+
+  <!-- Content (hidden until JS populates it) -->
+  <div class="premium-content" id={`${widgetId}-content`} style="display:none;">
+    <div class="premium-rates">
+      <div class="rate-row">
+        <span class="rate-label">{rateLabels[country].official}</span>
+        <span class="rate-value mono" id={`${widgetId}-official`}>—</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">{rateLabels[country].crypto}</span>
+        <span class="rate-value mono" id={`${widgetId}-crypto`}>—</span>
+      </div>
+    </div>
+
+    <div class="premium-pct-row">
+      <span
+        class="premium-label"
+        id={`${widgetId}-pct-label`}
+        data-tooltip="El premium indica cuánto más caro es el dólar cripto respecto al oficial. Un premium alto refleja restricciones cambiarias y demanda de activos fuera del sistema bancario."
+        tabindex="0"
+        role="term"
+        aria-describedby={`${widgetId}-tooltip-text`}
+      >
+        Premium
+      </span>
+      <span class="premium-pct mono" id={`${widgetId}-pct`}>—</span>
+      <span
+        id={`${widgetId}-tooltip-text`}
+        role="tooltip"
+        class="premium-tooltip-text"
+        hidden
+      >
+        El premium indica cuánto más caro es el dólar cripto respecto al oficial.
+        Un premium alto refleja restricciones cambiarias y demanda de activos fuera del sistema bancario.
+      </span>
+    </div>
+
+    <div class="premium-meta">
+      <span class="premium-updated" id={`${widgetId}-updated`}>—</span>
+    </div>
+  </div>
+
+  <!-- Error state (hidden until needed) -->
+  <div class="premium-error" id={`${widgetId}-error`} style="display:none;" role="alert">
+    Servicio temporalmente no disponible. Vuelve en unos minutos.
+  </div>
+
+  <p class="disclaimer" style="margin-top:var(--space-4);">
+    Fuentes: datos de mercado en tiempo real. Las tasas pueden diferir de otros agregadores.
+  </p>
+</div>
+
+<style>
+  .premium-widget {
+    background: var(--c-surface-1);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    max-width: 480px;
+  }
+
+  .premium-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-5);
+    gap: var(--space-3);
+  }
+
+  .premium-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--c-text);
+    font-family: var(--font-display);
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .premium-flag {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  /* Loading skeletons */
+  .premium-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .skeleton-bar {
+    background: linear-gradient(
+      90deg,
+      var(--c-surface-2) 25%,
+      var(--c-border) 50%,
+      var(--c-surface-2) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: var(--radius-sm);
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Rate rows */
+  .premium-rates {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    border: 1px solid var(--c-border);
+  }
+
+  .rate-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .rate-label {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .rate-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  /* Premium percentage */
+  .premium-pct-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border);
+  }
+
+  .premium-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--c-text-muted);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    /* Tooltip via global [data-tooltip] CSS */
+    position: relative;
+    cursor: help;
+    border-bottom: 1px dashed var(--c-text-muted);
+  }
+
+  .premium-pct {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-left: auto;
+    transition: color var(--transition-base);
+  }
+
+  /* JS sets .premium-pct--low, --mid, --high */
+  .premium-pct--low  { color: var(--c-success); }
+  .premium-pct--mid  { color: var(--c-warning, #FFD600); }
+  .premium-pct--high { color: var(--c-error); }
+
+  /* Tooltip text (accessible, hidden from sighted users via [data-tooltip]::after) */
+  .premium-tooltip-text {
+    display: none;
+  }
+
+  /* Meta */
+  .premium-meta {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .premium-updated::before {
+    content: "Actualizado: ";
+  }
+
+  /* Error */
+  .premium-error {
+    padding: var(--space-4);
+    background: rgba(255, 23, 68, 0.08);
+    border: 1px solid rgba(255, 23, 68, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--c-error);
+    font-size: 0.88rem;
+    font-family: var(--font-display);
+  }
+</style>
+
+<script>
+  // ── Types ──────────────────────────────────────────────────────────────────
+
+  interface PremiumData {
+    country: string;
+    officialRate: number;      // local currency per USD (official)
+    cryptoRate: number;        // local currency per USD (crypto/P2P)
+    premiumPct: number;        // (cryptoRate - officialRate) / officialRate * 100
+    officialLabel: string;     // e.g. "ARS 1,050.00"
+    cryptoLabel: string;       // e.g. "ARS 1,315.00"
+    updatedAt: string;         // ISO string or human-readable
+  }
+
+  // ── Fallback data (used when API is unavailable) ───────────────────────────
+  // These are illustrative placeholder values only.
+
+  const FALLBACKS: Record<string, PremiumData> = {
+    ar: {
+      country: "ar",
+      officialRate: 1050,
+      cryptoRate: 1315,
+      premiumPct: 25.24,
+      officialLabel: "ARS 1,050.00",
+      cryptoLabel: "ARS 1,315.00",
+      updatedAt: "datos de referencia",
+    },
+    ve: {
+      country: "ve",
+      officialRate: 36.5,
+      cryptoRate: 39.2,
+      premiumPct: 7.4,
+      officialLabel: "Bs. 36.50",
+      cryptoLabel: "Bs. 39.20",
+      updatedAt: "datos de referencia",
+    },
+  };
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+
+  function fmt2(n: number): string {
+    return n.toLocaleString("es-419", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function formatTimestamp(ts: string): string {
+    if (!ts) return "desconocido";
+    try {
+      const d = new Date(ts);
+      if (isNaN(d.getTime())) return ts; // already human-readable
+      return d.toLocaleString("es-419", {
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit",
+      });
+    } catch {
+      return ts;
+    }
+  }
+
+  function premiumClass(pct: number): string {
+    if (pct < 5) return "premium-pct--low";
+    if (pct <= 20) return "premium-pct--mid";
+    return "premium-pct--high";
+  }
+
+  // ── Fetch ──────────────────────────────────────────────────────────────────
+
+  async function fetchPremium(country: string): Promise<PremiumData> {
+    const res = await fetch(`/api/premium.php?country=${encodeURIComponent(country)}`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = (await res.json()) as Partial<PremiumData>;
+
+    // Validate minimum required fields
+    if (
+      typeof json.officialRate !== "number" ||
+      typeof json.cryptoRate !== "number"
+    ) {
+      throw new Error("Invalid response shape");
+    }
+
+    const officialRate = json.officialRate;
+    const cryptoRate = json.cryptoRate;
+    const premiumPct =
+      typeof json.premiumPct === "number"
+        ? json.premiumPct
+        : ((cryptoRate - officialRate) / officialRate) * 100;
+
+    return {
+      country,
+      officialRate,
+      cryptoRate,
+      premiumPct,
+      officialLabel: json.officialLabel ?? fmt2(officialRate),
+      cryptoLabel: json.cryptoLabel ?? fmt2(cryptoRate),
+      updatedAt: json.updatedAt ?? new Date().toISOString(),
+    };
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+
+  function renderPremium(widgetId: string, data: PremiumData, isFallback = false): void {
+    const loadingEl = document.getElementById(`${widgetId}-loading`);
+    const contentEl = document.getElementById(`${widgetId}-content`);
+    const errorEl = document.getElementById(`${widgetId}-error`);
+
+    if (loadingEl) loadingEl.style.display = "none";
+    if (errorEl) errorEl.style.display = "none";
+
+    const officialEl = document.getElementById(`${widgetId}-official`);
+    const cryptoEl = document.getElementById(`${widgetId}-crypto`);
+    const pctEl = document.getElementById(`${widgetId}-pct`);
+    const updatedEl = document.getElementById(`${widgetId}-updated`);
+
+    if (officialEl) officialEl.textContent = data.officialLabel;
+    if (cryptoEl) cryptoEl.textContent = data.cryptoLabel;
+
+    if (pctEl) {
+      // Remove any previous color classes
+      pctEl.classList.remove("premium-pct--low", "premium-pct--mid", "premium-pct--high");
+      pctEl.classList.add(premiumClass(data.premiumPct));
+      const sign = data.premiumPct >= 0 ? "+" : "";
+      pctEl.textContent = `${sign}${fmt2(data.premiumPct)}%`;
+      // ARIA annotation
+      pctEl.setAttribute(
+        "aria-label",
+        `Premium: ${sign}${fmt2(data.premiumPct)} por ciento`
+      );
+    }
+
+    if (updatedEl) {
+      updatedEl.textContent = isFallback
+        ? "Datos de referencia — API no disponible"
+        : formatTimestamp(data.updatedAt);
+    }
+
+    if (contentEl) contentEl.style.display = "block";
+  }
+
+  function renderError(widgetId: string): void {
+    const loadingEl = document.getElementById(`${widgetId}-loading`);
+    const errorEl = document.getElementById(`${widgetId}-error`);
+
+    if (loadingEl) loadingEl.style.display = "none";
+    if (errorEl) errorEl.style.display = "block";
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+
+  async function initPremiumWidget(widget: HTMLElement): Promise<void> {
+    const widgetId = widget.id;
+    const country = widget.dataset.country ?? "ar";
+
+    // Avoid double-init
+    if ((widget as HTMLElement & { _premiumInit?: boolean })._premiumInit) return;
+    (widget as HTMLElement & { _premiumInit?: boolean })._premiumInit = true;
+
+    try {
+      const data = await fetchPremium(country);
+      renderPremium(widgetId, data, false);
+    } catch {
+      // Try to show fallback data rather than a blank error
+      const fallback = FALLBACKS[country];
+      if (fallback) {
+        renderPremium(widgetId, fallback, true);
+      } else {
+        renderError(widgetId);
+      }
+    }
+  }
+
+  function initAllPremiumWidgets(): void {
+    const widgets = document.querySelectorAll<HTMLElement>("[id^='premium-index-']");
+    widgets.forEach((widget) => {
+      initPremiumWidget(widget);
+    });
+  }
+
+  initAllPremiumWidgets();
+  document.addEventListener("astro:page-load", initAllPremiumWidgets);
+</script>

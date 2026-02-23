@@ -1,0 +1,217 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import DCACalculator from "@components/DCACalculator.astro";
+import { webAppSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Calculadora DCA Bitcoin 2026 – Dollar Cost Averaging LatAm | free-bitcoin.lat";
+const description =
+  "Calculadora de Dollar Cost Averaging (DCA) para Bitcoin. Simula tu inversión periódica, calcula tu precio promedio y proyecta tu acumulación de BTC.";
+const canonical = "https://free-bitcoin.lat/calculadoras/dca/";
+
+const faqs = [
+  {
+    q: "¿Qué es el Dollar Cost Averaging (DCA)?",
+    a: "DCA es una estrategia de inversión que consiste en comprar una cantidad fija en dinero a intervalos regulares (semanal, quincenal, mensual), sin importar el precio actual del activo. De esta forma reduces el impacto de la volatilidad y eliminas la presión de intentar 'timing' el mercado.",
+  },
+  {
+    q: "¿Por qué el DCA funciona especialmente bien con Bitcoin?",
+    a: "Bitcoin es muy volátil a corto plazo pero ha mostrado una tendencia alcista a largo plazo en ciclos de 4 años ligados al halving. Con DCA no necesitas adivinar el pico ni el valle: compras en todas las etapas del ciclo y tu precio promedio termina siendo razonable. Históricamente, quien aplicó DCA en cualquier ventana de 4+ años salió en positivo.",
+  },
+  {
+    q: "¿Con cuánto dinero puedo empezar a hacer DCA en Bitcoin?",
+    a: "Con cualquier cantidad. En exchanges como Bitso (México), Ripio (Argentina/Brasil) o Buda (Chile) puedes comprar desde $5 USD equivalente en tu moneda local. Muchos exchanges tienen planes de compra automática semanal o mensual. Lo importante es la consistencia, no el monto inicial.",
+  },
+  {
+    q: "¿El DCA elimina todo el riesgo?",
+    a: "No. El DCA reduce el riesgo de comprar en un máximo histórico y mejora tu precio promedio en mercados volátiles, pero no elimina el riesgo de que Bitcoin baje y no recupere su valor. Nunca inviertas dinero que necesitas en el corto plazo ni más de lo que puedes permitirte perder.",
+  },
+];
+
+const jsonLd = [
+  webAppSchema({
+    name: "Calculadora DCA Bitcoin LatAm",
+    description,
+    url: canonical,
+  }),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Calculadoras", item: "https://free-bitcoin.lat/calculadoras/" },
+    { name: "Calculadora DCA", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <nav class="breadcrumb-nav" aria-label="Miga de pan">
+      <a href="/">Inicio</a> › <a href="/calculadoras/">Calculadoras</a> › <span>DCA</span>
+    </nav>
+
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Calculadora DCA Bitcoin 2026</h1>
+
+    <section class="intro-section" aria-label="Introducción al DCA">
+      <p class="lead">
+        El <strong>Dollar Cost Averaging (DCA)</strong> es la estrategia de inversión más sencilla
+        y efectiva para acumular Bitcoin sin volverse loco intentando predecir el mercado. En lugar
+        de comprar todo de una vez —arriesgándote a entrar en un máximo histórico— divides tu
+        inversión en partes iguales a lo largo del tiempo.
+      </p>
+
+      <p>
+        Imagina que decides invertir $100 USD mensuales en Bitcoin. En enero el precio es $90.000,
+        en febrero baja a $75.000 y en marzo sube a $85.000. Tu precio promedio de compra sería
+        aproximadamente $83.000, mejor que si lo hubieras invertido todo en enero. Eso es DCA en
+        acción.
+      </p>
+
+      <p>
+        Para los latinoamericanos que reciben ingresos en moneda local volátil, el DCA tiene una
+        ventaja adicional: puedes automatizar compras en dólares equivalentes cada quincena o mes,
+        aislando tus ahorros en BTC de la devaluación de tu moneda nacional.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="calc-heading">
+      <h2 id="calc-heading">Simula tu estrategia DCA</h2>
+      <DCACalculator />
+    </section>
+
+    <section class="section" aria-labelledby="por-que-dca">
+      <h2 id="por-que-dca">¿Por qué el DCA reduce el riesgo de timing?</h2>
+
+      <p>
+        El mayor error que cometen los inversores principiantes es intentar comprar en el mínimo y
+        vender en el máximo. Incluso los traders profesionales fallan sistemáticamente en esto.
+        <strong>El DCA elimina esa decisión</strong>: compras el mismo día de cada mes, sin importar
+        noticias, precio ni sentimiento del mercado.
+      </p>
+
+      <p>
+        Estudios backtesting muestran que en cualquier período de 4 años o más, el DCA en Bitcoin
+        ha generado retornos positivos históricamente. Los ciclos de Bitcoin, ligados al halving
+        cada ~4 años, crean ventanas de acumulación y apreciación que el DCA aprovecha
+        automáticamente.
+      </p>
+
+      <div class="highlight">
+        <p>
+          <strong>Consejo práctico para LatAm:</strong> Si tu exchange local permite compras
+          programadas (Bitso, Ripio, Buda y Mercado Bitcoin lo ofrecen), actívalas el día de tu
+          cobro. Así "ahorras en bitcoin" antes de gastar en otras cosas.
+        </p>
+      </div>
+
+      <p>
+        Recuerda siempre retirar tus BTC a una wallet propia. El DCA en un exchange y dejar todo
+        allí concentra el riesgo de custodia. Retira a tu hardware wallet o software wallet cuando
+        el saldo sea significativo.
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq-section" aria-labelledby="faq-dca">
+      <h2 id="faq-dca">Preguntas frecuentes sobre DCA</h2>
+      <div class="faq" role="list">
+        {
+          faqs.map((item, i) => (
+            <div class="faq-item" role="listitem">
+              <button class="faq-question" aria-expanded="false" data-faq-trigger aria-controls={`dca-faq-${i}`}>
+                <span>{item.q}</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="faq-answer" id={`dca-faq-${i}`} role="region" aria-label={item.q} set:html={item.a} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Esta calculadora es solo con fines educativos. Los resultados son proyecciones basadas en
+      datos históricos y no garantizan rendimientos futuros. Invertir en Bitcoin implica riesgos
+      significativos incluyendo la pérdida total del capital.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  .intro-section {
+    margin: var(--space-6) 0;
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+  }
+
+  p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--c-primary);
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((trigger) => {
+      trigger.replaceWith(trigger.cloneNode(true));
+    });
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest(".faq-item");
+        if (!item) return;
+        const isOpen = item.classList.contains("open");
+        const answerId = trigger.getAttribute("aria-controls") ?? "";
+        const answer = document.getElementById(answerId);
+        if (isOpen) {
+          item.classList.remove("open");
+          trigger.setAttribute("aria-expanded", "false");
+          if (answer) answer.style.display = "none";
+        } else {
+          item.classList.add("open");
+          trigger.setAttribute("aria-expanded", "true");
+          if (answer) answer.style.display = "block";
+        }
+      });
+    });
+  }
+  initFAQ();
+  document.addEventListener("astro:page-load", initFAQ);
+</script>

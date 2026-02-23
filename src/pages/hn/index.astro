@@ -1,0 +1,274 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Honduras 2026: BTC/HNL, Remesas y Regulacion CNBS | free-bitcoin.lat";
+const description = "Bitcoin en Honduras 2026: precio BTC/HNL, remesas >20% del PIB, CNBS Circular 003/2024, exchanges P2P y Lightning para remesas baratas.";
+const canonical = "https://free-bitcoin.lat/hn/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["P2P HNL", "Transferencia", "Tarjeta"],
+    bestFor: "P2P en lempiras, mayor liquidez",
+    isAffiliate: true,
+  },
+  {
+    name: "Airtm",
+    url: "https://app.airtm.com/ivt/kokot5m1iwkq0",
+    fees: "Variable segun metodo",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["Transferencia HNL", "P2P", "Wallet"],
+    bestFor: "Remesas familiares, conversion HNL/USD",
+    isAffiliate: true,
+  },
+  {
+    name: "MEXC",
+    url: "https://promote.mexc.com/r/37KwK6My",
+    fees: "0% maker / 0.10% taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Altcoins, comisiones bajas",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal comprar Bitcoin en Honduras?",
+    a: "El uso personal de Bitcoin en Honduras no esta expresamente prohibido. Sin embargo, la Comision Nacional de Bancos y Seguros (CNBS) emitio la Circular 003/2024, que restringe a las entidades financieras supervisadas de operar con criptomonedas. Los usuarios individuales pueden comprar y guardar cripto, pero los bancos no pueden facilitar estas transacciones directamente.",
+  },
+  {
+    q: "¿Que dice la Circular 003/2024 del CNBS sobre cripto?",
+    a: "La Circular 003/2024 del CNBS prohíbe a los bancos, cooperativas y entidades financieras supervisadas aceptar, custodiar o facilitar transacciones en criptomonedas. No es una prohibicion para ciudadanos individuales, sino una restriccion al sistema financiero formal. Esto significa que no puedes hacer un deposito bancario y convertirlo directamente en cripto a traves de tu banco, pero si puedes usar exchanges internacionales.",
+  },
+  {
+    q: "¿Por que Lightning Network es especialmente util para Honduras?",
+    a: "Honduras recibe remesas equivalentes a mas del 20% de su PIB, principalmente desde EE.UU. Lightning Network permite enviar Bitcoin en segundos con comisiones menores a un centavo de dolar, versus el 5-8% que cobran Western Union o MoneyGram. Para una familia que recibe $400 mensuales, esto puede significar un ahorro de $20-30 al mes o $240-360 al año.",
+  },
+  {
+    q: "¿Como convierto lempiras a USDT en Honduras?",
+    a: "La opcion mas practica es Binance P2P: buscas un vendedor que acepte transferencia bancaria en HNL (lempiras) y te vende USDT o BTC. Tambien puedes usar Airtm, que tiene presencia en Centroamerica y acepta metodos de pago locales. El proceso requiere abrir cuenta, completar KYC y coordinar el pago con el vendedor P2P.",
+  },
+  {
+    q: "¿Que impuestos debo pagar por ganancias en Bitcoin en Honduras?",
+    a: "Honduras no tiene regulacion fiscal especifica para criptomonedas. Sin embargo, el principio general del Impuesto Sobre la Renta (ISR) establece que cualquier ganancia economica es potencialmente gravable. La Direccion Ejecutiva de Ingresos (DEI) no ha emitido guias especificas para cripto. Se recomienda consultar con un contador hondureno para determinar las obligaciones fiscales en tu caso particular.",
+  },
+];
+
+const sources = [
+  { label: "CNBS – Comision Nacional de Bancos y Seguros Honduras", url: "https://www.cnbs.gob.hn" },
+  { label: "BCH – Banco Central de Honduras", url: "https://www.bch.hn" },
+  { label: "Banco Mundial – Remesas Honduras", url: "https://remittanceprices.worldbank.org" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Honduras", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Honduras" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="hn-hero">
+    <div class="container">
+      <div class="hn-hero-inner">
+        <div class="hn-hero-text">
+          <span class="hero-eyebrow">Honduras · BTC/HNL · Remesas &gt;20% PIB</span>
+          <h1>Bitcoin en Honduras 2026: BTC/HNL, remesas y regulacion CNBS</h1>
+          <p class="hero-sub">
+            Honduras es uno de los paises mas dependientes de remesas del mundo: los
+            envios del exterior superan el <strong>20% del PIB</strong>. Bitcoin y
+            especialmente Lightning Network representan una oportunidad transformadora para
+            reducir los costos de estas transferencias. La CNBS restringe al sistema bancario,
+            pero los individuos pueden usar exchanges internacionales libremente.
+          </p>
+          <div class="hero-cta">
+            <a href="/remesas/us-hn/" class="btn btn-primary">Remesas EE.UU. a Honduras</a>
+          </div>
+        </div>
+        <div class="hn-hero-widget card">
+          <LivePriceWidget currency="HNL" currencySymbol="L" countryName="Honduras" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="red"
+        label="Restringido para bancos — CNBS Circular 003/2024"
+        lastUpdate="2026-02-23"
+        regulatorName="CNBS – Comision Nacional de Bancos y Seguros"
+        regulatorUrl="https://www.cnbs.gob.hn"
+      />
+
+      <h2 id="regulacion-heading">Regulacion cripto en Honduras: CNBS Circular 003/2024</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            La <strong>Circular 003/2024 del CNBS</strong> (Comision Nacional de Bancos y
+            Seguros) representa la postura regulatoria mas reciente de Honduras sobre
+            criptomonedas. La circular prohíbe a las entidades supervisadas —bancos,
+            aseguradoras, cooperativas financieras— realizar, facilitar o promover
+            operaciones con criptomonedas.
+          </p>
+          <p>
+            Esta restriccion aplica al <em>sistema financiero formal</em>, no a ciudadanos
+            individuales. Una persona natural hondureña puede comprar, guardar y vender
+            Bitcoin usando exchanges internacionales sin violar ningun disposicion legal.
+            Lo que no puede hacer es que su banco le facilite esas operaciones directamente.
+          </p>
+          <p>
+            El <strong>Banco Central de Honduras (BCH)</strong> tampoco reconoce las
+            criptomonedas como moneda de curso legal. En ausencia de una ley especifica
+            de activos digitales, el marco legal hondureno permanece en una zona gris
+            para los usuarios individuales: sin prohibicion expresa pero sin respaldo
+            ni proteccion del Estado.
+          </p>
+          <div class="highlight">
+            <strong>Practica recomendada:</strong> Usa exchanges internacionales como
+            Binance o Airtm para comprar cripto en Honduras. El sistema bancario local
+            no puede facilitarlo, pero nada impide a los individuos operar a traves de
+            plataformas en el exterior.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Datos clave Honduras</h3>
+            <ul class="quick-links" role="list">
+              <li>Remesas: &gt;20% del PIB</li>
+              <li>Circular CNBS 003/2024 en vigor</li>
+              <li>Sin ley especifica cripto</li>
+              <li><a href="/remesas/us-hn/">Calculadora remesas EE.UU.-HN</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges para Honduras</h2>
+      <p class="section-sub">
+        Las plataformas mas accesibles para hondurenos en 2026. El P2P en lempiras
+        es la via mas comun dado que los bancos locales no pueden facilitar depositos directos.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Honduras — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Honduras" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .hn-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .hn-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .hn-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .hn-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .quick-links a { color: var(--c-text-muted); text-decoration: none; }
+  .quick-links a:hover { color: var(--c-primary); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .hn-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

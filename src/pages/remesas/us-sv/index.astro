@@ -1,0 +1,305 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a El Salvador con Bitcoin 2026 | free-bitcoin.lat";
+const description = "El Salvador es el único país donde Bitcoin es moneda de curso legal. Envía remesas gratis con Lightning Network usando Strike o Chivo Wallet. Guía 2026.";
+const canonical = "https://free-bitcoin.lat/remesas/us-sv/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → El Salvador", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Puedo enviar a El Salvador sin que el receptor convierta Bitcoin?",
+    a: "Sí. Dado que Bitcoin es moneda de curso legal en El Salvador, muchos comercios, servicios e incluso el gobierno aceptan pagos directamente en Bitcoin a través de la billetera Chivo o cualquier wallet Lightning. El receptor puede usar los satoshis directamente sin convertirlos a dólares.",
+  },
+  {
+    q: "¿Qué es Chivo Wallet y cómo funciona?",
+    a: "Chivo Wallet es la billetera oficial de Bitcoin del gobierno de El Salvador, disponible en iOS y Android. Funciona con Lightning Network y permite recibir pagos instantáneos en Bitcoin, convertirlos a dólares USD y retirarlos en efectivo en cajeros Chivo o depósitos bancarios. La app incluye una bonificación inicial de $30 USD para usuarios nuevos (hasta fin de disponibilidad del programa).",
+  },
+  {
+    q: "¿Es obligatorio aceptar Bitcoin en El Salvador?",
+    a: "La Ley Bitcoin de 2021 establecía la obligatoriedad para los negocios, pero en 2025 el gobierno modificó el reglamento y la aceptación por parte de comercios pasó a ser <strong>voluntaria</strong>. Sin embargo, los ciudadanos que deseen seguir usando Bitcoin lo pueden hacer sin restricciones y la infraestructura (cajeros, Chivo, Lightning) sigue operativa.",
+  },
+];
+
+const sources = [
+  { label: "BCR El Salvador – Estadísticas de remesas 2024", url: "https://www.bcr.gob.sv/" },
+  { label: "Chivo Wallet – Billetera oficial de Bitcoin El Salvador", url: "https://chivowallet.com/" },
+  { label: "Ley Bitcoin El Salvador (Diario Oficial 2021)", url: "https://www.diariooficial.gob.sv/" },
+  { label: "Banco Mundial – Precios de remesas", url: "https://remittanceprices.worldbank.org/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → El Salvador</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+        <span class="badge badge-green">Bitcoin moneda legal</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a El Salvador: la ventaja Bitcoin 2026</h1>
+      <p class="hero-lead">
+        El Salvador es el único país del mundo donde Bitcoin es moneda de curso legal. Esto significa que el corredor EE.UU.–El Salvador es el más eficiente del planeta para remesas con Lightning Network: sin conversión obligatoria, sin intermediarios, con costo cercano a cero. Las remesas representan alrededor del 24% del PIB salvadoreño y son la principal fuente de ingresos de millones de familias.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0</span>
+        <span class="stat-label">Costo Lightning nativo (Strike → Chivo)</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">24%</span>
+        <span class="stat-label">Remesas / PIB El Salvador</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">Inmediato</span>
+        <span class="stat-label">Sin conversión de moneda</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$8 mil M</span>
+        <span class="stat-label">Remesas recibidas 2024</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Comparación de costos: EE.UU. → El Salvador</h2>
+      <p>
+        A diferencia de otros corredores, en El Salvador el receptor puede elegir quedarse con Bitcoin sin necesidad de convertirlo. Esto elimina el último costo de la cadena: el diferencial de cambio. El envío Lightning de Strike a Chivo tiene costo cero en comisiones.
+      </p>
+      <RemittanceCalculator
+        corridor="us-sv"
+        fromCountry="EE.UU."
+        toCountry="El Salvador"
+        toCurrency="USD"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-legal">
+      <h2 id="sec-legal">Bitcoin como moneda legal: la ventaja única de El Salvador</h2>
+
+      <p>
+        Desde junio de 2021, El Salvador aprobó la Ley Bitcoin, convirtiéndose en el primer país del mundo en adoptar Bitcoin como moneda de curso legal junto al dólar estadounidense (USD). Esta decisión tiene consecuencias prácticas muy importantes para las remesas:
+      </p>
+
+      <ul class="feature-list">
+        <li>
+          <strong>Sin tipo de cambio:</strong> El Salvador usa USD como moneda principal y Bitcoin a paridad. No existe riesgo de "conversión forzosa" que genere pérdida cambiaria.
+        </li>
+        <li>
+          <strong>Red de cajeros Bitcoin:</strong> Existen más de 200 cajeros ATM Bitcoin y Chivo en todo el país para retirar efectivo USD.
+        </li>
+        <li>
+          <strong>Chivo Wallet integrado:</strong> La app oficial del gobierno permite recibir Lightning, convertir a USD y retirar en bancos o efectivo.
+        </li>
+        <li>
+          <strong>Aceptación comercial:</strong> Miles de comercios aceptan pagos Lightning con códigos QR directamente desde la wallet del destinatario.
+        </li>
+      </ul>
+
+      <div class="highlight-box card">
+        <p>
+          <strong>Caso de uso ideal:</strong> Un trabajador salvadoreño en EE.UU. puede enviar $300 USD en satoshis a través de Strike en segundos. Su familiar en San Salvador los recibe en Chivo Wallet, los usa directamente para pagar el supermercado, la luz o la mensualidad del colegio, todo sin tocar un solo billete físico y sin pagar ninguna comisión de remesa.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-como">
+      <h2 id="sec-como">Cómo enviar a El Salvador con Lightning</h2>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>El remitente usa Strike en EE.UU.</h3>
+            <p>Strike permite enviar dólares que se convierten a satoshis y viajan por Lightning. El destinatario puede recibirlos directamente en Chivo u otra wallet Lightning. Strike no cobra comisión por envíos Lightning a El Salvador.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>El destinatario usa Chivo Wallet en El Salvador</h3>
+            <p>Chivo Wallet es gratuita, oficial y compatible con Lightning. Permite recibir satoshis, mantenerlos en Bitcoin o convertirlos a USD al instante. Los retiros en efectivo están disponibles en cajeros Chivo en todo el país.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Recepción instantánea, sin cargos</h3>
+            <p>El pago llega en segundos. El receptor elige si gastar en Bitcoin directamente (en los comercios que lo aceptan), convertir a USD dentro de Chivo, o retirar en efectivo. No hay ninguna comisión de conversión si se mantiene en Bitcoin.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–El Salvador" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a { color: var(--c-text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--c-primary); }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: var(--space-4) 0;
+    padding-left: var(--space-4);
+  }
+  .feature-list li {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--c-primary);
+  }
+  .feature-list strong {
+    color: var(--c-text);
+  }
+  .highlight-box {
+    padding: var(--space-6);
+    border-left: 3px solid var(--c-success);
+    margin-top: var(--space-6);
+  }
+  .highlight-box p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .highlight-box strong {
+    color: var(--c-success);
+  }
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+  .step-content h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+  .step-content p { font-size: 0.9rem; margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .step-item { flex-direction: column; }
+  }
+</style>

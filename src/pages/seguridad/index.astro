@@ -1,0 +1,216 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+const title = "Seguridad Bitcoin en América Latina 2026 | free-bitcoin.lat";
+const description =
+  "Centro de seguridad Bitcoin para LatAm 2026. Aprende a evitar estafas, elegir la mejor wallet y operar P2P de forma segura.";
+const canonical = "https://free-bitcoin.lat/seguridad/";
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Seguridad", item: canonical },
+  ]),
+];
+
+const cards = [
+  {
+    href: "/seguridad/como-evitar-estafas/",
+    icon: "🚨",
+    title: "Cómo evitar estafas",
+    desc: "Los 10 tipos de estafas más comunes en LatAm y cómo identificarlas antes de perder tu dinero. Rug pulls, phishing, fake exchanges, esquemas Ponzi y más.",
+    label: "Leer guía",
+  },
+  {
+    href: "/seguridad/mejores-wallets/",
+    icon: "🔐",
+    title: "Mejores wallets 2026",
+    desc: "Ledger Nano S Plus vs Trezor Safe 7 vs software wallets: comparativa completa para elegir la custodia correcta según tu perfil y monto.",
+    label: "Ver comparativa",
+  },
+  {
+    href: "/seguridad/p2p-seguro/",
+    icon: "🤝",
+    title: "P2P seguro",
+    desc: "Cómo comprar y vender Bitcoin peer-to-peer sin perder tu dinero. Escrow, reputación, señales de alerta y mejores plataformas para LatAm.",
+    label: "Aprender P2P",
+  },
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Seguridad Bitcoin para América Latina</h1>
+
+    <p class="lead">
+      El mayor riesgo al usar Bitcoin no es la tecnología en sí: es el error humano y las estafas.
+      En LatAm, donde la educación financiera y cripto aún está en desarrollo, los delincuentes
+      aprovechan la falta de información para robar fondos. Este centro de seguridad te da las
+      herramientas para protegerte.
+    </p>
+
+    <p>
+      La regla más importante del ecosistema Bitcoin es simple:
+      <strong>"Not your keys, not your Bitcoin."</strong> Si no controlas tus claves privadas,
+      alguien más controla tu Bitcoin. Desde ahí parte todo lo que aprenderás en estas guías.
+    </p>
+
+    <!-- Security hub cards -->
+    <section class="section" aria-label="Guías de seguridad">
+      <div class="security-grid" role="list">
+        {
+          cards.map((card) => (
+            <div class="card security-card" role="listitem">
+              <span class="security-icon" aria-hidden="true">{card.icon}</span>
+              <h2 class="security-card-title">{card.title}</h2>
+              <p class="security-card-desc">{card.desc}</p>
+              <a href={card.href} class="btn btn-primary security-card-btn">
+                {card.label}
+              </a>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Quick tips -->
+    <section class="section" aria-labelledby="quick-tips">
+      <h2 id="quick-tips">Reglas de oro para principiantes</h2>
+      <div class="card tips-card">
+        <ol class="tips-list">
+          <li>
+            <strong>Nunca compartas tu seed phrase.</strong> Ningún soporte técnico, moderador de
+            Telegram ni exchange legítimo te pedirá tus 12 o 24 palabras. Quien las tenga, tiene
+            todos tus fondos.
+          </li>
+          <li>
+            <strong>No dejes Bitcoin en exchanges por tiempo indefinido.</strong> Los exchanges
+            pueden ser hackeados, quebrar (como FTX en 2022) o congelar retiros. Retira a tu
+            wallet propia.
+          </li>
+          <li>
+            <strong>Verifica siempre la dirección completa antes de enviar.</strong> Existen
+            malwares que reemplazan la dirección en el portapapeles. Revisa siempre los primeros y
+            últimos 6 caracteres como mínimo.
+          </li>
+          <li>
+            <strong>Desconfía de rendimientos garantizados.</strong> Bitcoin no paga intereses
+            fijos. Cualquier plataforma que prometa 10%, 20% o más mensual es una estafa con alta
+            probabilidad.
+          </li>
+          <li>
+            <strong>Usa autenticación en dos pasos (2FA) hardware o por aplicación.</strong> Nunca
+            uses SMS como segundo factor: el SIM swapping es una amenaza real en LatAm.
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Ninguna medida de seguridad es perfecta. Este sitio provee información educativa, no garantías.
+      Siempre investiga por tu cuenta y considera usar asesoría profesional para montos significativos.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    color: var(--c-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 720px;
+    margin-bottom: var(--space-4);
+  }
+
+  p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    max-width: 720px;
+  }
+
+  p strong {
+    color: var(--c-text);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  /* Security cards */
+  .security-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+  }
+
+  .security-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  .security-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .security-card-title {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--c-text);
+  }
+
+  .security-card-desc {
+    color: var(--c-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin: 0;
+    max-width: none;
+  }
+
+  .security-card-btn {
+    align-self: flex-start;
+  }
+
+  /* Tips */
+  .tips-card {
+    max-width: 720px;
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .tips-list {
+    list-style-position: outside;
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .tips-list li {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .tips-list strong {
+    color: var(--c-text);
+  }
+</style>

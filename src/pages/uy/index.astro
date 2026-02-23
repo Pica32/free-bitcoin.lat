@@ -1,0 +1,319 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Uruguay 2026: Ley 20.345, BTC/UYU y Marco Claro | free-bitcoin.lat";
+const description = "Bitcoin en Uruguay 2026: Ley 20.345 regulacion mas clara de LatAm, precio BTC/UYU, impuestos DGI, mejores exchanges y prestamos BTC con Firefish.";
+const canonical = "https://free-bitcoin.lat/uy/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Transferencia UYU", "P2P", "Tarjeta"],
+    bestFor: "Mayor liquidez, pares BTC/USDT",
+    isAffiliate: true,
+  },
+  {
+    name: "Kraken",
+    url: "https://invite.kraken.com/JDNW/aywgmsis",
+    fees: "0.16% maker / 0.26% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Wire USD", "Tarjeta", "Transferencia"],
+    bestFor: "Seguridad, usuarios avanzados",
+    isAffiliate: false,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Spot y derivados",
+    isAffiliate: true,
+  },
+  {
+    name: "Firefish",
+    url: "https://firefish.io?ref=satoshi713",
+    fees: "Variable",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["Transferencia bancaria", "Bitcoin"],
+    bestFor: "Prestamos colateralizados BTC",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Que establece la Ley 20.345 sobre Bitcoin en Uruguay?",
+    a: "La Ley 20.345 es el marco regulatorio de activos virtuales de Uruguay, considerado uno de los mas completos de America Latina. Establece definiciones legales para activos virtuales, crea un registro obligatorio de Proveedores de Servicios de Activos Virtuales (PSAV) ante el Banco Central del Uruguay (BCU), y establece normas AML/KYC. No prohibe el uso personal de criptomonedas, sino que regula a las empresas del sector.",
+  },
+  {
+    q: "¿Que impuestos pago por Bitcoin en Uruguay?",
+    a: "La Direccion General Impositiva (DGI) considera que las ganancias por venta de Bitcoin tributan IRPF (Impuesto a la Renta de las Personas Fisicas) a una tasa del 12% sobre la ganancia neta si la actividad es habitual, o IRNR si el contribuyente es no residente. Uruguay tambien tiene Impuesto al Patrimonio (IP) sobre activos financieros al cierre del ejercicio. Se recomienda consultar con contador uruguayo.",
+  },
+  {
+    q: "¿Como funciona Firefish para prestamos con Bitcoin en Uruguay?",
+    a: "Firefish es una plataforma que permite obtener prestamos en dinero fiat (EUR, USD, CZK) usando Bitcoin como colateral, sin necesidad de venderlo. El usuario bloquea su BTC en un contrato inteligente, recibe el prestamo en su cuenta bancaria, y cuando lo devuelve recupera su Bitcoin. Es util para uruguayos que tienen Bitcoin y necesitan liquidez sin deshacerse de sus fondos.",
+  },
+  {
+    q: "¿Por que Uruguay tiene la regulacion cripto mas clara de LatAm?",
+    a: "Uruguay tiene una tradition de estabilidad institucional, baja corrupcion y sistema financiero sofisticado. El BCU adopto un enfoque proactivo y tecnico para regular activos virtuales, creando un marco legal claro que da certeza juridica tanto a usuarios como a empresas. Esto contrasta con paises vecinos donde la regulacion es inexistente o contradictoria.",
+  },
+  {
+    q: "¿Puedo usar un exchange local en Uruguay?",
+    a: "Existen operadores locales registrados como PSAV ante el BCU, como Cryptomarket y plataformas menores. Sin embargo, la mayoria de usuarios uruguayos usan Binance o Kraken por su mayor liquidez y funciones avanzadas. Los exchanges internacionales aceptan usuarios uruguayos y permiten depositar en USD o via transferencia. Verifica que el exchange que uses cumpla con la normativa BCU si quieres maxima seguridad legal.",
+  },
+];
+
+const sources = [
+  { label: "BCU – Banco Central del Uruguay", url: "https://www.bcu.gub.uy" },
+  { label: "DGI – Direccion General Impositiva Uruguay", url: "https://www.dgi.gub.uy" },
+  { label: "Ley 20.345 – Activos Virtuales Uruguay", url: "https://www.bcu.gub.uy" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Uruguay", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Uruguay" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="uy-hero">
+    <div class="container">
+      <div class="uy-hero-inner">
+        <div class="uy-hero-text">
+          <span class="hero-eyebrow">Uruguay · BTC/UYU · Marco Regulatorio Claro</span>
+          <h1>Bitcoin en Uruguay 2026: Ley 20.345, BTC/UYU y prestamos BTC</h1>
+          <p class="hero-sub">
+            Uruguay tiene la regulacion de criptomonedas mas clara y completa de America
+            Latina. La <strong>Ley 20.345</strong> establece un marco juridico solido
+            para usuarios y empresas cripto, supervisado por el BCU. Con sistema bancario
+            estable, baja inflacion y apertura financiera, Uruguay es el pais ideal de
+            la region para construir un portafolio de Bitcoin a largo plazo.
+          </p>
+          <div class="hero-cta">
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Comprar BTC en Binance</a>
+            <a href="https://firefish.io?ref=satoshi713" class="btn btn-secondary" target="_blank" rel="noopener noreferrer sponsored">Prestamos BTC (Firefish)</a>
+          </div>
+        </div>
+        <div class="uy-hero-widget card">
+          <LivePriceWidget currency="UYU" currencySymbol="$" countryName="Uruguay" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="green"
+        label="Regulado — Ley 20.345 / BCU"
+        lastUpdate="2026-02-23"
+        regulatorName="BCU – Banco Central del Uruguay"
+        regulatorUrl="https://www.bcu.gub.uy"
+      />
+
+      <h2 id="regulacion-heading">La regulacion cripto mas avanzada de America Latina</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Uruguay se destaca en la region por haber adoptado un enfoque tecnico,
+            pragmatico y proactivo hacia la regulacion de activos virtuales. La
+            <strong>Ley 20.345</strong> es la norma central: establece definiciones
+            juridicas precisas para activos virtuales, crea el marco del Registro de
+            PSAV ante el BCU, y establece obligaciones de prevencion de lavado de
+            activos (AML) y conocimiento del cliente (KYC).
+          </p>
+          <p>
+            A diferencia de muchos paises latinoamericanos donde la regulacion cripto
+            es ambigua o inexistente, Uruguay ofrece <strong>certeza juridica real</strong>:
+            empresas y usuarios saben exactamente que esta permitido, que esta regulado
+            y cuales son sus obligaciones fiscales. Esta claridad atrae inversiones y
+            da confianza al usuario individual.
+          </p>
+          <p>
+            En el plano fiscal, la <strong>DGI (Direccion General Impositiva)</strong>
+            ha emitido guias claras sobre el tratamiento del Bitcoin: las ganancias por
+            venta de criptomonedas tributan IRPF cuando la actividad es habitual, y los
+            saldos se declaran en el Impuesto al Patrimonio. Uruguay no tiene la incertidumbre
+            fiscal que caracteriza a otros paises de la region.
+          </p>
+          <div class="highlight">
+            <strong>Para el inversor a largo plazo:</strong> Uruguay es el pais mas
+            predecible de la region para acumular Bitcoin. Marco legal estable, sistema
+            bancario solido, inflacion moderada y acceso a exchanges internacionales
+            con depositos en pesos y dolares.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Por que Uruguay lidera</h3>
+            <ul class="quick-links" role="list">
+              <li>Ley 20.345 especifica para cripto</li>
+              <li>BCU regula PSAV con claridad</li>
+              <li>DGI con guias fiscales definidas</li>
+              <li>Sistema bancario estable</li>
+              <li>Baja corrupcion institucional</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Firefish -->
+  <section class="section section-dark" aria-labelledby="firefish-heading">
+    <div class="container">
+      <h2 id="firefish-heading">Prestamos colateralizados con Bitcoin en Uruguay</h2>
+      <p>
+        <strong>Firefish</strong> es una plataforma que permite a holders de Bitcoin obtener
+        liquidez sin vender sus fondos. El mecanismo es simple: depositas BTC como colateral
+        en un contrato inteligente, recibes un prestamo en euros o dolares en tu cuenta
+        bancaria, y cuando devuelves el prestamo con intereses, recuperas tu Bitcoin intacto.
+      </p>
+      <p>
+        Para uruguayos con acumulacion de Bitcoin a largo plazo, esto representa una
+        herramienta financiera poderosa: puedes acceder a liquidez para gastos o inversiones
+        sin triggerear un evento fiscal (no vendes el BTC), y mantienes tu exposicion al
+        potencial alza del BTC. El sistema funciona con smart contracts transparentes y
+        auditables.
+      </p>
+      <div style="margin-top:var(--space-4)">
+        <a
+          href="https://firefish.io?ref=satoshi713"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+        >
+          Explorar Firefish (prestamos BTC)
+        </a>
+        <p class="affiliate-disclosure" style="margin-top:var(--space-2)">
+          Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para Uruguay</h2>
+      <p class="section-sub">
+        Plataformas recomendadas para usuarios uruguayos en 2026, incluyendo Firefish
+        para casos de uso de prestamos con BTC como colateral.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Uruguay — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Uruguay" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .uy-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .uy-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .uy-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .uy-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-dark p { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .uy-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

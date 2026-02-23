@@ -1,0 +1,507 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Precio Bitcoin en Pesos Argentinos Hoy 2026 – BTC/ARS | free-bitcoin.lat";
+const description = "Precio del Bitcoin en pesos argentinos (ARS) hoy 2026. BTC/ARS en tiempo real, conversor, diferencia entre exchanges y relación con el dólar cripto.";
+const canonical = "https://free-bitcoin.lat/ar/precio-bitcoin-ars/";
+
+const faqItems = [
+  {
+    q: "¿Cómo se calcula el precio de Bitcoin en pesos argentinos?",
+    a: "El precio BTC/ARS se obtiene multiplicando el precio internacional del Bitcoin en dólares (USD) por el tipo de cambio dólar/peso implícito en el mercado de criptomonedas (dólar cripto). Los exchanges no usan el tipo de cambio oficial del BCRA, sino el que surge de la oferta y demanda de stablecoins como USDT. Por eso el BTC/ARS puede diferir significativamente del precio en USD multiplicado por el dólar oficial.",
+  },
+  {
+    q: "¿Por qué el precio BTC/ARS varía entre exchanges?",
+    a: "Cada exchange tiene su propio tipo de cambio implícito dólar/peso, determinado por la oferta y demanda de USDT en esa plataforma. Si en Binance el USDT/ARS cotiza diferente que en Ripio, el precio BTC/ARS también será diferente. Además, los spreads (diferencias entre precio de compra y venta) varían entre plataformas, influyendo en el precio final que paga o recibe cada usuario.",
+  },
+  {
+    q: "¿El precio BTC/ARS refleja el dólar oficial o el dólar cripto?",
+    a: "El precio BTC/ARS en los exchanges refleja el dólar cripto (o dólar USDT), que es un tipo de cambio de mercado libre, no el dólar oficial fijado por el BCRA. En períodos de cepo cambiario, la diferencia entre el dólar oficial y el dólar cripto puede ser de cientos de porcentuales, por lo que el BTC/ARS puede parecer 'caro' si se lo compara con el precio en USD multiplicado por el tipo oficial.",
+  },
+  {
+    q: "¿Hay un 'premium' en el precio de Bitcoin en Argentina?",
+    a: "Históricamente sí. El premium BTC en Argentina mide la diferencia porcentual entre el precio de BTC en pesos (convertido a dólares con el tipo de cambio cripto) y el precio internacional de BTC en USD. En épocas de alta demanda y restricciones cambiarias, el Bitcoin puede cotizar entre un 5% y un 20% por encima del precio global. Podés monitorear este índice en nuestra calculadora de premium BTC/ARS.",
+  },
+  {
+    q: "¿Cuál es la mejor forma de comprar BTC al mejor precio en Argentina?",
+    a: "Para obtener el mejor precio, comparar el precio BTC/ARS en distintos exchanges en el mismo momento. Usar Binance P2P suele dar precios competitivos porque el spread lo fija el mercado. Evitar comprar con tarjeta de crédito internacional (recargo del impuesto PAIS + percepción de ganancias). La transferencia bancaria en pesos es el método más eficiente para mantener costos bajos.",
+  },
+];
+
+const sources = [
+  { label: "CoinGecko – BTC/ARS en tiempo real", url: "https://www.coingecko.com/en/coins/bitcoin/ars" },
+  { label: "BCRA – Tipo de cambio oficial", url: "https://www.bcra.gob.ar" },
+  { label: "CNV – Registro PSAV", url: "https://www.cnv.gov.ar" },
+  { label: "AFIP/ARCA – Impuestos sobre criptomonedas", url: "https://www.afip.gob.ar" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Precio Bitcoin en pesos argentinos (BTC/ARS) hoy 2026",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    author: { "@type": "Organization", name: "free-bitcoin.lat" },
+    publisher: { "@type": "Organization", name: "free-bitcoin.lat", url: "https://free-bitcoin.lat" },
+    inLanguage: "es",
+    about: { "@type": "Thing", name: "Precio Bitcoin Argentina ARS" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Argentina", item: "https://free-bitcoin.lat/ar/" },
+      { "@type": "ListItem", position: 3, name: "Precio BTC/ARS", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Argentina", href: "/ar/" },
+      { label: "Precio BTC/ARS" },
+    ]} />
+  </div>
+
+  <!-- Hero with price widget -->
+  <section class="price-hero">
+    <div class="container">
+      <div class="price-hero-inner">
+        <div class="price-hero-text">
+          <span class="hero-eyebrow">Argentina · BTC/ARS</span>
+          <h1>Precio Bitcoin en pesos argentinos (BTC/ARS) hoy</h1>
+          <p class="hero-sub">
+            Precio del Bitcoin en pesos argentinos actualizado en tiempo real. El valor BTC/ARS
+            refleja el tipo de cambio del mercado cripto (dólar cripto), no el tipo de cambio
+            oficial del BCRA. Incluye conversor BTC/ARS y análisis del premium local.
+          </p>
+        </div>
+        <div class="price-widget-wrap card">
+          <LivePriceWidget currency="ARS" currencySymbol="$" countryName="Argentina" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Converter -->
+  <section class="section" aria-labelledby="conversor-heading">
+    <div class="container">
+      <h2 id="conversor-heading">Conversor BTC / ARS</h2>
+      <p class="section-sub">
+        Convertí entre Bitcoin y pesos argentinos usando el precio en tiempo real del mercado cripto.
+      </p>
+      <div class="converter-card card" id="btc-ars-converter" aria-label="Conversor Bitcoin a pesos argentinos">
+        <div class="converter-row">
+          <div class="converter-field">
+            <label for="input-btc" class="converter-label">Bitcoin (BTC)</label>
+            <input
+              type="number"
+              id="input-btc"
+              class="converter-input mono"
+              placeholder="0.001"
+              min="0"
+              step="0.00001"
+              aria-label="Cantidad en Bitcoin"
+            />
+          </div>
+          <div class="converter-equals" aria-hidden="true">=</div>
+          <div class="converter-field">
+            <label for="input-ars" class="converter-label">Pesos Argentinos (ARS)</label>
+            <input
+              type="number"
+              id="input-ars"
+              class="converter-input mono"
+              placeholder="0"
+              min="0"
+              step="1"
+              aria-label="Cantidad en pesos argentinos"
+            />
+          </div>
+        </div>
+        <p class="converter-note" id="converter-rate-note" aria-live="polite">
+          Cargando precio actual...
+        </p>
+        <p class="converter-disclaimer">
+          Precio de referencia del mercado. No incluye comisiones del exchange.
+          <a href="/calculadoras/premium-btc/">Ver premium BTC/ARS</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How BTC/ARS is formed -->
+  <section class="section section-dark" aria-labelledby="como-se-forma-heading">
+    <div class="container">
+      <h2 id="como-se-forma-heading">¿Cómo se forma el precio BTC/ARS?</h2>
+      <p>
+        El precio de Bitcoin en pesos argentinos <strong>no surge directamente del mercado
+        internacional</strong>. Se forma mediante una cadena de dos tipos de cambio:
+      </p>
+      <ol class="steps-list">
+        <li>
+          <strong>Precio BTC/USD internacional:</strong> Es el precio de Bitcoin en dólares que
+          se determina en exchanges globales como Binance, Coinbase o Kraken. Este es el precio
+          de referencia global, disponible en tiempo real.
+        </li>
+        <li>
+          <strong>Tipo de cambio USD/ARS (dólar cripto):</strong> Los exchanges argentinos no
+          usan el tipo de cambio oficial del BCRA (que está controlado administrativamente).
+          En cambio, utilizan el tipo de cambio implícito que surge de la negociación de USDT
+          contra pesos en sus plataformas. Si el USDT/ARS cotiza a $1.060, ese es el "dólar
+          cripto" que se usa como referencia.
+        </li>
+        <li>
+          <strong>Multiplicación:</strong> BTC/ARS = BTC/USD × USDT/ARS. Por ejemplo, si BTC
+          vale $97.000 USD y el dólar cripto está a $1.060, entonces 1 BTC = $102.820.000 ARS.
+        </li>
+      </ol>
+      <div class="highlight" style="margin-top:var(--space-6);">
+        <strong>Diferencia histórica:</strong> En períodos de cepo cambiario estricto, el dólar
+        oficial estuvo hasta un 300–400% por debajo del tipo de cambio libre. Eso significa
+        que el precio de BTC en ARS podía ser 4 veces mayor al precio en USD multiplicado
+        por el tipo oficial. Con la unificación cambiaria progresiva de 2024-2026, esta brecha
+        se ha reducido considerablemente.
+      </div>
+    </div>
+  </section>
+
+  <!-- Cripto vs Oficial -->
+  <section class="section" aria-labelledby="cripto-vs-oficial-heading">
+    <div class="container">
+      <h2 id="cripto-vs-oficial-heading">Precio BTC en dólar cripto vs dólar oficial</h2>
+      <p>
+        Esta distinción es fundamental para entender el precio BTC/ARS en Argentina. Existen
+        dos maneras de calcular el precio:
+      </p>
+
+      <div class="table-wrap" style="margin: var(--space-6) 0;">
+        <table aria-label="Comparación precio BTC según tipo de cambio">
+          <thead>
+            <tr>
+              <th scope="col">Tipo de cambio usado</th>
+              <th scope="col">Fuente</th>
+              <th scope="col">Refleja</th>
+              <th scope="col">Uso práctico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Dólar cripto (USDT/ARS)</strong></td>
+              <td>Exchanges PSAV</td>
+              <td>Precio de mercado libre</td>
+              <td>Precio real al que se opera BTC en Argentina</td>
+            </tr>
+            <tr>
+              <td><strong>Dólar oficial (BCRA)</strong></td>
+              <td>Banco Central</td>
+              <td>Tipo de cambio regulado</td>
+              <td>Solo referencia; no se usa para operar cripto</td>
+            </tr>
+            <tr>
+              <td><strong>Dólar MEP</strong></td>
+              <td>Bolsa de Valores</td>
+              <td>Precio de mercado (legal)</td>
+              <td>Similar al cripto, obtenido via bonos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        El BCRA prohíbe a los bancos y entidades financieras usar tipos de cambio distintos al
+        oficial para transacciones. Sin embargo, las operaciones en exchanges de criptomonedas
+        registrados como PSAV están reguladas por la CNV, no por el BCRA, lo que les permite
+        operar con el tipo de cambio de mercado implícito en las stablecoins.
+      </p>
+      <p>
+        Esto hace que el <strong>precio BTC/ARS que ves en un exchange argentino sea siempre
+        más alto</strong> que multiplicar el precio en USD por el tipo oficial, porque el
+        "dólar cripto" suele ser mayor al dólar oficial. El inversor que compra BTC en Argentina
+        está pagando con un peso que ya vale menos que el oficial.
+      </p>
+    </div>
+  </section>
+
+  <!-- Best exchanges for BTC in Argentina -->
+  <section class="section section-dark" aria-labelledby="donde-comprar-heading">
+    <div class="container">
+      <h2 id="donde-comprar-heading">¿Dónde comprar BTC al mejor precio en Argentina?</h2>
+      <p>
+        El precio BTC/ARS varía entre plataformas. Estos son los factores que inciden en
+        cuál exchange ofrece mejor precio en cada momento:
+      </p>
+      <ul class="feature-list">
+        <li>
+          <strong>Spread USDT/ARS:</strong> El exchange con menor spread entre compra y venta
+          de USDT tendrá el BTC más barato en términos de pesos. Binance P2P suele tener
+          spreads competitivos por su alta liquidez.
+        </li>
+        <li>
+          <strong>Comisiones de operación:</strong> Airtm cobra una comisión fija; Binance
+          cobra el 0,10% del volumen operado. Para montos grandes, el porcentual puede
+          ser mejor; para montos chicos, la comisión fija conviene.
+        </li>
+        <li>
+          <strong>Método de depósito:</strong> Los depósitos por transferencia bancaria en ARS
+          son gratuitos en la mayoría de los exchanges. Usar tarjeta de débito o crédito
+          agrega costos significativos.
+        </li>
+        <li>
+          <strong>Liquidez del par:</strong> En exchanges con menor volumen, el spread puede
+          ser mayor porque hay menos vendedores. Binance tiene el mayor volumen P2P en Argentina.
+        </li>
+      </ul>
+      <div style="margin-top:var(--space-6);">
+        <a href="/ar/" class="btn btn-primary">Ver comparativa completa de exchanges →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre el precio BTC/ARS" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal:</strong> Los precios mostrados son de referencia y pueden variar
+      respecto a los precios reales de cada exchange en el momento de la operación. Este
+      contenido no es asesoría de inversión. Verificá siempre el precio actual en la plataforma
+      antes de operar. Última actualización: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .price-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .price-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .price-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .price-widget-wrap { padding: var(--space-6); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .converter-card {
+    padding: var(--space-6);
+    max-width: 640px;
+  }
+  .converter-row {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+  }
+  .converter-field { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 160px; }
+  .converter-label { font-size: 0.8rem; color: var(--c-text-muted); font-weight: 600; }
+  .converter-input {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    color: var(--c-text);
+    font-size: 1.1rem;
+    width: 100%;
+    transition: border-color var(--transition-fast);
+  }
+  .converter-input:focus {
+    outline: none;
+    border-color: var(--c-primary);
+  }
+  .converter-equals {
+    font-size: 1.5rem;
+    color: var(--c-text-muted);
+    padding-bottom: var(--space-2);
+    flex-shrink: 0;
+  }
+  .converter-note {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    margin: 0 0 var(--space-2) 0;
+  }
+  .converter-disclaimer {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+  .steps-list {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .steps-list li { color: var(--c-text); line-height: 1.7; }
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .feature-list li {
+    padding-left: var(--space-5);
+    position: relative;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+  }
+  .feature-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--c-primary);
+    font-weight: 700;
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-dark p { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  @media (max-width: 900px) {
+    .price-hero-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .converter-equals { display: none; }
+    .converter-row { flex-direction: column; }
+  }
+</style>
+
+<script>
+  // BTC/ARS Converter logic
+  const CACHE_KEY = "btc_price_ars";
+  let currentBtcArs = 0;
+
+  function getCachedPrice(): number {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return 0;
+      const data = JSON.parse(raw) as { local?: number; fetchedAt?: number };
+      if (!data.fetchedAt || Date.now() - data.fetchedAt > 10 * 60 * 1000) return 0;
+      return data.local ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  async function fetchArsPrice(): Promise<number> {
+    try {
+      const res = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=ars",
+        { signal: AbortSignal.timeout(6000) }
+      );
+      if (!res.ok) return 0;
+      const data = (await res.json()) as { bitcoin?: { ars?: number } };
+      return data?.bitcoin?.ars ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  function formatArs(n: number): string {
+    return n.toLocaleString("es-AR", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function formatBtc(n: number): string {
+    return n.toLocaleString("es-AR", { minimumFractionDigits: 8, maximumFractionDigits: 8 });
+  }
+
+  function updateConverterNote(price: number): void {
+    const note = document.getElementById("converter-rate-note");
+    if (note && price > 0) {
+      note.textContent = `Tasa de referencia: 1 BTC = $${formatArs(price)} ARS`;
+    }
+  }
+
+  function initConverter(): void {
+    const inputBtc = document.getElementById("input-btc") as HTMLInputElement | null;
+    const inputArs = document.getElementById("input-ars") as HTMLInputElement | null;
+    if (!inputBtc || !inputArs) return;
+
+    // Try cached price first
+    const cached = getCachedPrice();
+    if (cached > 0) {
+      currentBtcArs = cached;
+      updateConverterNote(cached);
+    }
+
+    // Fetch fresh price
+    fetchArsPrice().then((price) => {
+      if (price > 0) {
+        currentBtcArs = price;
+        updateConverterNote(price);
+      }
+    });
+
+    inputBtc.addEventListener("input", () => {
+      if (!currentBtcArs) return;
+      const btcVal = parseFloat(inputBtc.value);
+      if (!isNaN(btcVal) && btcVal >= 0) {
+        inputArs.value = Math.round(btcVal * currentBtcArs).toString();
+      } else {
+        inputArs.value = "";
+      }
+    });
+
+    inputArs.addEventListener("input", () => {
+      if (!currentBtcArs) return;
+      const arsVal = parseFloat(inputArs.value);
+      if (!isNaN(arsVal) && arsVal >= 0) {
+        inputBtc.value = (arsVal / currentBtcArs).toFixed(8);
+      } else {
+        inputBtc.value = "";
+      }
+    });
+  }
+
+  initConverter();
+  document.addEventListener("astro:page-load", initConverter);
+</script>

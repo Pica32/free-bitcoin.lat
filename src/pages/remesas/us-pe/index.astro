@@ -1,0 +1,249 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a Perú con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Guía para enviar remesas de Estados Unidos a Perú en 2026. Bitcoin Lightning desde $0.50 USD. Convierte a soles peruanos (PEN) via Buda o P2P. Guía completa.";
+const canonical = "https://free-bitcoin.lat/remesas/us-pe/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → Perú", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Cómo convierte el receptor los satoshis a soles peruanos?",
+    a: "El receptor en Perú puede usar <strong>Buda.com</strong> (disponible en Perú), <strong>Binance P2P</strong> con el par USDT/PEN, o plataformas locales como <strong>Ripio</strong> o <strong>Bitso</strong>. La venta de USDT a PEN en P2P tiene alta liquidez y el retiro a cuenta bancaria peruana (BCP, Interbank, BBVA) tarda entre 15 y 60 minutos.",
+  },
+  {
+    q: "¿Tiene Perú regulación específica sobre Bitcoin?",
+    a: "La SBS (Superintendencia de Banca, Seguros y AFP) del Perú ha emitido comunicados advirtiendo sobre los riesgos de las criptomonedas. No existe una ley que prohíba a particulares comprar, vender o recibir Bitcoin. En 2024, el Congreso peruano discutió marcos regulatorios para exchanges, pero no hay restricciones al uso individual.",
+  },
+  {
+    q: "¿Puedo enviar a una cuenta bancaria peruana directamente con Bitcoin?",
+    a: "No directamente. A diferencia de México (SPEI vía Strike), Perú no tiene integración directa Lightning–banca local. El proceso requiere un paso intermedio: el receptor recibe en su wallet crypto y luego hace el retiro P2P a su cuenta bancaria. El proceso completo tarda 15–60 minutos adicionales al envío Lightning.",
+  },
+];
+
+const sources = [
+  { label: "Banco Central de Reserva del Perú – Remesas 2024", url: "https://www.bcrp.gob.pe/" },
+  { label: "SBS Perú – Comunicado sobre criptomonedas", url: "https://www.sbs.gob.pe/" },
+  { label: "Banco Mundial – Precios de remesas", url: "https://remittanceprices.worldbank.org/" },
+  { label: "Buda.com – Exchange disponible en Perú", url: "https://www.buda.com/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → Perú</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a Perú: guía 2026</h1>
+      <p class="hero-lead">
+        Perú recibe cerca de $4,000 millones de dólares en remesas anuales, principalmente desde Estados Unidos, España, Italia y Chile. La comunidad peruana en EE.UU. envía dinero regularmente a departamentos como Lima, Piura, La Libertad, Junín y Arequipa. Bitcoin Lightning es la opción más barata disponible: menos de $0.50 USD por envío frente a los $8–$27 de los canales tradicionales.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning por $200</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">2%</span>
+        <span class="stat-label">Remesas / PIB Perú aprox.</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 1 min</span>
+        <span class="stat-label">Velocidad Lightning</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$4 mil M</span>
+        <span class="stat-label">Remesas recibidas 2024</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Comparación de costos: EE.UU. → Perú (PEN)</h2>
+      <p>
+        El corredor EE.UU.–Perú tiene opciones cripto bien establecidas gracias a exchanges locales como Buda.com y a la alta liquidez de Binance P2P para el par USDT/PEN. Ajusta el monto para ver el ahorro real en cada método.
+      </p>
+      <RemittanceCalculator
+        corridor="us-pe"
+        fromCountry="EE.UU."
+        toCountry="Perú"
+        toCurrency="PEN"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-proceso">
+      <h2 id="sec-proceso">El proceso completo explicado</h2>
+
+      <p>
+        Enviar de EE.UU. a Perú con Bitcoin implica dos etapas separadas: el envío Lightning (instantáneo) y la conversión a soles peruanos (15–60 minutos). Aunque esto agrega un paso comparado con el corredor México (donde Strike deposita directamente vía SPEI), el ahorro en costos sigue siendo muy significativo.
+      </p>
+
+      <p>
+        <strong>Etapa 1 - Envío desde EE.UU.:</strong> El remitente usa Strike para enviar dólares convertidos a satoshis por Lightning Network. El destinatario los recibe en su wallet (Muun, Phoenix, Wallet of Satoshi) en menos de 60 segundos.
+      </p>
+
+      <p>
+        <strong>Etapa 2 - Conversión a PEN:</strong> El receptor abre Binance P2P o Buda.com, convierte sus satoshis o USDT a soles peruanos y solicita el retiro a su cuenta bancaria. En Binance P2P, puede elegir recibir en BCP, Interbank, BBVA, Scotiabank, BanBif u otras opciones. La transacción P2P promedia 10–30 minutos.
+      </p>
+
+      <p>
+        El costo total del proceso bidireccional (Lightning + P2P) es aproximadamente $0.50–$2.00 USD sobre un envío de $200, frente a los $8–$27 de las casas de cambio y bancos tradicionales. El ahorro anual acumulado para una familia que recibe remesas mensuales puede superar los $300 USD.
+      </p>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-consejos">
+      <h2 id="sec-consejos">Consejos para el receptor en Perú</h2>
+
+      <ul class="tips-list">
+        <li>
+          <strong>Usa Binance P2P para convertir USDT a PEN:</strong> Es la opción con mayor liquidez y más opciones bancarias. Crea una cuenta Binance con KYC antes de necesitarla para agilizar el proceso.
+        </li>
+        <li>
+          <strong>Verifica siempre la reputación del vendedor/comprador P2P:</strong> En Binance P2P, filtra por comerciantes con más de 500 transacciones y más del 98% de tasa de completado.
+        </li>
+        <li>
+          <strong>Mantén algo de USDT en Perú como reserva:</strong> Si recibes remesas regularmente, mantener un saldo en USDT puede ayudarte a aprovechar momentos de tipo de cambio favorable.
+        </li>
+        <li>
+          <strong>Buda.com para montos grandes:</strong> Para envíos superiores a $500 USD, Buda.com puede ofrecer mejores precios que P2P por su mayor profundidad de mercado.
+        </li>
+      </ul>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–Perú" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a { color: var(--c-text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--c-primary); }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .tips-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .tips-list li {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    padding-left: var(--space-6);
+    position: relative;
+  }
+  .tips-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--c-primary);
+    font-weight: 700;
+  }
+  .tips-list strong {
+    color: var(--c-text);
+  }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

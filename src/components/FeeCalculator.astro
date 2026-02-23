@@ -1,0 +1,318 @@
+---
+// FeeCalculator.astro
+// Compare transaction fee costs across 5 networks.
+// All estimates are hardcoded — educational use only.
+// No props required; standalone component.
+---
+
+<section class="calc-form" id="fee-calculator" aria-label="Calculadora de comisiones de transacción">
+  <h3 style="margin-bottom: var(--space-2); color: var(--c-text);">
+    Comparador de Comisiones por Red
+  </h3>
+  <p style="color:var(--c-text-muted); font-size:0.9rem; margin-bottom:var(--space-6);">
+    Compara el costo estimado de enviar fondos según la red que elijas.
+  </p>
+
+  <form id="fee-form" novalidate>
+    <div class="form-row">
+      <label for="fee-amount">Monto a enviar (USD)</label>
+      <input
+        type="number"
+        id="fee-amount"
+        name="amount"
+        min="1"
+        step="1"
+        placeholder="500"
+        value="500"
+        required
+        aria-describedby="fee-amount-hint"
+      />
+      <span id="fee-amount-hint" style="font-size:0.78rem; color:var(--c-text-muted);">
+        Monto referencial en dólares
+      </span>
+    </div>
+
+    <div class="form-row">
+      <label for="fee-network">Red de destino</label>
+      <select id="fee-network" name="network" aria-label="Seleccionar red">
+        <option value="all">Comparar todas las redes</option>
+        <option value="btc-onchain">On-chain Bitcoin</option>
+        <option value="lightning">Lightning Network</option>
+        <option value="usdt-trc20">USDT TRC-20 (Tron)</option>
+        <option value="usdt-erc20">USDT ERC-20 (Ethereum)</option>
+        <option value="swift">Transferencia bancaria SWIFT</option>
+      </select>
+    </div>
+
+    <div id="fee-error" role="alert" aria-live="polite" style="display:none; color:var(--c-error); font-size:0.85rem; margin-bottom:var(--space-4);"></div>
+
+    <button type="submit" class="btn btn-primary" id="fee-submit">
+      Calcular costo estimado
+    </button>
+  </form>
+
+  <!-- Single-network result -->
+  <div id="fee-single-result" style="display:none; margin-top:var(--space-6);" aria-live="polite">
+    <div class="highlight">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:var(--space-4);">
+        <div>
+          <div style="font-size:0.75rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Red</div>
+          <div id="fee-single-name" style="font-weight:700; color:var(--c-text); font-family:var(--font-display);"></div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Comisión estimada</div>
+          <div id="fee-single-fee" class="price" style="font-size:1.3rem; font-weight:700; color:var(--c-primary);"></div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">% del monto</div>
+          <div id="fee-single-pct" class="price" style="font-size:1.3rem; font-weight:700; color:var(--c-text);"></div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--c-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:var(--space-1);">Tiempo estimado</div>
+          <div id="fee-single-time" style="font-weight:700; color:var(--c-text); font-family:var(--font-mono);"></div>
+        </div>
+      </div>
+      <div id="fee-single-desc" style="margin-top:var(--space-4); font-size:0.87rem; color:var(--c-text-muted); border-top:1px solid var(--c-border); padding-top:var(--space-3);"></div>
+    </div>
+  </div>
+
+  <!-- Comparison table (all networks) -->
+  <div id="fee-table-result" style="display:none; margin-top:var(--space-6);" aria-live="polite">
+    <div style="font-size:0.82rem; color:var(--c-text-muted); margin-bottom:var(--space-3); font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">
+      Comparativa completa para <span id="fee-table-amount" style="color:var(--c-primary);"></span>
+    </div>
+    <div class="table-wrap" style="border:1px solid var(--c-border); border-radius:var(--radius-md); overflow:hidden;">
+      <table id="fee-table" aria-label="Comparativa de comisiones por red">
+        <thead>
+          <tr>
+            <th>Red</th>
+            <th>Comisión estimada</th>
+            <th>% del monto</th>
+            <th>Tiempo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody id="fee-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="disclaimer" style="margin-top:var(--space-6);">
+    Estimaciones educativas. Las tarifas reales varían según condiciones de red, mempool,
+    precio del gas y políticas del exchange o banco. No son cotizaciones vinculantes.
+  </p>
+</section>
+
+<style>
+  #fee-calculator {
+    max-width: 900px;
+  }
+
+  #fee-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  #fee-table td:nth-child(5) {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    max-width: 260px;
+  }
+
+  /* Highlight the cheapest row */
+  #fee-table tr.cheapest td:first-child::before {
+    content: "✓ ";
+    color: var(--c-success);
+  }
+  #fee-table tr.cheapest td {
+    background: rgba(0, 200, 83, 0.04);
+  }
+</style>
+
+<script>
+  // ── Fee data ───────────────────────────────────────────────────────────────
+
+  interface NetworkFee {
+    id: string;
+    name: string;
+    feeMin: number;   // USD
+    feeMax: number;   // USD
+    feeLabel: string; // display range string
+    timeLabel: string;
+    description: string;
+  }
+
+  const NETWORKS: NetworkFee[] = [
+    {
+      id: "btc-onchain",
+      name: "On-chain Bitcoin",
+      feeMin: 0.5,
+      feeMax: 5.0,
+      feeLabel: "$0.50 – $5.00",
+      timeLabel: "10 – 60 min",
+      description:
+        "La comisión on-chain de Bitcoin varía según la congestión del mempool. En períodos de alta actividad puede superar los $5 USD. Confirmación garantizada en 1-6 bloques.",
+    },
+    {
+      id: "lightning",
+      name: "Lightning Network",
+      feeMin: 0.001,
+      feeMax: 0.01,
+      feeLabel: "$0.001 – $0.01",
+      timeLabel: "Instantáneo",
+      description:
+        "Lightning permite micropagos casi gratuitos e instantáneos usando canales de pago. Ideal para montos pequeños y frecuentes. Requiere que ambas partes usen Lightning.",
+    },
+    {
+      id: "usdt-trc20",
+      name: "USDT TRC-20 (Tron)",
+      feeMin: 1.0,
+      feeMax: 1.0,
+      feeLabel: "~$1.00",
+      timeLabel: "2 – 5 min",
+      description:
+        "USDT sobre la red Tron tiene tarifas muy bajas y confirmaciones rápidas. Es popular en exchanges latinoamericanos. Verifica siempre la red antes de enviar.",
+    },
+    {
+      id: "usdt-erc20",
+      name: "USDT ERC-20 (Ethereum)",
+      feeMin: 2.0,
+      feeMax: 20.0,
+      feeLabel: "$2.00 – $20.00",
+      timeLabel: "15 – 30 seg",
+      description:
+        "USDT sobre Ethereum paga gas en ETH. Las tarifas fluctúan con la demanda de la red; en horas pico pueden superar $20 USD. Confirmaciones rápidas una vez incluido.",
+    },
+    {
+      id: "swift",
+      name: "Transferencia bancaria SWIFT",
+      feeMin: 25.0,
+      feeMax: 50.0,
+      feeLabel: "$25.00 – $50.00",
+      timeLabel: "1 – 5 días hábiles",
+      description:
+        "Las transferencias internacionales SWIFT cobran comisiones fijas del banco emisor más posibles comisiones intermediarias. Pueden aplicar costos de cambio de divisa adicionales.",
+    },
+  ];
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+
+  function fmtUSD(n: number): string {
+    return `$${n.toLocaleString("es-419", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+  }
+
+  function fmtPct(fee: number, amount: number): string {
+    if (amount <= 0) return "—";
+    const pct = (fee / amount) * 100;
+    if (pct < 0.01) return "< 0.01%";
+    return `${pct.toLocaleString("es-419", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
+  }
+
+  /** Representative fee (midpoint) for ranking */
+  function midFee(n: NetworkFee): number {
+    return (n.feeMin + n.feeMax) / 2;
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+
+  function showSingleResult(network: NetworkFee, amount: number): void {
+    const el = document.getElementById("fee-single-result") as HTMLElement;
+    const tableEl = document.getElementById("fee-table-result") as HTMLElement;
+    tableEl.style.display = "none";
+
+    const fee = midFee(network);
+
+    (document.getElementById("fee-single-name") as HTMLElement).textContent = network.name;
+    (document.getElementById("fee-single-fee") as HTMLElement).textContent = network.feeLabel;
+    (document.getElementById("fee-single-pct") as HTMLElement).textContent = fmtPct(fee, amount);
+    (document.getElementById("fee-single-time") as HTMLElement).textContent = network.timeLabel;
+    (document.getElementById("fee-single-desc") as HTMLElement).textContent = network.description;
+
+    el.style.display = "block";
+    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function showAllResults(amount: number): void {
+    const singleEl = document.getElementById("fee-single-result") as HTMLElement;
+    singleEl.style.display = "none";
+
+    const tableEl = document.getElementById("fee-table-result") as HTMLElement;
+    const tbody = document.getElementById("fee-table-body") as HTMLTableSectionElement;
+    const amountLabel = document.getElementById("fee-table-amount") as HTMLElement;
+
+    amountLabel.textContent = fmtUSD(amount);
+
+    // Sort by midpoint fee ascending so cheapest is on top
+    const sorted = [...NETWORKS].sort((a, b) => midFee(a) - midFee(b));
+
+    tbody.innerHTML = "";
+    sorted.forEach((net, idx) => {
+      const fee = midFee(net);
+      const tr = document.createElement("tr");
+      if (idx === 0) tr.classList.add("cheapest");
+
+      tr.innerHTML = `
+        <td style="font-weight:600; font-family:var(--font-display); white-space:nowrap;">${net.name}</td>
+        <td class="price" style="color:var(--c-primary); white-space:nowrap;">${net.feeLabel}</td>
+        <td class="mono" style="color:var(--c-text-muted);">${fmtPct(fee, amount)}</td>
+        <td class="mono" style="white-space:nowrap;">${net.timeLabel}</td>
+        <td>${net.description}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    tableEl.style.display = "block";
+    tableEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+
+  function initFeeCalculator(): void {
+    const form = document.getElementById("fee-form") as HTMLFormElement | null;
+    if (!form) return;
+
+    if ((form as HTMLFormElement & { _feeInit?: boolean })._feeInit) return;
+    (form as HTMLFormElement & { _feeInit?: boolean })._feeInit = true;
+
+    const errorEl = document.getElementById("fee-error") as HTMLElement;
+    const submitBtn = document.getElementById("fee-submit") as HTMLButtonElement;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      errorEl.style.display = "none";
+      errorEl.textContent = "";
+
+      const amount = parseFloat((document.getElementById("fee-amount") as HTMLInputElement).value);
+      const networkId = (document.getElementById("fee-network") as HTMLSelectElement).value;
+
+      if (!amount || amount <= 0) {
+        errorEl.textContent = "Ingresa un monto válido mayor a 0.";
+        errorEl.style.display = "block";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Calculando…";
+
+      if (networkId === "all") {
+        showAllResults(amount);
+      } else {
+        const network = NETWORKS.find((n) => n.id === networkId);
+        if (!network) {
+          errorEl.textContent = "Red no reconocida. Selecciona una opción válida.";
+          errorEl.style.display = "block";
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Calcular costo estimado";
+          return;
+        }
+        showSingleResult(network, amount);
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Calcular costo estimado";
+    });
+  }
+
+  initFeeCalculator();
+  document.addEventListener("astro:page-load", initFeeCalculator);
+</script>

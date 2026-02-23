@@ -1,0 +1,887 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const title = "Preço do Bitcoin em Reais Hoje 2026 – BTC/BRL | free-bitcoin.lat";
+const description = "Preço do Bitcoin em reais (BRL) em tempo real hoje 2026. Conversor BTC/BRL, variação 24h, histórico e melhor corretora para comprar Bitcoin com PIX.";
+const canonical = "https://free-bitcoin.lat/br/preco-bitcoin-brl/";
+
+const faqItems = [
+  {
+    q: "Como é calculado o preço do Bitcoin em reais?",
+    a: "O preço BTC/BRL é calculado multiplicando o preço do Bitcoin em dólares (USD) pela taxa de câmbio USD/BRL atual. Cada corretora aplica seu próprio spread (margem), que varia de 0,5% a 2%, o que explica pequenas diferenças entre plataformas.",
+  },
+  {
+    q: "Por que o preço do Bitcoin é diferente entre corretoras?",
+    a: "Cada corretora tem sua própria liquidez, volume de negociação e política de spread. Corretoras com menor volume tendem a ter spreads maiores. Além disso, taxas de conversão de dólar para real embutidas no preço podem variar conforme o momento da atualização.",
+  },
+  {
+    q: "Qual foi o preço mais alto do Bitcoin em reais?",
+    a: "O preço mais alto (ATH) do Bitcoin em reais foi registrado em 2024/2025, com o BTC atingindo aproximadamente R$ 540.000. O ATH anterior em BRL havia sido de cerca de R$ 350.000 em novembro de 2021.",
+  },
+  {
+    q: "O preço do Bitcoin em reais acompanha o dólar?",
+    a: "Sim, em grande medida. Como o Bitcoin é precificado globalmente em dólares, uma desvalorização do real frente ao dólar eleva o preço em BRL mesmo que o preço em USD não mude. Por isso, o BTC em reais tende a ser um bom hedge cambial para brasileiros.",
+  },
+  {
+    q: "Qual corretora tem o melhor preço de Bitcoin em reais?",
+    a: "Binance e Bybit costumam oferecer spreads menores por terem maior liquidez global. Corretoras locais como Mercado Bitcoin podem ter spreads ligeiramente maiores, mas oferecem suporte em português e são totalmente regulamentadas no Brasil. Compare sempre antes de comprar.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: title,
+    description: description,
+    url: canonical,
+    inLanguage: "pt-BR",
+    dateModified: "2026-02-23",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "Preço do Bitcoin em Reais (BTC/BRL)",
+    description: "Dados de preço do Bitcoin em reais brasileiros em tempo real via CoinGecko API.",
+    url: canonical,
+    creator: {
+      "@type": "Organization",
+      name: "free-bitcoin.lat",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Brasil", item: "https://free-bitcoin.lat/br/" },
+      { "@type": "ListItem", position: 3, name: "Preço BTC/BRL", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container">
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Navegação estrutural">
+      <ol role="list">
+        <li><a href="/">Início</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/br/">Brasil</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">Preço BTC/BRL</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge-green">Tempo real</span>
+        <span class="badge-orange">Atualizado 2026</span>
+      </div>
+      <h1>Preço do Bitcoin em reais (BTC/BRL) hoje</h1>
+      <p class="hero-lead">
+        Acompanhe o preço do Bitcoin em reais em tempo real, use nosso conversor BTC/BRL e entenda como o preço é calculado. Dados atualizados a cada 60 segundos diretamente da CoinGecko.
+      </p>
+    </header>
+
+    <!-- Live Price Widget -->
+    <section class="card price-widget" aria-labelledby="preco-live">
+      <div class="price-widget-inner">
+        <div class="price-main">
+          <p class="price-label" id="preco-live">1 BTC =</p>
+          <p class="price-value mono" id="live-price">Carregando...</p>
+          <p class="price-change-row">
+            <span id="live-change" class="price-change mono"></span>
+            <span class="price-source">via CoinGecko</span>
+          </p>
+        </div>
+        <div class="price-meta">
+          <div class="meta-item">
+            <span class="meta-label">Par</span>
+            <span class="meta-value mono">BTC/BRL</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Atualização</span>
+            <span class="meta-value" id="last-update">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Converter -->
+    <section class="card converter-card" aria-labelledby="conversor-titulo">
+      <h2 id="conversor-titulo">Conversor BTC / BRL</h2>
+      <p class="converter-desc">Digite um valor em BTC ou em reais para converter instantaneamente.</p>
+      <div class="converter-grid">
+        <div class="converter-field">
+          <label for="input-btc">Bitcoin (BTC)</label>
+          <input
+            type="number"
+            id="input-btc"
+            class="converter-input mono"
+            placeholder="0.001"
+            min="0"
+            step="any"
+          />
+        </div>
+        <div class="converter-sep" aria-hidden="true">⇄</div>
+        <div class="converter-field">
+          <label for="input-brl">Reais (BRL)</label>
+          <input
+            type="number"
+            id="input-brl"
+            class="converter-input mono"
+            placeholder="500"
+            min="0"
+            step="any"
+          />
+        </div>
+      </div>
+      <p class="converter-note">Taxa usada: preço em tempo real. Sem taxas de corretora incluídas.</p>
+    </section>
+
+    <!-- Section: Como é calculado -->
+    <section class="content-section" aria-labelledby="sec-calculo">
+      <h2 id="sec-calculo">Como o preço BTC/BRL é calculado</h2>
+      <p>
+        O Bitcoin é um ativo global negociado principalmente em dólares americanos. Para calcular o preço em reais, as corretoras e agregadores como a CoinGecko multiplicam o preço BTC/USD pela taxa de câmbio USD/BRL do momento:
+      </p>
+      <div class="formula-box card">
+        <p class="mono formula">Preço BTC/BRL = Preço BTC/USD × Taxa USD/BRL</p>
+      </div>
+      <p>
+        Por exemplo: se o Bitcoin vale US$ 100.000 e o dólar está cotado a R$ 5,80, o preço em reais seria R$ 580.000. Esse cálculo acontece em tempo real, e qualquer variação cambial — mesmo sem variação do preço em dólar — altera o preço em BRL.
+      </p>
+      <p>
+        Cada corretora aplica ainda um <strong>spread</strong> (margem de lucro sobre o câmbio), que varia de 0,5% a 2% dependendo da plataforma, do volume negociado e do método de pagamento. Exchanges globais como Binance tendem a ter spreads menores por maior liquidez; corretoras locais menores podem cobrar spreads maiores.
+      </p>
+      <p>
+        Além do spread, ao depositar reais para comprar Bitcoin no Brasil, há o custo do câmbio embutido na conversão BRL → USD que a corretora realiza internamente. Esse custo, somado ao spread, é o custo real da operação — não apenas a taxa de corretagem exibida na plataforma.
+      </p>
+    </section>
+
+    <!-- Section: Por que varia entre corretoras -->
+    <section class="content-section" aria-labelledby="sec-variacao">
+      <h2 id="sec-variacao">Por que o preço varia entre corretoras?</h2>
+      <p>
+        É normal que o preço do Bitcoin seja ligeiramente diferente entre Binance, Bybit, Mercado Bitcoin e outras corretoras. Há três fatores principais:
+      </p>
+      <div class="factors-grid">
+        <div class="card factor-card">
+          <h3>Liquidez e volume</h3>
+          <p>
+            Corretoras com maior volume de negociação (como Binance) conseguem executar ordens maiores sem mover o preço significativamente — o chamado "market impact" baixo. Plataformas menores têm spreads maiores para compensar a menor profundidade do livro de ordens.
+          </p>
+        </div>
+        <div class="card factor-card">
+          <h3>Spread embutido</h3>
+          <p>
+            Algumas corretoras exibem um preço "tudo incluído" que já considera o spread, enquanto outras mostram o preço de mercado e cobram a taxa separadamente. Compare sempre o preço final que você paga por 1 BTC, não apenas a taxa de corretagem.
+          </p>
+        </div>
+        <div class="card factor-card">
+          <h3>Velocidade de atualização</h3>
+          <p>
+            Em mercados voláteis, o preço pode mudar dezenas de reais por segundo. Diferenças de atualização entre plataformas criam janelas onde o mesmo ativo aparece com preços distintos — algo que arbitragistas exploram continuamente.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Histórico -->
+    <section class="content-section" aria-labelledby="sec-historico">
+      <h2 id="sec-historico">Histórico de preço do Bitcoin em reais</h2>
+      <p>
+        Para entender o preço atual, é útil conhecer os principais momentos da trajetória do Bitcoin em reais. O BRL é particularmente sensível ao Bitcoin porque a desvalorização do real ao longo dos anos amplificou os ganhos em moeda local.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Período</th>
+              <th>Preço BTC/BRL (aprox.)</th>
+              <th>Contexto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Janeiro 2020</td>
+              <td class="mono">R$ 35.000</td>
+              <td>Pré-pandemia, mercado estável</td>
+            </tr>
+            <tr>
+              <td>Abril 2021 (ATH parcial)</td>
+              <td class="mono">R$ 320.000</td>
+              <td>Bull run institucional, dólar a R$ 5,60</td>
+            </tr>
+            <tr>
+              <td>Novembro 2021 (ATH global)</td>
+              <td class="mono highlight">R$ 350.000</td>
+              <td>BTC a US$ 69.000 + USD/BRL elevado</td>
+            </tr>
+            <tr>
+              <td>Junho 2022 (bear)</td>
+              <td class="mono">R$ 120.000</td>
+              <td>Colapso Luna/UST, crise cripto</td>
+            </tr>
+            <tr>
+              <td>Dezembro 2022 (mínimo)</td>
+              <td class="mono">R$ 80.000</td>
+              <td>Falência FTX, fuga de capital</td>
+            </tr>
+            <tr>
+              <td>Abril 2024 (halving)</td>
+              <td class="mono">R$ 300.000</td>
+              <td>Quarto halving do Bitcoin</td>
+            </tr>
+            <tr>
+              <td>2024/2025 (ATH)</td>
+              <td class="mono highlight">R$ 540.000</td>
+              <td>ETFs spot EUA, demanda institucional + real fraco</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        O preço em BRL tende a ser mais alto do que em outras moedas estáveis porque o real frequentemente se desvaloriza frente ao dólar. Isso significa que investidores brasileiros que compraram Bitcoin em anos anteriores obtiveram retornos ainda maiores em reais do que em dólares — um efeito dual de valorização do ativo e depreciação da moeda local.
+      </p>
+      <p>
+        A volatilidade do Bitcoin permanece elevada. Quedas de 30% a 80% do pico ocorreram em todos os ciclos anteriores (2014, 2018, 2022). Planejar o tamanho da posição levando em conta essa volatilidade é essencial para qualquer investidor.
+      </p>
+    </section>
+
+    <!-- Section: Onde comprar -->
+    <section class="content-section" aria-labelledby="sec-comprar">
+      <h2 id="sec-comprar">Onde comprar BTC ao melhor preço em reais?</h2>
+      <p>
+        Para obter o melhor preço de Bitcoin em BRL, priorize corretoras com alto volume no par BTC/BRL, aceite de PIX para depósito instantâneo e spreads transparentes. Abaixo as principais opções para brasileiros:
+      </p>
+      <div class="exchange-row">
+        <a
+          href="https://accounts.binance.com/register?ref=346436875"
+          class="card exchange-card"
+          rel="noopener sponsored"
+          target="_blank"
+        >
+          <strong>Binance</strong>
+          <span class="mono exchange-fee">0,10%</span>
+          <span class="exchange-pix">PIX ✓</span>
+          <span class="btn btn-primary btn-sm">Abrir conta</span>
+        </a>
+        <a
+          href="https://www.bybit.com/en/invite/?ref=NX1PKE"
+          class="card exchange-card"
+          rel="noopener sponsored"
+          target="_blank"
+        >
+          <strong>Bybit</strong>
+          <span class="mono exchange-fee">0,10%</span>
+          <span class="exchange-pix">PIX ✓</span>
+          <span class="btn btn-primary btn-sm">Abrir conta</span>
+        </a>
+        <a
+          href="https://invite.kraken.com/JDNW/aywgmsis"
+          class="card exchange-card"
+          rel="noopener sponsored"
+          target="_blank"
+        >
+          <strong>Kraken</strong>
+          <span class="mono exchange-fee">0,16%</span>
+          <span class="exchange-pix">TED/cartão</span>
+          <span class="btn btn-primary btn-sm">Abrir conta</span>
+        </a>
+      </div>
+      <p class="affiliate-disclosure">
+        Links acima são de afiliado. Você não paga nada extra — recebemos uma comissão se você se cadastrar.
+      </p>
+      <p>
+        Para um guia completo sobre como comprar Bitcoin no Brasil com PIX passo a passo, acesse:
+        <a href="/br/como-comprar-bitcoin/">Como comprar Bitcoin no Brasil 2026 &rarr;</a>
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq content-section" aria-labelledby="faq-titulo">
+      <h2 id="faq-titulo">Perguntas frequentes sobre o preço BTC/BRL</h2>
+      <div class="faq-list">
+        {faqItems.map((item) => (
+          <details class="faq-item card">
+            <summary class="faq-question">{item.q}</summary>
+            <p class="faq-answer">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="sources content-section" aria-labelledby="fontes-titulo">
+      <h2 id="fontes-titulo">Fontes</h2>
+      <ul class="sources-list">
+        <li><a href="https://www.coingecko.com/en/coins/bitcoin" rel="noopener noreferrer" target="_blank">CoinGecko — Dados de preço BTC</a></li>
+        <li><a href="https://www.bcb.gov.br/estabilidadefinanceira/ativos_virtuais" rel="noopener noreferrer" target="_blank">Banco Central do Brasil — Ativos Virtuais</a></li>
+        <li><a href="https://www.gov.br/receitafederal" rel="noopener noreferrer" target="_blank">Receita Federal — Declaração de Criptoativos</a></li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      <strong>Aviso:</strong> Os preços exibidos têm fins informativos e podem ter atraso. Não constituem oferta de compra ou venda. Consulte a corretora de sua preferência para o preço exato no momento da operação.
+    </p>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .badge-orange {
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 700px;
+  }
+
+  /* Price Widget */
+  .price-widget {
+    margin: var(--space-6) 0;
+    padding: var(--space-6) var(--space-8);
+    border-left: 3px solid var(--c-primary);
+  }
+
+  .price-widget-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  .price-label {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+  }
+
+  .price-value {
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: var(--c-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .price-change-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .price-change {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .change-up { color: #22c55e; }
+  .change-down { color: #ef4444; }
+
+  .price-source {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+  }
+
+  .price-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 140px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 0.95rem;
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  /* Converter */
+  .converter-card {
+    margin: var(--space-6) 0;
+    padding: var(--space-6) var(--space-8);
+  }
+
+  .converter-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .converter-desc {
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-5);
+  }
+
+  .converter-grid {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .converter-field {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .converter-field label {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .converter-input {
+    width: 100%;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    color: var(--c-text);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    padding: var(--space-3) var(--space-4);
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+  }
+
+  .converter-input:focus {
+    outline: none;
+    border-color: var(--c-primary);
+  }
+
+  .converter-sep {
+    font-size: 1.5rem;
+    color: var(--c-primary);
+    padding-bottom: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .converter-note {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  /* Content sections */
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+
+  .content-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+
+  /* Formula box */
+  .formula-box {
+    padding: var(--space-4) var(--space-6);
+    margin: var(--space-4) 0;
+    border-left: 3px solid var(--c-primary);
+    background: rgba(255, 107, 0, 0.04);
+  }
+
+  .formula {
+    font-size: 1rem;
+    color: var(--c-text);
+    margin: 0;
+  }
+
+  /* Factors grid */
+  .factors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .factor-card {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .factor-card h3 {
+    font-size: 0.95rem;
+    color: var(--c-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .factor-card p {
+    font-size: 0.87rem;
+    margin-bottom: 0;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: var(--space-6) 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-surface-1);
+    color: var(--c-text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-text);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .highlight {
+    color: var(--c-primary);
+    font-weight: 700;
+  }
+
+  /* Exchange row */
+  .exchange-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+  }
+
+  .exchange-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4);
+    text-align: center;
+    text-decoration: none;
+    color: var(--c-text);
+    transition: border-color 0.15s;
+  }
+
+  .exchange-card:hover {
+    border-color: var(--c-primary);
+    text-decoration: none;
+  }
+
+  .exchange-card strong {
+    font-size: 1rem;
+  }
+
+  .exchange-fee {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  .exchange-pix {
+    font-size: 0.78rem;
+    color: #22c55e;
+  }
+
+  .btn-sm {
+    padding: 0.35em 0.9em;
+    font-size: 0.82rem;
+  }
+
+  .affiliate-disclosure {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    background: rgba(255, 107, 0, 0.04);
+    border: 1px solid rgba(255, 107, 0, 0.15);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .faq-item {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .faq-question {
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: "+";
+    color: var(--c-primary);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  details[open] .faq-question::after {
+    content: "−";
+  }
+
+  .faq-answer {
+    margin-top: var(--space-3);
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* Sources */
+  .sources-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .sources-list li::before {
+    content: "→ ";
+    color: var(--c-primary);
+  }
+
+  .sources-list a {
+    color: var(--c-text-muted);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .sources-list a:hover {
+    color: var(--c-primary);
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    padding: var(--space-6) 0 var(--space-2);
+  }
+
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--c-primary);
+  }
+
+  @media (max-width: 640px) {
+    .price-widget {
+      padding: var(--space-4) var(--space-5);
+    }
+    .converter-card {
+      padding: var(--space-4) var(--space-5);
+    }
+    .price-widget-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .converter-sep {
+      align-self: center;
+    }
+  }
+</style>
+
+<script>
+  // BTC/BRL Live Price with localStorage cache
+  const CACHE_KEY = "btc_brl_price_cache";
+  const CACHE_TTL = 60 * 1000;
+  const API_URL =
+    "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl&include_24hr_change=true";
+
+  const priceEl = document.getElementById("live-price");
+  const changeEl = document.getElementById("live-change");
+  const updateEl = document.getElementById("last-update");
+  const btcInput = document.getElementById("input-btc") as HTMLInputElement;
+  const brlInput = document.getElementById("input-brl") as HTMLInputElement;
+
+  let currentBtcBrl = 0;
+
+  function formatBRL(value: number) {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  }
+
+  function renderPrice(price: number, change: number) {
+    currentBtcBrl = price;
+    if (priceEl) priceEl.textContent = formatBRL(price);
+    if (changeEl) {
+      const sign = change >= 0 ? "+" : "";
+      changeEl.textContent = `${sign}${change.toFixed(2)}% (24h)`;
+      changeEl.className = "price-change mono " + (change >= 0 ? "change-up" : "change-down");
+    }
+    if (updateEl) {
+      const now = new Date();
+      updateEl.textContent = now.toLocaleTimeString("pt-BR");
+    }
+  }
+
+  function fetchPrice() {
+    fetch(API_URL)
+      .then((r) => r.json())
+      .then((data) => {
+        const price = data.bitcoin.brl;
+        const change = data.bitcoin.brl_24h_change;
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ price, change, ts: Date.now() }));
+        } catch (_) {}
+        renderPrice(price, change);
+      })
+      .catch(() => {
+        if (priceEl) priceEl.textContent = "Indisponível";
+      });
+  }
+
+  // Load from cache or fetch
+  try {
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+    if (cached && Date.now() - cached.ts < CACHE_TTL) {
+      renderPrice(cached.price, cached.change);
+    } else {
+      fetchPrice();
+    }
+  } catch (_) {
+    fetchPrice();
+  }
+
+  // Converter logic
+  if (btcInput && brlInput) {
+    btcInput.addEventListener("input", () => {
+      const btc = parseFloat(btcInput.value);
+      if (!isNaN(btc) && currentBtcBrl > 0) {
+        brlInput.value = (btc * currentBtcBrl).toFixed(2);
+      } else {
+        brlInput.value = "";
+      }
+    });
+
+    brlInput.addEventListener("input", () => {
+      const brl = parseFloat(brlInput.value);
+      if (!isNaN(brl) && currentBtcBrl > 0) {
+        btcInput.value = (brl / currentBtcBrl).toFixed(8);
+      } else {
+        btcInput.value = "";
+      }
+    });
+  }
+</script>

@@ -1,0 +1,319 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import ForumPreview from "@components/ForumPreview.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Bitcoin en Colombia 2026: Precio BTC/COP, Exchanges y Regulación | free-bitcoin.lat";
+const description = "Bitcoin en Colombia 2026: precio BTC/COP en tiempo real, estado regulatorio SFC, mejores exchanges con Nequi y PSE, impuestos DIAN.";
+const canonical = "https://free-bitcoin.lat/co/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Nequi", "PSE", "P2P"],
+    bestFor: "Mayor volumen BTC/COP",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Básico" as const,
+    paymentMethods: ["P2P", "Tarjeta"],
+    bestFor: "Derivados y spot activo",
+    isAffiliate: true,
+  },
+  {
+    name: "KuCoin",
+    url: "https://www.kucoin.com/r/rf/QBSKA5LH",
+    fees: "0.10% maker/taker",
+    kycLevel: "Básico" as const,
+    paymentMethods: ["P2P", "Tarjeta"],
+    bestFor: "Altcoins y P2P en COP",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal comprar Bitcoin en Colombia?",
+    a: "Sí. El Bitcoin no está prohibido en Colombia para personas naturales. La Superintendencia Financiera de Colombia (SFC) regula a las plataformas que operan con activos digitales mediante el sandbox regulatorio, y el Proyecto de Ley 510/2025 (PSAV) busca formalizar el marco. Cualquier colombiano puede comprar, vender o guardar Bitcoin por cuenta propia sin incurrir en ilegalidad.",
+  },
+  {
+    q: "¿Debo pagar impuestos a la DIAN por mis ganancias en Bitcoin?",
+    a: "Sí. La DIAN considera las criptomonedas como activos para efectos del impuesto de renta. Las ganancias obtenidas al vender Bitcoin a un precio superior al de compra deben declararse como incremento patrimonial. Si eres persona natural, debes incluirlas en tu declaración de renta anual. La DIAN trabaja actualmente en protocolos de intercambio de información con exchanges para aumentar la fiscalización.",
+  },
+  {
+    q: "¿Puedo comprar Bitcoin con Nequi o PSE en Colombia?",
+    a: "Sí. Binance Colombia permite depósitos en pesos colombianos (COP) a través de PSE (Pagos Seguros en Línea) y Nequi, los dos métodos de pago electrónico más usados en el país. El proceso es: crear cuenta en Binance, completar KYC con cédula colombiana, seleccionar depósito en COP por PSE o Nequi, y una vez acreditados los fondos, comprar BTC en el par BTC/COP.",
+  },
+  {
+    q: "¿Qué exchanges están regulados en Colombia?",
+    a: "Colombia se encuentra en transición regulatoria. La SFC cerró el sandbox regulatorio en junio de 2024, y el Proyecto de Ley 510/2025 sobre Proveedores de Servicios de Activos Virtuales (PSAV) está en trámite en el Congreso. Ningún exchange tiene licencia PSAV definitiva aún. Binance, Bybit y KuCoin operan para colombianos bajo sus licencias internacionales y controles AML propios.",
+  },
+  {
+    q: "¿Puedo recibir remesas desde EE.UU. en Bitcoin a Colombia?",
+    a: "Sí, y es una alternativa cada vez más popular. Las remesas representan aproximadamente el 2.8% del PIB colombiano. Enviar dinero por Western Union o bancos tradicionales puede costar entre 4% y 8% de comisión. Con Bitcoin Lightning, el envío es prácticamente instantáneo y con comisiones por debajo del 0.5%. Apps como Strike (en EE.UU.) y wallets Bitcoin permiten enviar satoshis que se convierten a COP via Binance u otras plataformas.",
+  },
+];
+
+const sources = [
+  { label: "Superintendencia Financiera de Colombia (SFC)", url: "https://www.superfinanciera.gov.co" },
+  { label: "DIAN – Dirección de Impuestos y Aduanas Nacionales", url: "https://www.dian.gov.co" },
+  { label: "Banco de la República de Colombia", url: "https://www.banrep.gov.co" },
+  { label: "Banco Mundial – Precios de Remesas", url: "https://remittanceprices.worldbank.org" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Bitcoin en Colombia 2026: guía completa",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    author: { "@type": "Organization", name: "free-bitcoin.lat" },
+    publisher: { "@type": "Organization", name: "free-bitcoin.lat", url: "https://free-bitcoin.lat" },
+    inLanguage: "es",
+    about: { "@type": "Thing", name: "Bitcoin en Colombia" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Colombia", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Colombia" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="country-hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="hero-eyebrow">🇨🇴 Colombia · BTC/COP</span>
+          <h1>Bitcoin en Colombia 2026: guía completa</h1>
+          <p class="hero-sub">
+            Colombia avanza hacia un marco regulatorio para activos digitales con el Proyecto de Ley
+            510/2025 (PSAV). La SFC operó un sandbox regulatorio hasta junio de 2024 y la DIAN trabaja
+            en intercambio de información con plataformas cripto. Mientras tanto, millones de colombianos
+            ya compran Bitcoin con Nequi y PSE a través de Binance y otras plataformas internacionales.
+            Las remesas —que representan el 2.8% del PIB— son uno de los principales casos de uso de
+            Bitcoin en el país.
+          </p>
+          <div class="hero-cta">
+            <a href="#exchanges" class="btn btn-primary">Ver exchanges disponibles</a>
+            <a href="/remesas/us-co/" class="btn btn-secondary">Calculadora de remesas</a>
+          </div>
+        </div>
+        <div class="hero-widget card">
+          <LivePriceWidget currency="COP" currencySymbol="$" countryName="Colombia" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <div class="reg-summary card">
+        <div class="reg-badge-row">
+          <span class="badge badge-yellow">Marco en construcción</span>
+          <span class="reg-authority">Regulador: SFC + DIAN</span>
+          <span class="reg-date">Actualizado: feb. 2026</span>
+        </div>
+        <h2 id="regulacion-heading">Estado regulatorio en Colombia 2026</h2>
+        <p>
+          Colombia se encuentra en una etapa de transición regulatoria para los activos virtuales.
+          El <strong>Proyecto de Ley 510/2025</strong> sobre Proveedores de Servicios de Activos
+          Virtuales (PSAV) está en debate en el Congreso y busca crear un sistema de licencias
+          formales para exchanges y custodios. La <strong>Superintendencia Financiera de Colombia (SFC)</strong>
+          lideró entre 2021 y 2024 un sandbox regulatorio que permitió a entidades financieras
+          explorar el ofrecimiento de servicios cripto bajo supervisión controlada. Dicho sandbox
+          finalizó en junio de 2024 con lecciones que alimentaron el proyecto de ley vigente.
+        </p>
+        <p>
+          La <strong>DIAN</strong> (Dirección de Impuestos y Aduanas Nacionales) ha comenzado a
+          requerir que las declaraciones de renta incluyan activos en criptomonedas. Actualmente
+          trabaja en protocolos de intercambio automático de información con plataformas que operen
+          en Colombia, similares a los marcos FATF/GAFI. Para el ciudadano común, Bitcoin no está
+          prohibido: se puede comprar, vender, guardar y utilizar libremente, pero las ganancias
+          realizadas deben reportarse en la declaración de renta.
+        </p>
+        <div class="highlight">
+          <strong>Punto clave:</strong> Bitcoin es legal en Colombia para uso personal. La regulación
+          apunta a las plataformas que ofrecen servicios, no a los usuarios individuales. Declara
+          tus ganancias ante la DIAN para cumplir con tus obligaciones fiscales.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" id="exchanges" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para Colombia</h2>
+      <p class="section-sub">
+        Plataformas disponibles en Colombia con métodos de pago locales. Binance ofrece depósitos
+        directos en COP mediante Nequi y PSE. Bybit y KuCoin permiten operaciones P2P con
+        contrapartes colombianas pagando en pesos.
+      </p>
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges con disponibilidad en Colombia — febrero 2026"
+      />
+      <div class="exchange-notes">
+        <p>
+          <strong>Nequi y PSE:</strong> Disponibles en Binance para depósitos en COP. Sin comisión
+          de depósito. Tiempo de acreditación: inmediato (Nequi) o hasta 30 minutos (PSE).
+        </p>
+        <p>
+          <strong>P2P:</strong> Bybit y KuCoin ofrecen mercado P2P donde puedes comprar Bitcoin
+          directamente de otros usuarios colombianos pagando con transferencia bancaria, Nequi o
+          Daviplata. Siempre verifica la reputación del vendedor antes de operar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Remesas -->
+  <section class="section" aria-labelledby="remesas-heading">
+    <div class="container">
+      <div class="highlight remesas-block">
+        <div>
+          <h2 id="remesas-heading">Remesas Colombia: Bitcoin como alternativa real</h2>
+          <p>
+            Colombia recibe anualmente más de 9,000 millones de dólares en remesas, principalmente
+            desde Estados Unidos, España y Ecuador. Estos flujos representan aproximadamente el 2.8%
+            del PIB nacional y son fuente de ingreso esencial para millones de familias. Los canales
+            tradicionales —Western Union, MoneyGram, transferencias bancarias— cobran entre 4% y 9%
+            de comisión, consumiendo una parte significativa de lo que los migrantes envían con
+            esfuerzo a sus familias.
+          </p>
+          <p>
+            Bitcoin Lightning permite enviar cualquier monto desde EE.UU. a Colombia en segundos,
+            con comisiones por debajo del 1%. El receptor puede convertir los satoshis a pesos
+            colombianos a través de Binance u otras plataformas, o guardar el BTC como ahorro.
+            Aplicaciones como Muun, Phoenix y Wallet of Satoshi facilitan estos envíos sin
+            necesidad de cuenta bancaria en ninguno de los dos países.
+          </p>
+        </div>
+        <a href="/remesas/us-co/" class="btn btn-primary" style="align-self:flex-start;margin-top:1rem;">
+          Calculadora remesas EE.UU. → Colombia →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes: Bitcoin en Colombia" />
+  </div>
+
+  <!-- Forum -->
+  <div class="container">
+    <ForumPreview country="co" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal:</strong> Este contenido es solo informativo y no constituye asesoría
+      financiera, legal ni fiscal. Consulta a un contador o abogado especializado en Colombia para
+      tu situación particular. La regulación puede cambiar. Última verificación: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .country-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .hero-widget { padding: var(--space-6); }
+  .reg-summary { padding: var(--space-6); }
+  .reg-badge-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+  }
+  .reg-authority, .reg-date {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .reg-summary h2 { margin-bottom: var(--space-4); }
+  .reg-summary p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .exchange-notes { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+  .exchange-notes p { font-size: 0.875rem; color: var(--c-text-muted); }
+  .section-dark { background: var(--c-surface-1); }
+  .remesas-block { display: flex; flex-direction: column; gap: var(--space-4); }
+  .remesas-block p { color: var(--c-text-muted); line-height: 1.7; margin-bottom: var(--space-3); }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+  }
+</style>

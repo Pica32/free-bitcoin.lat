@@ -1,0 +1,210 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import RegulatoryStatusBadge from "../components/RegulatoryStatusBadge.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+interface HreflangItem {
+  lang: string;
+  href: string;
+}
+
+interface CountryData {
+  name: string;
+  currency: string;
+  language: string;
+  regulatory_status: "green" | "yellow" | "red";
+  regulator: string;
+  flag?: string;
+}
+
+interface Props {
+  country: CountryData;
+  title: string;
+  description: string;
+  canonical: string;
+  hreflang?: HreflangItem[];
+  jsonLd?: object | object[];
+  ogImage?: string;
+  breadcrumbItems?: { label: string; href?: string }[];
+  regulatorUrl?: string;
+  regulatorLastUpdate?: string;
+}
+
+const {
+  country,
+  title,
+  description,
+  canonical,
+  hreflang = [],
+  jsonLd,
+  ogImage,
+  breadcrumbItems,
+  regulatorUrl = "#",
+  regulatorLastUpdate,
+} = Astro.props;
+
+const statusLabelMap: Record<string, string> = {
+  green: "Regulado",
+  yellow: "Marco en desarrollo",
+  red: "Sin marco legal claro",
+};
+
+const flagMap: Record<string, string> = {
+  México: "🇲🇽",
+  Brasil: "🇧🇷",
+  Argentina: "🇦🇷",
+  Venezuela: "🇻🇪",
+  Colombia: "🇨🇴",
+  Chile: "🇨🇱",
+  Perú: "🇵🇪",
+  "El Salvador": "🇸🇻",
+  Guatemala: "🇬🇹",
+  Bolivia: "🇧🇴",
+  Paraguay: "🇵🇾",
+  Uruguay: "🇺🇾",
+  Ecuador: "🇪🇨",
+  Panamá: "🇵🇦",
+  Honduras: "🇭🇳",
+};
+
+const countryFlag = country.flag ?? flagMap[country.name] ?? "🌎";
+
+const defaultBreadcrumbs = [
+  { label: "Inicio", href: "/" },
+  { label: "Bitcoin por país", href: "/bitcoin/" },
+  { label: country.name },
+];
+
+const crumbs = breadcrumbItems ?? defaultBreadcrumbs;
+
+const lastUpdate =
+  regulatorLastUpdate ?? new Date().toISOString().split("T")[0];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  hreflang={hreflang}
+  jsonLd={jsonLd}
+  ogImage={ogImage}
+>
+  <slot name="head" slot="head" />
+
+  <!-- Country Page Header -->
+  <div class="country-header-wrap">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+
+      <div class="country-header">
+        <div class="country-title-group">
+          <span class="country-flag" aria-hidden="true">{countryFlag}</span>
+          <div>
+            <h1 class="country-name">{country.name}</h1>
+            <p class="country-meta">
+              Moneda: <strong>{country.currency}</strong> &middot; Idioma:{" "}
+              <strong>{country.language}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="country-badge-wrap">
+          <RegulatoryStatusBadge
+            status={country.regulatory_status}
+            label={statusLabelMap[country.regulatory_status] ?? country.regulatory_status}
+            lastUpdate={lastUpdate}
+            regulatorName={country.regulator}
+            regulatorUrl={regulatorUrl}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="country-layout">
+      <div class="country-main">
+        <slot />
+      </div>
+      <aside class="country-sidebar">
+        <slot name="sidebar" />
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .country-header-wrap {
+    background: var(--c-surface-1);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-8) 0 var(--space-6);
+  }
+
+  .country-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .country-title-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .country-flag {
+    font-size: 3rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .country-name {
+    margin-bottom: var(--space-1);
+  }
+
+  .country-meta {
+    color: var(--c-text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 0;
+  }
+
+  .country-badge-wrap {
+    padding-top: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .country-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-8);
+    padding: var(--space-8) 0;
+    align-items: start;
+  }
+
+  .country-sidebar:empty {
+    display: none;
+  }
+
+  @media (max-width: 960px) {
+    .country-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .country-sidebar {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .country-header {
+      flex-direction: column;
+    }
+
+    .country-flag {
+      font-size: 2.25rem;
+    }
+  }
+</style>

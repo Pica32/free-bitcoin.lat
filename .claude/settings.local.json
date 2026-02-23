@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tail:*)",
+      "Bash(echo montserrat css fetched:*)",
+      "Bash(cd:*)",
+      "Bash(head:*)"
+    ]
+  }
+}

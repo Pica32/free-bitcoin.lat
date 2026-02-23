@@ -1,0 +1,398 @@
+---
+interface RemittanceOption {
+  method: string;
+  provider: string;
+  totalCostUSD: number;
+  speed: string;
+  risk: string;
+}
+
+interface Props {
+  corridor: string;
+  fromCountry: string;
+  toCountry: string;
+  toCurrency: string;
+}
+
+const { corridor, fromCountry, toCountry, toCurrency } = Astro.props;
+
+const fallbackData: Record<string, RemittanceOption[]> = {
+  "us-mx": [
+    { method: "Bitcoin Lightning", provider: "Strike / Muun", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 1.5, speed: "10–30 min", risk: "medio" },
+    { method: "Airtm", provider: "Airtm", totalCostUSD: 3.0, speed: "1–24 h", risk: "bajo" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 8.0, speed: "Minutos", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 27.5, speed: "1–3 días", risk: "muy bajo" },
+  ],
+  "us-gt": [
+    { method: "Bitcoin Lightning", provider: "Strike / Muun", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 2.0, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 7.5, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 5.0, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 25.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+  "us-hn": [
+    { method: "Bitcoin Lightning", provider: "Strike / Muun", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 2.0, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 8.0, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 5.5, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 26.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+  "us-sv": [
+    { method: "Bitcoin Lightning", provider: "Strike / Chivo", totalCostUSD: 0.0, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 1.5, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 6.0, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 4.5, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 22.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+  "us-co": [
+    { method: "Bitcoin Lightning", provider: "Strike / Muun", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 2.0, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 8.5, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 5.0, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 28.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+  "us-pe": [
+    { method: "Bitcoin Lightning", provider: "Strike / Muun", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 2.0, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 8.0, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 5.0, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 27.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+  "us-bo": [
+    { method: "Bitcoin Lightning", provider: "Muun / Phoenix", totalCostUSD: 0.5, speed: "< 1 min", risk: "bajo" },
+    { method: "USDT P2P", provider: "Binance P2P", totalCostUSD: 2.5, speed: "10–30 min", risk: "medio" },
+    { method: "Western Union", provider: "WU / MG", totalCostUSD: 9.0, speed: "Minutos", risk: "muy bajo" },
+    { method: "Remitly", provider: "Remitly", totalCostUSD: 6.0, speed: "1–3 días", risk: "muy bajo" },
+    { method: "Banco tradicional", provider: "Bancos", totalCostUSD: 30.0, speed: "2–5 días", risk: "muy bajo" },
+  ],
+};
+
+const defaultOptions = fallbackData[corridor] ?? fallbackData["us-mx"];
+const defaultAmount = 200;
+
+const riskBadge: Record<string, string> = {
+  "bajo": "badge-green",
+  "medio": "badge-yellow",
+  "muy bajo": "badge-green",
+  "alto": "badge-red",
+};
+
+const corridorLabel = `${fromCountry} → ${toCountry}`;
+---
+
+<div class="remittance-calc card" id="remittance-calc" data-corridor={corridor}>
+  <div class="calc-header">
+    <h3 class="calc-title">Comparador de costos: {corridorLabel}</h3>
+    <p class="calc-subtitle">¿Cuánto llega si envías <span id="amount-display">${defaultAmount}</span> USD?</p>
+  </div>
+
+  <div class="calc-input-row">
+    <label for="send-amount" class="calc-label">Monto a enviar (USD)</label>
+    <div class="input-wrap">
+      <span class="input-prefix">$</span>
+      <input
+        type="number"
+        id="send-amount"
+        class="calc-input mono"
+        value={defaultAmount}
+        min="1"
+        max="10000"
+        step="10"
+        aria-describedby="calc-note"
+      />
+      <span class="input-suffix">USD</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="remittance-table" aria-label={`Comparación de costos de remesa ${corridorLabel}`}>
+      <thead>
+        <tr>
+          <th scope="col">Método / Proveedor</th>
+          <th scope="col">Costo estimado</th>
+          <th scope="col">Neto recibido</th>
+          <th scope="col">Velocidad</th>
+          <th scope="col">Riesgo</th>
+        </tr>
+      </thead>
+      <tbody id="remittance-tbody">
+        {defaultOptions.map((opt, i) => (
+          <tr class={i === 0 ? "row-best" : ""}>
+            <td>
+              <div class="method-cell">
+                {i === 0 && <span class="badge badge-green best-tag">Mejor opción</span>}
+                <strong>{opt.method}</strong>
+                <span class="provider-name">{opt.provider}</span>
+              </div>
+            </td>
+            <td>
+              <span class="mono cost-cell" data-cost={opt.totalCostUSD}>
+                {opt.totalCostUSD === 0 ? "Gratis" : `$${opt.totalCostUSD.toFixed(2)}`}
+              </span>
+            </td>
+            <td>
+              <span class="mono net-cell highlight">
+                ${(defaultAmount - opt.totalCostUSD).toFixed(2)} USD
+              </span>
+              <span class="net-note">equiv. en {toCurrency}</span>
+            </td>
+            <td><span class="speed-cell">{opt.speed}</span></td>
+            <td>
+              <span class={`badge ${riskBadge[opt.risk] ?? "badge-yellow"}`}>{opt.risk}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="disclaimer" id="calc-note">
+    Las tarifas son estimaciones actualizadas para 2026. El monto recibido se expresa en USD equivalente antes de conversión a {toCurrency} al tipo de cambio del mercado. Verifica con cada proveedor antes de enviar.
+  </p>
+
+  <p class="calc-corridor-link">
+    <a href={`/remesas/${corridor}/`} class="link-primary">
+      Ver guia completa del corredor {corridorLabel} &rarr;
+    </a>
+  </p>
+</div>
+
+<style>
+  .remittance-calc {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .calc-header {
+    border-bottom: 1px solid var(--c-border);
+    padding-bottom: var(--space-4);
+  }
+
+  .calc-title {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .calc-subtitle {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .calc-input-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .calc-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    white-space: nowrap;
+  }
+
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--transition-fast);
+  }
+
+  .input-wrap:focus-within {
+    border-color: var(--c-primary);
+  }
+
+  .input-prefix,
+  .input-suffix {
+    padding: var(--space-3) var(--space-4);
+    color: var(--c-text-muted);
+    font-size: 0.9rem;
+    background: var(--c-surface-1);
+    border: none;
+    user-select: none;
+  }
+
+  .calc-input {
+    background: transparent;
+    border: none;
+    color: var(--c-text);
+    font-size: 1.1rem;
+    font-family: var(--font-mono);
+    padding: var(--space-3) var(--space-2);
+    width: 100px;
+    outline: none;
+    text-align: right;
+  }
+
+  .calc-input::-webkit-inner-spin-button,
+  .calc-input::-webkit-outer-spin-button {
+    opacity: 1;
+  }
+
+  /* Table row highlight for best option */
+  .row-best td {
+    background: rgba(0, 200, 83, 0.04);
+  }
+
+  .method-cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .best-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    width: fit-content;
+    margin-bottom: var(--space-1);
+  }
+
+  .provider-name {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+  }
+
+  .cost-cell {
+    color: var(--c-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .net-cell {
+    display: block;
+    font-size: 1rem;
+    color: var(--c-success);
+  }
+
+  .net-note {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+  }
+
+  .speed-cell {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .calc-corridor-link {
+    text-align: right;
+    font-size: 0.9rem;
+  }
+
+  .link-primary {
+    color: var(--c-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .link-primary:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .remittance-calc {
+      padding: var(--space-4);
+    }
+
+    .calc-input-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* Hide risk on mobile */
+    thead th:last-child,
+    tbody td:last-child {
+      display: none;
+    }
+  }
+</style>
+
+<script define:vars={{ corridor, fallbackData, toCurrency }}>
+  (function () {
+    const calc = document.getElementById("remittance-calc");
+    if (!calc) return;
+
+    const input = document.getElementById("send-amount");
+    const amountDisplay = document.getElementById("amount-display");
+    const tbody = document.getElementById("remittance-tbody");
+
+    let currentOptions = fallbackData[corridor] || fallbackData["us-mx"];
+
+    // Try to fetch live data
+    fetch(`/api/remittance.php?corridor=${corridor}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("fetch failed");
+        return res.json();
+      })
+      .then((data) => {
+        if (data && Array.isArray(data.options) && data.options.length > 0) {
+          currentOptions = data.options;
+          renderTable(Number(input.value) || 200);
+        }
+      })
+      .catch(() => {
+        // Silently use fallback data already rendered server-side
+      });
+
+    function getRiskBadgeClass(risk) {
+      const map = {
+        bajo: "badge-green",
+        "muy bajo": "badge-green",
+        medio: "badge-yellow",
+        alto: "badge-red",
+      };
+      return map[risk] || "badge-yellow";
+    }
+
+    function renderTable(amount) {
+      if (!tbody) return;
+      tbody.innerHTML = currentOptions
+        .map((opt, i) => {
+          const net = Math.max(0, amount - opt.totalCostUSD).toFixed(2);
+          const costDisplay =
+            opt.totalCostUSD === 0
+              ? "Gratis"
+              : `$${opt.totalCostUSD.toFixed(2)}`;
+          const isBest = i === 0;
+          const badgeClass = getRiskBadgeClass(opt.risk);
+
+          return `<tr class="${isBest ? "row-best" : ""}">
+            <td>
+              <div class="method-cell">
+                ${isBest ? '<span class="badge badge-green best-tag">Mejor opci&oacute;n</span>' : ""}
+                <strong>${opt.method}</strong>
+                <span class="provider-name">${opt.provider}</span>
+              </div>
+            </td>
+            <td><span class="mono cost-cell">$${costDisplay}</span></td>
+            <td>
+              <span class="mono net-cell highlight">$${net} USD</span>
+              <span class="net-note">equiv. en ${toCurrency}</span>
+            </td>
+            <td><span class="speed-cell">${opt.speed}</span></td>
+            <td><span class="badge ${badgeClass}">${opt.risk}</span></td>
+          </tr>`;
+        })
+        .join("");
+    }
+
+    function updateDisplay(amount) {
+      if (amountDisplay) amountDisplay.textContent = `$${amount}`;
+      renderTable(amount);
+    }
+
+    if (input) {
+      input.addEventListener("input", () => {
+        const val = Math.max(1, Math.min(10000, Number(input.value) || 200));
+        updateDisplay(val);
+      });
+    }
+  })();
+</script>

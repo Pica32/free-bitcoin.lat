@@ -1,0 +1,163 @@
+---
+interface Props {
+  name: string;
+  url: string;
+  description: string;
+  tier: "primary" | "secondary" | "standard";
+  isAffiliate: true;
+  disclosureOverride?: string;
+  logoSrc?: string;
+}
+
+const {
+  name,
+  url,
+  description,
+  tier,
+  isAffiliate,
+  disclosureOverride,
+  logoSrc,
+} = Astro.props;
+
+const defaultDisclosure =
+  "Este es un enlace de afiliado. Si te registras, recibimos una pequeña comisión sin costo adicional para ti.";
+
+const disclosure = disclosureOverride ?? defaultDisclosure;
+
+const tierConfig = {
+  primary: { label: "Recomendado", badgeClass: "badge-green" },
+  secondary: { label: "Destacado", badgeClass: "badge-yellow" },
+  standard: { label: "", badgeClass: "" },
+};
+
+const tierInfo = tierConfig[tier] ?? tierConfig.standard;
+---
+
+<div class={`card card-hover affiliate-card affiliate-card--${tier}`}>
+  <div class="affiliate-card-header">
+    <div class="affiliate-card-identity">
+      {logoSrc && (
+        <img
+          src={logoSrc}
+          alt={`Logo de ${name}`}
+          class="affiliate-logo"
+          width="40"
+          height="40"
+          loading="lazy"
+        />
+      )}
+      <div>
+        <div class="affiliate-name-row">
+          <h3 class="affiliate-name">{name}</h3>
+          {tierInfo.label && (
+            <span class={`badge ${tierInfo.badgeClass}`}>{tierInfo.label}</span>
+          )}
+        </div>
+        <p class="affiliate-description">{description}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="affiliate-card-footer">
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer sponsored"
+      class="btn btn-primary btn-sm affiliate-cta"
+      aria-label={`Ir a ${name} (enlace de afiliado, abre en nueva pestaña)`}
+    >
+      Visitar {name}
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        aria-hidden="true"
+      >
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+        <polyline points="15 3 21 3 21 9" />
+        <line x1="10" y1="14" x2="21" y2="3" />
+      </svg>
+    </a>
+    <p class="affiliate-disclosure">{disclosure}</p>
+  </div>
+</div>
+
+<style>
+  .affiliate-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .affiliate-card--primary {
+    border-color: rgba(0, 200, 83, 0.3);
+  }
+
+  .affiliate-card--secondary {
+    border-color: rgba(255, 214, 0, 0.2);
+  }
+
+  .affiliate-card-header {
+    flex: 1;
+  }
+
+  .affiliate-card-identity {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .affiliate-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    object-fit: contain;
+    flex-shrink: 0;
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+  }
+
+  .affiliate-name-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2);
+  }
+
+  .affiliate-name {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .affiliate-description {
+    color: var(--c-text-muted);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .affiliate-card-footer {
+    border-top: 1px solid var(--c-border);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .affiliate-cta {
+    align-self: flex-start;
+  }
+
+  .affiliate-disclosure {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    border-left: 3px solid var(--c-primary);
+    padding-left: var(--space-3);
+    margin: 0;
+    font-style: italic;
+    line-height: 1.5;
+  }
+</style>

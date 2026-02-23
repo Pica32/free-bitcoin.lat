@@ -1,0 +1,291 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Ecuador 2026: Precio en USD, Exchanges y Estado Legal | free-bitcoin.lat";
+const description = "Bitcoin en Ecuador 2026: Ecuador usa USD. Estado legal segun BCE, mejores exchanges disponibles, remesas ~5% PIB y como comprar cripto sin conversion de divisa.";
+const canonical = "https://free-bitcoin.lat/ec/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Transferencia USD", "P2P", "Tarjeta"],
+    bestFor: "Mayor liquidez, pares BTC/USDT en USD",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Spot y derivados, interfaz moderna",
+    isAffiliate: true,
+  },
+  {
+    name: "KuCoin",
+    url: "https://www.kucoin.com/r/rf/QBSKA5LH",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia USD"],
+    bestFor: "Altcoins, bajo KYC inicial",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal comprar Bitcoin en Ecuador?",
+    a: "El uso personal de Bitcoin en Ecuador no esta expresamente prohibido. Sin embargo, el Banco Central del Ecuador (BCE) no reconoce las criptomonedas como dinero electronico ni como moneda de curso legal. Esto significa que ningun negocio esta obligado a aceptarlas, y el BCE no ofrece ningun respaldo ni garantia. El SRI (Servicio de Rentas Internas) puede gravar las ganancias derivadas de operaciones cripto.",
+  },
+  {
+    q: "¿Que ventaja tiene Ecuador al usar USD para comprar cripto?",
+    a: "Ecuador esta dolarizado desde el año 2000: el dolar estadounidense es la moneda oficial. Esto elimina el riesgo cambiario que enfrentan los usuarios de otros paises latinoamericanos. Un ecuatoriano que compra Bitcoin lo hace directamente en USD, sin necesidad de conversiones intermedias ni preocuparse por la depreciacion de una moneda local.",
+  },
+  {
+    q: "¿Cuanto representan las remesas en la economia ecuatoriana?",
+    a: "Las remesas representan aproximadamente el 5% del PIB de Ecuador, siendo una fuente vital de ingresos para miles de familias. El mayor corredor es EE.UU.-Ecuador. Bitcoin y USDT permiten enviar remesas con comisiones del 1-2% versus el 5-8% de las remesadoras tradicionales, lo que puede ahorrar cientos de dolares al año por familia.",
+  },
+  {
+    q: "¿Como compro Bitcoin en Ecuador si no tengo cuenta bancaria?",
+    a: "Puedes usar Binance P2P, que permite comprar Bitcoin directamente a otros usuarios con efectivo o pagos no bancarios. Tambien puedes usar exchanges P2P con pagos en efectivo acordados localmente. Sin embargo, la mayoria de exchanges exigen verificacion KYC (cedula de identidad + selfie), aunque no necesariamente cuenta bancaria para recibir fondos.",
+  },
+  {
+    q: "¿Tengo que pagar impuestos al SRI por ganancias en Bitcoin?",
+    a: "El SRI considera que las ganancias obtenidas por la venta de activos digitales como Bitcoin pueden estar sujetas al Impuesto a la Renta si constituyen un ingreso. No existe regulacion especifica para cripto en Ecuador, pero el principio general de tributacion sobre rentas aplica. Se recomienda consultar con un contador ecuatoriano para declaraciones formales.",
+  },
+];
+
+const sources = [
+  { label: "BCE – Banco Central del Ecuador", url: "https://www.bce.fin.ec" },
+  { label: "SRI – Servicio de Rentas Internas Ecuador", url: "https://www.sri.gob.ec" },
+  { label: "Banco Mundial – Remesas Ecuador", url: "https://remittanceprices.worldbank.org" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Ecuador", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Ecuador" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="ec-hero">
+    <div class="container">
+      <div class="ec-hero-inner">
+        <div class="ec-hero-text">
+          <span class="hero-eyebrow">Ecuador · BTC/USD · Economia Dolarizada</span>
+          <h1>Bitcoin en Ecuador 2026: precio en USD, exchanges y estado legal</h1>
+          <p class="hero-sub">
+            Ecuador es el unico pais andino completamente dolarizado desde el año 2000.
+            Esta condicion elimina el riesgo cambiario para el usuario ecuatoriano que
+            compra Bitcoin: opera directamente en USD, sin conversiones ni fricciones
+            monetarias. Las remesas —equivalentes al 5% del PIB— son el caso de uso
+            mas practico del cripto en el pais.
+          </p>
+          <div class="hero-cta">
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Comprar BTC en Binance</a>
+          </div>
+        </div>
+        <div class="ec-hero-widget card">
+          <LivePriceWidget currency="USD" currencySymbol="$" countryName="Ecuador" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="red"
+        label="Sin regulacion — BCE no autoriza"
+        lastUpdate="2026-02-23"
+        regulatorName="BCE – Banco Central del Ecuador"
+        regulatorUrl="https://www.bce.fin.ec"
+      />
+
+      <h2 id="regulacion-heading">Estado legal de las criptomonedas en Ecuador 2026</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Ecuador no cuenta con una ley especifica que regule las criptomonedas. El
+            <strong>Banco Central del Ecuador (BCE)</strong> ha emitido comunicados aclarando
+            que no reconoce a las criptomonedas como dinero electronico (concepto reservado
+            para el sistema de pagos oficial) ni como moneda de curso legal.
+          </p>
+          <p>
+            Esto crea una zona gris regulatoria: el uso personal de Bitcoin no esta prohibido
+            explicitamente, pero tampoco esta respaldado ni garantizado por ningun organismo
+            del Estado. Los negocios ecuatorianos no estan obligados a aceptar cripto como
+            pago, y el sistema bancario no ofrece servicios relacionados.
+          </p>
+          <p>
+            La gran ventaja de Ecuador frente a otros paises de la region es su
+            <strong>dolarizacion total</strong>. El ecuatoriano que compra Bitcoin lo hace
+            en dolares reales, sin necesidad de pasar por tasas de cambio locales ni
+            preocuparse por la inflacion de una moneda nacional. Esto simplifica enormemente
+            la experiencia cripto.
+          </p>
+          <p>
+            El <strong>SRI (Servicio de Rentas Internas)</strong> no tiene normativa especifica
+            para cripto, pero el principio general de tributar sobre ingresos aplica. Se espera
+            que en los proximos años Ecuador desarrolle un marco regulatorio mas claro, siguiendo
+            la tendencia regional.
+          </p>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Ventajas Ecuador</h3>
+            <ul class="quick-links" role="list">
+              <li>Sin riesgo cambiario (USD oficial)</li>
+              <li>Compras directas en USD</li>
+              <li>Remesas ~5% del PIB</li>
+              <li>Sin conversion de divisas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para Ecuador</h2>
+      <p class="section-sub">
+        Los exchanges internacionales son la opcion dominante en Ecuador. Al estar dolarizados,
+        los depositos y retiros en USD son directos y sin conversion.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Ecuador — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- Remesas -->
+  <section class="section" aria-labelledby="remesas-heading">
+    <div class="container">
+      <div class="highlight">
+        <h2 id="remesas-heading" style="margin-bottom:var(--space-3)">Remesas cripto: la oportunidad mas clara para Ecuador</h2>
+        <p>
+          Con remesas equivalentes al <strong>5% del PIB</strong>, Ecuador es uno de los paises
+          mas dependientes de envios del exterior en America Latina. El corredor EE.UU.-Ecuador
+          es el mas activo. Una transferencia bancaria internacional cobra entre 5% y 8%.
+          Con Bitcoin o USDT, el costo baja al 1-2%, ahorrando decenas o cientos de dolares
+          anuales por familia. Al estar ya dolarizado, el receptor en Ecuador no necesita
+          convertir divisas: recibe directamente en USD.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Ecuador" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .ec-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .ec-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .ec-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .ec-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .section-dark { background: var(--c-surface-1); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-5);
+  }
+  .highlight p { color: var(--c-text-muted); line-height: 1.75; margin: 0; }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .ec-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

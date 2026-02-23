@@ -1,0 +1,140 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Imposto de Renda Bitcoin e Criptomoedas no Brasil 2026 | free-bitcoin.lat";
+const description = "Guia completo de imposto de renda sobre Bitcoin e criptoativos no Brasil 2026. Como declarar à Receita Federal, tabela de alíquotas, isenção R$35k e prazo IRPF.";
+const canonical = "https://free-bitcoin.lat/br/impostos-bitcoin/";
+
+const faqItems = [
+  { q: "Preciso declarar Bitcoin no Imposto de Renda no Brasil?", a: "Sim. Pela IN RFB 2.291/2025 (DeCripto), exchanges com clientes brasileiros são obrigadas a informar operações à Receita Federal. Além disso, você deve declarar seus criptoativos na ficha 'Bens e Direitos' (código 89) da declaração anual de IRPF." },
+  { q: "Qual é a alíquota de imposto sobre ganhos com Bitcoin?", a: "Os ganhos de capital são tributados progressivamente: 15% até R$5 milhões, 17,5% de R$5M–R$10M, 20% de R$10M–R$30M, e 22,5% acima de R$30M. Há isenção para vendas de até R$35.000 no mês (por tipo de ativo)." },
+  { q: "Existe isenção para pequenos valores?", a: "Sim. Vendas de até R$35.000 no mês do mesmo tipo de ativo são isentas de imposto sobre ganho de capital. Mas você ainda deve declarar os ativos na ficha de Bens e Direitos se o custo de aquisição ultrapassar R$5.000." },
+  { q: "Como calcular o ganho de capital em criptomoedas?", a: "Ganho de capital = preço de venda - custo médio de aquisição. O custo médio deve incluir taxas pagas. Use o programa GCAP da Receita Federal ou os recursos da sua declaração de IRPF para calcular corretamente." },
+  { q: "O que é o DeCripto (IN RFB 2.291/2025)?", a: "DeCripto é o sistema da Receita Federal que obriga exchanges, corretoras e prestadores de serviços de criptoativos com clientes brasileiros a informar mensalmente as operações realizadas. Entrou em vigor com a IN RFB 2.291/2025 e aumenta a capacidade de fiscalização da RF." },
+  { q: "Mining e staking são tributados no Brasil?", a: "Sim. Rendimentos de mineração e staking são considerados renda ordinária no momento do recebimento (como 'outros rendimentos') e devem ser declarados na ficha correspondente. Guarde registros com data e valor de mercado na data de recebimento." },
+];
+
+const sources = [
+  { label: "Receita Federal – Criptoativos", url: "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/declaracoes-e-demonstrativos/dirpf" },
+  { label: "Lei 14.478/2022 – Marco legal criptoativos", url: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14478.htm" },
+  { label: "IN RFB 1.888/2019 (precursora do DeCripto)", url: "https://www.in.gov.br/en/web/dou/-/instrucao-normativa-rfb-n-1.888-de-3-de-maio-de-2019" },
+  { label: "Banco Central do Brasil – Regulamentação de PSAVs", url: "https://www.bcb.gov.br" },
+  { label: "Programa GCAP – Receita Federal", url: "https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/programas/gcap" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Início", item: "https://free-bitcoin.lat/" },
+    { name: "Brasil", item: "https://free-bitcoin.lat/br/" },
+    { name: "Impostos Bitcoin", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container" style="padding-top:var(--space-8)">
+    <Breadcrumbs items={[
+      { label: "Início", href: "/" },
+      { label: "Brasil", href: "/br/" },
+      { label: "Impostos Bitcoin" },
+    ]} />
+
+    <article>
+      <header style="margin-bottom:var(--space-8)">
+        <h1>Imposto de renda sobre Bitcoin no Brasil 2026</h1>
+        <div class="last-updated">📅 Última atualização: 2026-02-23</div>
+      </header>
+
+      <p class="lead">No Brasil, os ganhos de capital com Bitcoin são tributados pelo Imposto de Renda com alíquotas de <strong>15% a 22,5%</strong>. A Receita Federal exige declaração anual e, desde a IN RFB 2.291/2025 (DeCripto), as exchanges reportam automaticamente as operações. Há isenção para vendas de até <strong>R$35.000/mês</strong> do mesmo tipo de ativo.</p>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Tabela de alíquotas de ganho de capital (2026)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Faixa de ganho líquido</th><th>Alíquota</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Vendas ≤ R$35.000 no mês (por tipo de ativo)</td><td><strong>Isento</strong></td></tr>
+              <tr><td>Ganho até R$5.000.000</td><td><strong>15%</strong></td></tr>
+              <tr><td>Ganho de R$5M a R$10M</td><td><strong>17,5%</strong></td></tr>
+              <tr><td>Ganho de R$10M a R$30M</td><td><strong>20%</strong></td></tr>
+              <tr><td>Ganho acima de R$30M</td><td><strong>22,5%</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="disclaimer">A isenção de R$35.000 se aplica ao <em>total vendido no mês</em> do mesmo tipo de ativo (ex: Bitcoin separado de Ethereum), não ao ganho. Se vender R$34.999 em BTC mesmo com grande lucro, pode ser isento.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Como declarar criptomoedas no IRPF</h2>
+        <h3>Ficha "Bens e Direitos"</h3>
+        <p>Declare todos os criptoativos que possuía em 31/12 do ano anterior:</p>
+        <ul style="line-height:2;padding-left:1.2rem">
+          <li><strong>Código 89:</strong> Criptoativos em geral (Bitcoin, Ethereum, etc.)</li>
+          <li>Informe o <em>custo de aquisição</em> em reais (não o valor de mercado)</li>
+          <li>Inclua nome da moeda, quantidade e onde está custodiada (exchange ou carteira)</li>
+        </ul>
+
+        <h3>Ganhos de Capital</h3>
+        <p>Quando você vende e tem lucro acima de R$35.000 no mês:</p>
+        <ol style="line-height:2;padding-left:1.2rem">
+          <li>Use o programa <strong>GCAP</strong> da Receita Federal (gratuito) para calcular o imposto</li>
+          <li>Pague o DARF até o <strong>último dia útil do mês seguinte</strong> à venda</li>
+          <li>Importe o arquivo do GCAP para a declaração de IRPF</li>
+        </ol>
+
+        <div class="highlight">
+          <strong>Atenção:</strong> O imposto sobre ganho de capital é pago mensalmente (DARF), não apenas na declaração anual. Atrasos geram multa de 0,33%/dia + juros SELIC.
+        </div>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Como calcular o ganho de capital</h2>
+        <p>A fórmula é simples:</p>
+        <div class="card" style="font-family:var(--font-mono);text-align:center;font-size:1.1rem">
+          Ganho = Valor de venda – Custo médio de aquisição
+        </div>
+        <h3>Exemplo prático:</h3>
+        <ul style="line-height:2;padding-left:1.2rem">
+          <li>Comprou 0,1 BTC por R$30.000 (custo médio: R$300.000/BTC)</li>
+          <li>Vendeu 0,1 BTC por R$55.000</li>
+          <li>Ganho = R$55.000 – R$30.000 = <strong>R$25.000</strong></li>
+          <li>Como o ganho é R$25.000, mas a <em>venda total</em> foi R$55.000 (acima do limite), verifique se o total vendido no mês supera R$35.000</li>
+        </ul>
+        <p>Se o total vendido em BTC no mês for R$55.000, o imposto é devido sobre o ganho de R$25.000 × 15% = <strong>R$3.750</strong>.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>DeCripto: o que as exchanges já reportam</h2>
+        <p>Desde a IN RFB 2.291/2025, exchanges com clientes brasileiros — incluindo Binance, Bybit, Mercado Bitcoin e outras — são obrigadas a informar mensalmente à Receita Federal:</p>
+        <ul style="line-height:2;padding-left:1.2rem">
+          <li>Nome, CPF e dados do cliente</li>
+          <li>Tipo de operação (compra, venda, conversão)</li>
+          <li>Valor em reais de cada transação</li>
+        </ul>
+        <p>Isso significa que a Receita já sabe sobre suas operações em exchanges registradas. Declarar é obrigatório e a omissão pode gerar autuação.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Mining, staking e DeFi</h2>
+        <p><strong>Mineração:</strong> Tratada como renda ordinária. O valor de mercado dos BTC recebidos na data do bloco é tributado como "outros rendimentos" na tabela progressiva (até 27,5%).</p>
+        <p><strong>Staking / Yield farming:</strong> Idem — renda no momento do recebimento. Guarde o valor em reais na data exata de cada recompensa.</p>
+        <p><strong>DeFi e DEX:</strong> Ainda sem orientação específica, mas a RF considera que cada swap é uma alienação sujeita a ganho de capital. Consulte um contador especializado.</p>
+      </section>
+
+      <FAQ items={faqItems} />
+      <SourcesList sources={sources} />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .lead { font-size:1.1rem; line-height:1.7; border-left:3px solid var(--c-primary); padding-left:var(--space-4); margin-bottom:var(--space-6); }
+</style>

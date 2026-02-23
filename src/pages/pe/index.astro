@@ -1,0 +1,275 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Peru 2026: Precio BTC/PEN, Exchanges y SBS | free-bitcoin.lat";
+const description = "Bitcoin en Peru 2026: precio BTC/PEN en tiempo real, regulacion SBS (Res 02648-2024), mejores exchanges con Yape y Plin, impuestos SUNAT.";
+const canonical = "https://free-bitcoin.lat/pe/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Yape", "Plin", "P2P PEN", "Transferencia"],
+    bestFor: "Mayor liquidez, P2P en soles, Yape",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Spot y derivados, interfaz moderna",
+    isAffiliate: true,
+  },
+  {
+    name: "KuCoin",
+    url: "https://www.kucoin.com/r/rf/QBSKA5LH",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P PEN", "Tarjeta", "Transferencia"],
+    bestFor: "Altcoins, P2P en soles",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal comprar Bitcoin en Peru?",
+    a: "Si. La Superintendencia de Banca, Seguros y AFP (SBS) emitio la Resolucion 02648-2024, que establece el marco regulatorio para activos virtuales en Peru. La norma exige que los Proveedores de Servicios de Activos Virtuales (PSAV) que operen en Peru se registren ante la SBS. El uso personal de Bitcoin por ciudadanos es legal y no requiere ningun tramite especial.",
+  },
+  {
+    q: "¿Puedo comprar Bitcoin con Yape o Plin en Peru?",
+    a: "Si. En Binance P2P es comun encontrar vendedores que aceptan Yape y Plin como metodo de pago para comprar USDT o BTC en soles peruanos (PEN). El proceso es: abrir cuenta en Binance, completar KYC, iniciar una orden P2P, transferir soles al vendedor via Yape/Plin, y el vendedor libera el cripto via escrow. Es el metodo mas comodo y popular en Peru.",
+  },
+  {
+    q: "¿Que dice la resolucion SBS 02648-2024?",
+    a: "La Resolucion SBS 02648-2024 implementa los estandares del GAFI para activos virtuales en Peru. Establece que los PSAV deben registrarse ante la SBS, implementar controles AML/KYC, reportar transacciones sospechosas a la UIF-Peru, y cumplir con requisitos de capital y gobernanza. No es una prohibicion: es una normativa de supervision similar a la de otros sectores financieros.",
+  },
+  {
+    q: "¿Tengo que pagar impuestos por Bitcoin en Peru?",
+    a: "Si. La SUNAT (Superintendencia Nacional de Aduanas y de Administracion Tributaria) considera que las ganancias por venta de criptomonedas son rentas de tercera categoria si la actividad es habitual, o rentas de segunda categoria (5% sobre la ganancia neta) si es una inversion ocasional. Debes guardar registro de cada compra y venta (fecha, precio, cantidad) para calcular la ganancia neta imponible.",
+  },
+  {
+    q: "¿Como recibo remesas de EE.UU. con Bitcoin en Peru?",
+    a: "Peru recibe remesas importantes desde EE.UU., España, Chile y otros paises. Para recibir cripto: 1) El familiar en el exterior compra USDT o BTC en su exchange local; 2) Lo envia a tu wallet en Peru (TRC-20 para USDT barato, Lightning para BTC); 3) Tu vendes en Binance P2P a compradores locales que te pagan en soles via Yape/Plin. Calcula costos en nuestra <a href='/remesas/us-pe/'>calculadora remesas EE.UU.-PE</a>.",
+  },
+];
+
+const sources = [
+  { label: "SBS – Superintendencia de Banca, Seguros y AFP Peru", url: "https://www.sbs.gob.pe" },
+  { label: "SUNAT – Superintendencia Nacional de Administracion Tributaria", url: "https://www.sunat.gob.pe" },
+  { label: "UIF-Peru – Unidad de Inteligencia Financiera", url: "https://www.sbs.gob.pe/uif" },
+  { label: "Banco Mundial – Remesas Peru", url: "https://remittanceprices.worldbank.org" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Peru", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Peru" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="pe-hero">
+    <div class="container">
+      <div class="pe-hero-inner">
+        <div class="pe-hero-text">
+          <span class="hero-eyebrow">Peru · BTC/PEN · Yape · Plin · SBS</span>
+          <h1>Bitcoin en Peru 2026: precio BTC/PEN, exchanges con Yape y regulacion SBS</h1>
+          <p class="hero-sub">
+            Peru cuenta desde 2024 con un marco regulatorio claro para criptomonedas bajo
+            la supervision de la SBS (Res 02648-2024). Binance P2P acepta <strong>Yape
+            y Plin</strong> como metodo de pago, lo que hace que comprar Bitcoin en soles
+            sea mas facil que nunca. Las remesas y la impuestos SUNAT son los temas
+            clave para el usuario peruano.
+          </p>
+          <div class="hero-cta">
+            <a href="/remesas/us-pe/" class="btn btn-primary">Remesas EE.UU. a Peru</a>
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-secondary" target="_blank" rel="noopener noreferrer sponsored">Comprar con Yape (Binance)</a>
+          </div>
+        </div>
+        <div class="pe-hero-widget card">
+          <LivePriceWidget currency="PEN" currencySymbol="S/." countryName="Peru" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="yellow"
+        label="Regulado — SBS Res 02648-2024"
+        lastUpdate="2026-02-23"
+        regulatorName="SBS – Superintendencia de Banca, Seguros y AFP"
+        regulatorUrl="https://www.sbs.gob.pe"
+      />
+
+      <h2 id="regulacion-heading">Regulacion cripto Peru 2026: SBS y SUNAT</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Peru dio un paso importante hacia la regulacion formal de criptomonedas con la
+            <strong>Resolucion SBS 02648-2024</strong>. Esta norma implementa los estandares
+            del GAFI (Grupo de Accion Financiera Internacional) para activos virtuales,
+            exigiendo a los PSAV que registrarse ante la SBS, implementar controles
+            AML/KYC y reportar a la UIF-Peru.
+          </p>
+          <p>
+            Para el usuario individual, el marco es claro: <strong>comprar y vender Bitcoin
+            es legal en Peru</strong>. No necesitas registro ni autorizacion personal para
+            operar. La regulacion aplica a las empresas que prestan servicios cripto, no a
+            los usuarios individuales.
+          </p>
+          <p>
+            En el plano tributario, la <strong>SUNAT</strong> considera que las ganancias
+            por criptomonedas son gravables. Para inversiones ocasionales, aplica el impuesto
+            de segunda categoria (5% sobre la ganancia neta). Para actividad frecuente, pueden
+            considerarse renta de tercera categoria. Guarda tus registros de compra y venta
+            para calcular correctamente.
+          </p>
+          <div class="highlight">
+            <strong>Yape y Plin en Bitcoin:</strong> Peru es uno de los pocos paises de la
+            region donde puedes comprar BTC directamente desde una billetera de pago movil.
+            Binance P2P tiene numerosos vendedores que aceptan Yape y Plin, lo que elimina
+            la necesidad de transferencia bancaria para montos pequenos.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Informacion clave</h3>
+            <ul class="quick-links" role="list">
+              <li>Regulador: SBS (Res 02648-2024)</li>
+              <li>Impuestos: SUNAT (5% segunda cat.)</li>
+              <li>Pago: Yape, Plin, transferencia BCP/Interbank</li>
+              <li><a href="/remesas/us-pe/">Remesas EE.UU. a Peru</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para Peru</h2>
+      <p class="section-sub">
+        Plataformas recomendadas para peruanos en 2026. Binance P2P destaca por la
+        integracion con Yape y Plin para pagos en soles.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Peru — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Peru" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .pe-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .pe-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .pe-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .pe-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .quick-links a { color: var(--c-text-muted); text-decoration: none; }
+  .quick-links a:hover { color: var(--c-primary); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .pe-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

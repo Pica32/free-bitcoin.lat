@@ -1,0 +1,584 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Cómo Comprar Bitcoin en México 2026 – Guía Paso a Paso | free-bitcoin.lat";
+const description = "Aprende cómo comprar Bitcoin en México en 2026. Guía paso a paso con SPEI, OXXO o tarjeta. Mejores exchanges: Binance, Bitso, Kraken. Sin complicaciones.";
+const canonical = "https://free-bitcoin.lat/mx/como-comprar-bitcoin/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "Tarjeta", "P2P"],
+    bestFor: "Mejor precio BTC/MXN",
+    isAffiliate: true,
+  },
+  {
+    name: "Kraken",
+    url: "https://invite.kraken.com/JDNW/aywgmsis",
+    fees: "0.16% maker / 0.26% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "Wire", "Tarjeta"],
+    bestFor: "Seguridad y reputación",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Básico" as const,
+    paymentMethods: ["SPEI P2P", "Tarjeta"],
+    bestFor: "Flexibilidad KYC",
+    isAffiliate: true,
+  },
+  {
+    name: "Bitso",
+    url: "https://bitso.com/",
+    fees: "0.50% – 1.00%",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["SPEI", "OXXO", "Tarjeta"],
+    bestFor: "OXXO, principiantes",
+    isAffiliate: false,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Cuánto dinero necesito para empezar a comprar Bitcoin en México?",
+    a: "En la mayoría de los exchanges disponibles en México puedes comenzar con montos muy bajos. Binance permite comprar desde el equivalente a $5 USD (aproximadamente $90–100 MXN según el tipo de cambio). Bitso tiene un mínimo de compra de $50 MXN. No es necesario comprar un Bitcoin completo: puedes adquirir fracciones (satoshis) por cualquier cantidad.",
+  },
+  {
+    q: "¿Es seguro comprar Bitcoin por SPEI?",
+    a: "Sí. SPEI es el sistema de pagos interbancarios del Banco de México y es completamente seguro para hacer depósitos. El riesgo no está en SPEI sino en la plataforma que elijas. Asegúrate de usar exchanges registrados ante la CNBV como ITF (como Bitso) o exchanges internacionales con buena reputación (Binance, Kraken). Verifica siempre la CLABE oficial del exchange antes de transferir.",
+  },
+  {
+    q: "¿Cuánto tarda en acreditarse un depósito SPEI en un exchange?",
+    a: "En horario bancario (lunes a viernes, 6:00 a 17:30 hrs), los depósitos SPEI se acreditan en 5 a 30 minutos. Fuera de horario bancario o en días festivos, el depósito puede tardar hasta el siguiente día hábil. Algunos exchanges como Binance tienen sistemas que aceleran el proceso en horas pico.",
+  },
+  {
+    q: "¿Necesito RFC para comprar Bitcoin en México?",
+    a: "No es obligatorio proporcionar el RFC para abrir una cuenta en un exchange, pero sí necesitas un documento de identidad oficial (INE, pasaporte o cédula profesional) para completar el proceso KYC. El RFC será relevante cuando declares tus ganancias ante el SAT, pero el exchange no lo requiere para operarte. Algunos exchanges de mayor nivel de verificación sí pueden solicitarlo.",
+  },
+  {
+    q: "¿Qué pasa si el exchange cierra o es hackeado?",
+    a: "Este es el principal riesgo de mantener Bitcoin en un exchange. Si la plataforma quiebra o sufre un hackeo, podrías perder tus fondos. La regla de oro es: <strong>no tus llaves, no tus bitcoins</strong>. Para montos significativos, se recomienda retirar el BTC a una wallet de custodia propia (hardware wallet como Ledger o Trezor, o software wallet como Sparrow). El exchange solo debe ser el punto de compra, no tu banco.",
+  },
+  {
+    q: "¿Puedo comprar Bitcoin de forma anónima en México?",
+    a: "Con los exchanges regulados (ITF), el proceso KYC es obligatorio: debes identificarte con INE o pasaporte. El anonimato total no es posible en plataformas legales. El método P2P (Binance P2P, LocalBitcoins) puede ofrecer mayor privacidad, pero implica más riesgo de estafas y sigue sujeto a la supervisión de la plataforma. Operar fuera de plataformas reguladas para evadir KYC puede implicar riesgos legales y de seguridad.",
+  },
+];
+
+const sources = [
+  { label: "CNBV – ITF autorizadas", url: "https://www.cnbv.gob.mx/Paginas/FinTech.aspx" },
+  { label: "Banxico – Circular 4/2019", url: "https://www.banxico.org.mx/marco-normativo/disposiciones-de-banxico/d/%7B4A0E8FE8-A61A-9BE4-E8D8-B39A89FE3F7C%7D.pdf" },
+  { label: "SAT – Declaración anual personas físicas", url: "https://www.sat.gob.mx/personas/declaraciones/declaracion-anual" },
+  { label: "Ley FinTech – DOF", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LRITF_090323.pdf" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Cómo comprar Bitcoin en México con SPEI",
+    description: "Guía paso a paso para comprar Bitcoin en México usando transferencia SPEI en Binance.",
+    totalTime: "PT30M",
+    estimatedCost: { "@type": "MonetaryAmount", currency: "MXN", value: "50" },
+    supply: [
+      { "@type": "HowToSupply", name: "INE o Pasaporte vigente" },
+      { "@type": "HowToSupply", name: "Cuenta bancaria mexicana con acceso a banca en línea" },
+      { "@type": "HowToSupply", name: "Teléfono móvil con acceso a internet" },
+    ],
+    tool: [
+      { "@type": "HowToTool", name: "App o sitio web de Binance" },
+    ],
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "Crear cuenta en Binance",
+        text: "Registra tu correo electrónico y crea una contraseña segura en Binance.com. Activa la autenticación de dos factores (2FA) antes de depositar.",
+        url: "https://accounts.binance.com/register?ref=346436875",
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "Completar verificación KYC",
+        text: "Sube una foto de tu INE o pasaporte y toma una selfie de verificación. El proceso tarda entre 5 y 30 minutos normalmente.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "Depositar pesos por SPEI",
+        text: "En la sección de depósitos, selecciona MXN y copia la CLABE interbancaria asignada a tu cuenta. Realiza la transferencia desde tu banco.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 4,
+        name: "Comprar Bitcoin en el mercado spot",
+        text: "Ve al mercado spot, selecciona el par BTC/MXN y elige entre orden de mercado (compra inmediata al precio actual) u orden límite (compra cuando el precio alcance tu objetivo).",
+      },
+      {
+        "@type": "HowToStep",
+        position: 5,
+        name: "Elegir tipo de orden",
+        text: "Una orden de mercado ejecuta al instante al mejor precio disponible. Una orden límite te permite fijar el precio máximo que pagarás, pero puede no ejecutarse si el mercado no llega a ese nivel.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 6,
+        name: "Retirar BTC a tu wallet propia",
+        text: "Para mayor seguridad, transfiere el Bitcoin comprado a una wallet de tu propiedad: hardware wallet (Ledger, Trezor) o software wallet (Sparrow, BlueWallet). Verifica siempre la dirección de destino antes de confirmar.",
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a.replace(/<[^>]+>/g, "") },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "México", item: "https://free-bitcoin.lat/mx/" },
+      { "@type": "ListItem", position: 3, name: "Cómo comprar Bitcoin", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "México", href: "/mx/" },
+      { label: "Cómo comprar Bitcoin" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="guide-hero">
+    <div class="container">
+      <div class="guide-hero-inner">
+        <span class="hero-eyebrow">Guía 2026 · México · SPEI / OXXO</span>
+        <h1>Cómo comprar Bitcoin en México 2026: guía paso a paso</h1>
+        <p class="hero-sub">
+          Para comprar Bitcoin en México en 2026, el método más rápido y seguro es usar un exchange
+          regulado como ITF (Bitso, Binance) con transferencia SPEI. Puedes depositar desde cualquier
+          banco mexicano en minutos y comprar BTC sin salir de casa. Esta guía te explica cada paso,
+          los métodos de pago disponibles y cómo proteger tu inversión.
+        </p>
+        <div class="hero-cta">
+          <a href="#pasos" class="btn btn-primary">Ver pasos →</a>
+          <a href="/mx/precio-bitcoin-mxn/" class="btn btn-secondary">Ver precio actual BTC/MXN</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Métodos de pago -->
+  <section class="section" aria-labelledby="metodos-heading">
+    <div class="container">
+      <h2 id="metodos-heading">Métodos para comprar Bitcoin en México</h2>
+      <p class="section-sub">
+        Existen cuatro métodos principales para depositar pesos y comprar Bitcoin en México.
+        Cada uno tiene sus ventajas, límites y costos.
+      </p>
+
+      <div class="methods-grid">
+
+        <div class="method-card card card-hover">
+          <div class="method-header">
+            <span class="method-badge badge badge-green">Recomendado</span>
+            <h3>SPEI – Transferencia interbancaria</h3>
+          </div>
+          <p>
+            El Sistema de Pagos Electrónicos Interbancarios de Banxico es el método más recomendado.
+            Es gratuito, instantáneo en horario bancario y disponible en todos los bancos mexicanos
+            (BBVA, Santander, Citibanamex, Banorte, HSBC, etc.). Funciona desde banca en línea o
+            app móvil de tu banco.
+          </p>
+          <ul class="method-list">
+            <li><strong>Exchanges:</strong> Binance, Bitso, Kraken, Bybit (P2P), Volabit</li>
+            <li><strong>Costo:</strong> Sin comisión de depósito</li>
+            <li><strong>Límite:</strong> Según tu nivel KYC (suele ser $50,000 – $500,000 MXN/día)</li>
+            <li><strong>Tiempo:</strong> 5 a 30 minutos en horario bancario</li>
+          </ul>
+        </div>
+
+        <div class="method-card card">
+          <div class="method-header">
+            <span class="method-badge badge badge-yellow">Efectivo</span>
+            <h3>OXXO Pay – Pago en tienda</h3>
+          </div>
+          <p>
+            OXXO Pay permite pagar en efectivo en cualquier tienda OXXO, 7-Eleven y establecimientos
+            afiliados. Es la opción preferida para quienes no tienen cuenta bancaria o prefieren no
+            usar sus datos bancarios. Genera una referencia en la plataforma y paga en la tienda.
+          </p>
+          <ul class="method-list">
+            <li><strong>Exchanges:</strong> Bitso, Volabit</li>
+            <li><strong>Costo:</strong> Comisión de $15–$20 MXN por depósito según plataforma</li>
+            <li><strong>Límite:</strong> $5,000 MXN por operación aproximadamente</li>
+            <li><strong>Tiempo:</strong> 1 a 2 horas hábiles</li>
+          </ul>
+        </div>
+
+        <div class="method-card card">
+          <div class="method-header">
+            <span class="method-badge badge badge-yellow">Rápido</span>
+            <h3>Tarjeta de crédito o débito</h3>
+          </div>
+          <p>
+            La compra directa con tarjeta Visa o Mastercard es la más rápida: los fondos se acreditan
+            al instante. Sin embargo, es el método más caro debido a las comisiones del procesador de
+            pagos. Las tarjetas de crédito pueden generar cargos por "avance en efectivo" según tu banco.
+          </p>
+          <ul class="method-list">
+            <li><strong>Exchanges:</strong> Binance, Bybit, Bitso (débito)</li>
+            <li><strong>Costo:</strong> 3% – 5% de comisión por transacción</li>
+            <li><strong>Límite:</strong> El de tu tarjeta (generalmente $10,000 – $50,000 MXN)</li>
+            <li><strong>Tiempo:</strong> Inmediato</li>
+          </ul>
+        </div>
+
+        <div class="method-card card">
+          <div class="method-header">
+            <span class="method-badge badge badge-red">Mayor riesgo</span>
+            <h3>P2P – Persona a persona</h3>
+          </div>
+          <p>
+            Las plataformas P2P como Binance P2P permiten comprar Bitcoin directamente a otro usuario.
+            Puedes pagar con casi cualquier método, incluyendo transferencia bancaria, SPEI, PayPal o
+            efectivo. Sin embargo, existe mayor riesgo de estafas. Usa siempre la plataforma de custodia
+            y nunca liberes los BTC antes de confirmar el pago recibido.
+          </p>
+          <div class="warning-box">
+            <strong>Advertencia:</strong> El fraude más común en P2P es el "comprobante falso".
+            Siempre verifica el depósito en tu cuenta bancaria real antes de liberar Bitcoin.
+            Nunca operes fuera de la plataforma P2P.
+          </div>
+          <ul class="method-list">
+            <li><strong>Exchanges:</strong> Binance P2P, Paxful</li>
+            <li><strong>Costo:</strong> 0% comisión de plataforma (precio incluye margen del vendedor)</li>
+            <li><strong>Tiempo:</strong> 15 minutos a varias horas según vendedor</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pasos con Binance + SPEI -->
+  <section class="section section-dark" id="pasos" aria-labelledby="pasos-heading">
+    <div class="container">
+      <h2 id="pasos-heading">Guía paso a paso: comprar Bitcoin con SPEI en Binance</h2>
+      <p class="section-sub">
+        Este es el método más popular en México por su combinación de precio competitivo, seguridad y
+        facilidad de depósito. El proceso completo toma entre 20 y 60 minutos la primera vez.
+      </p>
+
+      <ol class="howto-steps" aria-label="Pasos para comprar Bitcoin en Binance con SPEI">
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>Crear cuenta en Binance</h3>
+            <p>
+              Visita <a href="https://accounts.binance.com/register?ref=346436875" target="_blank" rel="noopener noreferrer sponsored">Binance.com</a>
+              y regístrate con tu correo electrónico. Elige una contraseña de al menos 12 caracteres con
+              letras, números y símbolos. Activa la autenticación de dos factores (2FA) con Google
+              Authenticator o una llave de seguridad física antes de realizar cualquier depósito.
+            </p>
+            <p class="step-tip">
+              Consejo: usa un correo exclusivo para exchanges de cripto, diferente al de tu uso diario.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>Completar verificación KYC (identidad)</h3>
+            <p>
+              Ve a tu perfil y selecciona "Verificación de identidad". Sube una foto clara del frente
+              y reverso de tu <strong>INE vigente</strong> o de tu <strong>pasaporte mexicano</strong>.
+              Completa la selfie de verificación facial siguiendo las instrucciones en pantalla.
+              Binance procesa la mayoría de verificaciones en 5 a 30 minutos, aunque en ocasiones puede
+              tardar hasta 24 horas.
+            </p>
+            <p>
+              El nivel KYC básico te permite operar hasta $50,000 MXN/día. Para límites mayores, puedes
+              completar una verificación avanzada con comprobante de domicilio.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Depositar pesos mexicanos por SPEI</h3>
+            <p>
+              En el menú superior selecciona "Comprar cripto" → "Depositar" → elige la moneda
+              <strong>MXN (Peso Mexicano)</strong>. Binance te asignará una <strong>CLABE interbancaria</strong>
+              única a tu cuenta. Copia esta CLABE y realiza la transferencia SPEI desde la app o banca
+              en línea de tu banco. En el campo "Concepto", anota tu nombre o el referido que te indique
+              Binance.
+            </p>
+            <p class="step-tip">
+              Importante: usa solo la CLABE que aparece en tu cuenta de Binance. No uses CLABE de
+              mensajes externos o redes sociales — estas podrían ser estafas.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">4</div>
+          <div class="step-content">
+            <h3>Ir al mercado Spot → par BTC/MXN</h3>
+            <p>
+              Una vez acreditado el depósito, ve a "Mercados" → "Spot" y busca el par
+              <strong>BTC/MXN</strong>. Verás el gráfico de precio en tiempo real y la profundidad
+              del libro de órdenes. Aquí puedes ver el precio al que otros usuarios están comprando y
+              vendiendo Bitcoin en pesos mexicanos.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">5</div>
+          <div class="step-content">
+            <h3>Elegir orden de mercado o límite</h3>
+            <p>
+              <strong>Orden de mercado:</strong> Ejecuta la compra al instante al mejor precio disponible.
+              Ideal cuando quieres comprar rápido sin preocuparte por el precio exacto. Introduce el monto
+              en MXN que quieres gastar y confirma.
+            </p>
+            <p>
+              <strong>Orden límite:</strong> Fijas el precio máximo que estás dispuesto a pagar por BTC.
+              Si el mercado baja hasta ese nivel, la orden se ejecuta automáticamente. Útil para comprar
+              en correcciones o para implementar una estrategia DCA.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">6</div>
+          <div class="step-content">
+            <h3>Mover BTC a tu propia wallet (recomendado)</h3>
+            <p>
+              Para proteger tu Bitcoin de posibles hackeos al exchange, retíralo a una wallet de tu
+              propiedad. Las mejores opciones son:
+            </p>
+            <ul class="wallet-options">
+              <li><strong>Hardware wallet (más seguro):</strong> Ledger Nano S Plus, Ledger Nano X, Trezor Model One o Trezor Model T. Guarda tus claves privadas offline.</li>
+              <li><strong>Software wallet (conveniente):</strong> Sparrow Wallet (desktop, open source), BlueWallet (móvil), o Electrum (desktop). Siempre auto-custodial.</li>
+            </ul>
+            <p class="step-tip">
+              Guarda las 12 o 24 palabras de recuperación (seed phrase) de tu wallet en papel, en un lugar
+              seguro y fuera de línea. Nunca las fotografíes ni las guardes en la nube.
+            </p>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- Mínimo y seguridad -->
+  <section class="section" aria-labelledby="minimo-heading">
+    <div class="container content-cols">
+
+      <div class="col-card card">
+        <h2 id="minimo-heading">¿Cuánto es el mínimo para comprar?</h2>
+        <p>
+          No necesitas comprar un Bitcoin completo. Puedes adquirir fracciones de BTC por cualquier monto:
+        </p>
+        <ul class="min-list">
+          <li><strong>Binance:</strong> Mínimo $5 USD equivalente (~$90–110 MXN)</li>
+          <li><strong>Bitso:</strong> Mínimo $50 MXN</li>
+          <li><strong>Kraken:</strong> Mínimo $10 USD equivalente (~$185 MXN)</li>
+          <li><strong>Bybit:</strong> Mínimo $1 USDT equivalente (~$18 MXN)</li>
+        </ul>
+        <p>
+          La unidad más pequeña de Bitcoin es 1 satoshi (0.00000001 BTC). A un precio de $1,800,000 MXN por
+          BTC, 1 satoshi equivale a $0.018 MXN — es decir, con $100 MXN puedes comprar unos 5,555 satoshis.
+        </p>
+      </div>
+
+      <div class="col-card card">
+        <h2>¿Es seguro comprar en exchanges ITF?</h2>
+        <p>
+          Los exchanges registrados como <strong>Instituciones de Tecnología Financiera (ITF)</strong> ante
+          la CNBV —como Bitso— están sujetos a obligaciones de capital, auditorías y cumplimiento AML.
+          Esto ofrece mayor protección regulatoria que exchanges no registrados.
+        </p>
+        <p>
+          Sin embargo, ningún exchange garantiza la seguridad total del 100% de los fondos. La práctica
+          más recomendada es mantener en el exchange solo el dinero que vayas a operar pronto, y retirar
+          lo demás a tu propia wallet hardware. Consulta nuestra guía de
+          <a href="/seguridad/mejores-wallets/">mejores wallets para Bitcoin</a>.
+        </p>
+        <div class="highlight" style="margin-top:1rem">
+          <strong>Regla de oro:</strong> "Not your keys, not your coins."
+          Si no controlas las claves privadas, no controlas el Bitcoin.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exchanges table -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges recomendados para comprar Bitcoin en México</h2>
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges con acceso desde México — actualizado febrero 2026"
+      />
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes: comprar Bitcoin en México" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes y referencias regulatorias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal:</strong> Esta guía es solo informativa y no constituye asesoría financiera.
+      Los precios, comisiones y condiciones de los exchanges pueden cambiar. Verifica siempre la
+      información directamente en cada plataforma. La inversión en Bitcoin implica riesgo de pérdida
+      total del capital. Solo invierte lo que puedas permitirte perder. Última actualización: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .guide-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .guide-hero-inner { max-width: 780px; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+  .guide-hero-inner h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-6); }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-8); }
+  .section-dark { background: var(--c-surface-1); }
+  /* Methods grid */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+  .method-card { display: flex; flex-direction: column; gap: var(--space-4); }
+  .method-header { display: flex; flex-direction: column; gap: var(--space-2); }
+  .method-header h3 { font-size: 1rem; margin: 0; }
+  .method-badge { align-self: flex-start; }
+  .method-card p { color: var(--c-text-muted); font-size: 0.9rem; line-height: 1.65; margin: 0; }
+  .method-list { padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-1); font-size: 0.85rem; color: var(--c-text-muted); }
+  .method-list li strong { color: var(--c-text); }
+  .warning-box {
+    background: rgba(220, 50, 50, 0.08);
+    border: 1px solid rgba(220, 50, 50, 0.25);
+    border-left: 3px solid #dc3232;
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+  }
+  /* HowTo steps */
+  .howto-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    counter-reset: step-counter;
+    padding: 0;
+  }
+  .step-item {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+  }
+  .step-number {
+    width: 44px;
+    height: 44px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-content h3 { font-size: 1.05rem; margin-bottom: var(--space-3); }
+  .step-content p { color: var(--c-text-muted); line-height: 1.7; margin-bottom: var(--space-3); }
+  .step-content p:last-child { margin-bottom: 0; }
+  .step-tip {
+    background: rgba(255, 107, 0, 0.07);
+    border-left: 3px solid var(--c-primary);
+    padding: var(--space-3) var(--space-4);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.875rem;
+    color: var(--c-text-muted) !important;
+  }
+  .wallet-options { padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-2); color: var(--c-text-muted); font-size: 0.9rem; margin: var(--space-3) 0; }
+  /* Cols layout */
+  .content-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  .col-card { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .col-card h2 { font-size: 1.2rem; }
+  .col-card p { color: var(--c-text-muted); line-height: 1.7; font-size: 0.95rem; }
+  .min-list { padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-1); font-size: 0.9rem; color: var(--c-text-muted); }
+  .min-list li strong { color: var(--c-text); }
+  @media (max-width: 768px) {
+    .step-item { flex-direction: column; gap: var(--space-3); }
+    .step-number { width: 36px; height: 36px; font-size: 0.95rem; }
+    .content-cols { grid-template-columns: 1fr; }
+  }
+</style>

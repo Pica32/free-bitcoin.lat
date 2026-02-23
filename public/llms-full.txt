@@ -1,0 +1,129 @@
+# free-bitcoin.lat — llms-full.txt
+# Complete directory of all pages categorized by country and page type
+# Updated: 2026-02-23
+
+## GLOBAL PAGES
+
+### Homepage
+https://free-bitcoin.lat/ — Bitcoin in Latin America overview, live price widget, 15-country navigation
+
+### Bitcoin Education
+https://free-bitcoin.lat/bitcoin/ — What is Bitcoin? Complete guide for LatAm 2026
+
+### Glossary
+https://free-bitcoin.lat/glosario/ — 40+ Bitcoin/crypto terms in Spanish
+
+### Security
+https://free-bitcoin.lat/seguridad/ — Security hub
+https://free-bitcoin.lat/seguridad/como-evitar-estafas/ — How to avoid Bitcoin scams (top 10 types)
+https://free-bitcoin.lat/seguridad/mejores-wallets/ — Best Bitcoin wallets: Ledger vs Trezor vs software
+https://free-bitcoin.lat/seguridad/p2p-seguro/ — Safe P2P trading guide
+
+### Calculators
+https://free-bitcoin.lat/calculadoras/ — Calculator hub + BTC converter for 15 currencies
+https://free-bitcoin.lat/calculadoras/dca/ — Dollar Cost Averaging (DCA) calculator
+https://free-bitcoin.lat/calculadoras/remesas/ — Remittance cost comparison calculator
+https://free-bitcoin.lat/calculadoras/premium-btc/ — BTC premium index for Argentina and Venezuela
+https://free-bitcoin.lat/calculadoras/comisiones/ — Transaction fee calculator (Lightning vs on-chain vs USDT)
+
+### Forum
+https://free-bitcoin.lat/foro/ — Anonymous Bitcoin forum hub for Latin America
+
+## REMITTANCE CORRIDORS
+
+https://free-bitcoin.lat/remesas/us-mx/ — US to Mexico: Lightning, USDT P2P, Western Union comparison
+https://free-bitcoin.lat/remesas/us-gt/ — US to Guatemala: remittances = ~19% of GDP
+https://free-bitcoin.lat/remesas/us-hn/ — US to Honduras: remittances = ~20% of GDP
+https://free-bitcoin.lat/remesas/us-sv/ — US to El Salvador: Lightning native (USD, no conversion)
+https://free-bitcoin.lat/remesas/us-co/ — US to Colombia: Nequi, P2P options
+https://free-bitcoin.lat/remesas/us-pe/ — US to Peru: Yape, Plin P2P
+https://free-bitcoin.lat/remesas/us-bo/ — US to Bolivia: ban lifted 2024
+
+## MEXICO (es-MX) — Priority Market
+
+https://free-bitcoin.lat/mx/ — Bitcoin in Mexico: hub page
+https://free-bitcoin.lat/mx/precio-bitcoin-mxn/ — BTC/MXN live price + converter
+https://free-bitcoin.lat/mx/como-comprar-bitcoin/ — How to buy Bitcoin in Mexico (SPEI, OXXO, card)
+https://free-bitcoin.lat/mx/impuestos-bitcoin/ — Bitcoin taxes in Mexico (SAT guide)
+https://free-bitcoin.lat/mx/regulacion-cripto/ — Crypto regulation in Mexico (Ley FinTech, Banxico)
+https://free-bitcoin.lat/mx/mejores-exchanges/ — Best exchanges for Mexico
+https://free-bitcoin.lat/mx/como-vender-bitcoin/ — How to sell Bitcoin in Mexico
+
+## BRAZIL (pt-BR) — Priority Market
+
+https://free-bitcoin.lat/br/ — Bitcoin no Brasil: página hub
+https://free-bitcoin.lat/br/preco-bitcoin-brl/ — Preço BTC/BRL em tempo real
+https://free-bitcoin.lat/br/como-comprar-bitcoin/ — Como comprar Bitcoin com PIX
+https://free-bitcoin.lat/br/impostos-bitcoin/ — Imposto de renda sobre criptoativos (IRPF 2026)
+https://free-bitcoin.lat/br/regulacao-cripto/ — Regulação cripto Brasil (Lei 14.478/2022)
+https://free-bitcoin.lat/br/melhores-exchanges/ — Melhores corretoras de Bitcoin no Brasil
+
+## ARGENTINA (es-AR) — Priority Market
+
+https://free-bitcoin.lat/ar/ — Bitcoin en Argentina: hub page
+https://free-bitcoin.lat/ar/precio-bitcoin-ars/ — Precio BTC/ARS en tiempo real
+https://free-bitcoin.lat/ar/dolar-crypto/ — Qué es el dólar cripto y cómo funciona
+https://free-bitcoin.lat/ar/como-comprar-bitcoin/ — Cómo comprar Bitcoin en Argentina
+https://free-bitcoin.lat/ar/impuestos-bitcoin/ — Impuestos cripto Argentina (AFIP/ARCA)
+https://free-bitcoin.lat/ar/regulacion-cripto/ — Regulación CNV PSAV 2026
+https://free-bitcoin.lat/ar/mejores-exchanges/ — Mejores exchanges para Argentina
+
+## VENEZUELA (es-VE) — Priority Market
+
+https://free-bitcoin.lat/ve/ — Bitcoin en Venezuela: hub page
+https://free-bitcoin.lat/ve/bitcoin-venezuela/ — Historia y adopción de Bitcoin en Venezuela
+https://free-bitcoin.lat/ve/p2p-seguro/ — P2P seguro en Venezuela (estafas y protección)
+https://free-bitcoin.lat/ve/como-comprar-bitcoin/ — Cómo comprar Bitcoin en Venezuela
+https://free-bitcoin.lat/ve/regulacion-cripto/ — Regulación SUNACRIP Venezuela
+https://free-bitcoin.lat/ve/mejores-exchanges/ — Mejores exchanges para Venezuela
+
+## COLOMBIA (es-CO)
+https://free-bitcoin.lat/co/ — Bitcoin en Colombia hub
+
+## CHILE (es-CL)
+https://free-bitcoin.lat/cl/ — Bitcoin en Chile hub (Ley 21.521)
+
+## PERU (es-PE)
+https://free-bitcoin.lat/pe/ — Bitcoin en Perú hub (SBS AML)
+
+## EL SALVADOR (es-SV)
+https://free-bitcoin.lat/sv/ — Bitcoin en El Salvador hub (Ley Bitcoin, Lightning)
+
+## GUATEMALA (es-GT)
+https://free-bitcoin.lat/gt/ — Bitcoin en Guatemala hub (remesas 19% PIB)
+
+## BOLIVIA (es-BO)
+https://free-bitcoin.lat/bo/ — Bitcoin en Bolivia hub (ban levantado 2024)
+
+## PARAGUAY (es-PY)
+https://free-bitcoin.lat/py/ — Bitcoin en Paraguay hub (minería Itaipú)
+
+## URUGUAY (es-UY)
+https://free-bitcoin.lat/uy/ — Bitcoin en Uruguay hub (Ley 20.345)
+
+## ECUADOR (es-EC)
+https://free-bitcoin.lat/ec/ — Bitcoin en Ecuador hub (dolarizado, BCE)
+
+## PANAMA (es-PA)
+https://free-bitcoin.lat/pa/ — Bitcoin en Panamá hub (Ley 247 en debate)
+
+## HONDURAS (es-HN)
+https://free-bitcoin.lat/hn/ — Bitcoin en Honduras hub (remesas >20% PIB)
+
+## API ENDPOINTS (for developers)
+https://free-bitcoin.lat/api/price.php — BTC price in 15 LatAm currencies (JSON)
+https://free-bitcoin.lat/api/premium.php?country=ar — BTC premium Argentina
+https://free-bitcoin.lat/api/premium.php?country=ve — BTC/USDT premium Venezuela
+https://free-bitcoin.lat/api/remittance.php?corridor=us-mx — Remittance fee table
+https://free-bitcoin.lat/api/forum.php — Anonymous forum API
+
+## SITEMAPS
+https://free-bitcoin.lat/sitemap-index.xml
+https://free-bitcoin.lat/sitemaps/sitemap-global.xml
+https://free-bitcoin.lat/sitemaps/sitemap-mx.xml
+https://free-bitcoin.lat/sitemaps/sitemap-br.xml
+https://free-bitcoin.lat/sitemaps/sitemap-ar.xml
+https://free-bitcoin.lat/sitemaps/sitemap-ve.xml
+https://free-bitcoin.lat/sitemaps/sitemap-other.xml
+https://free-bitcoin.lat/sitemaps/sitemap-remesas.xml
+https://free-bitcoin.lat/sitemaps/sitemap-calculadoras.xml

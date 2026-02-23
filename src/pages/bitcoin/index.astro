@@ -1,0 +1,490 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "¿Qué es Bitcoin? Guía Completa 2026 para América Latina | free-bitcoin.lat";
+const description =
+  "Guía completa sobre qué es Bitcoin, cómo funciona la blockchain, por qué importa para LatAm 2026 y cómo empezar de forma segura.";
+const canonical = "https://free-bitcoin.lat/bitcoin/";
+
+const faqs = [
+  {
+    q: "¿Qué es Bitcoin exactamente?",
+    a: "Bitcoin (BTC) es una moneda digital descentralizada que permite enviar y recibir pagos directamente entre personas, sin intermediarios como bancos o gobiernos. Fue creada en 2009 por una persona o grupo bajo el seudónimo de Satoshi Nakamoto.",
+  },
+  {
+    q: "¿Cómo comprar Bitcoin en América Latina?",
+    a: "Puedes comprar Bitcoin en exchanges locales como Bitso (México), Ripio (Argentina/Brasil), Buda (Chile/Colombia) o Binance P2P. Necesitas crear una cuenta, verificar tu identidad (KYC), depositar moneda local y hacer la compra. Comienza con montos pequeños mientras aprendes.",
+  },
+  {
+    q: "¿Es seguro invertir en Bitcoin?",
+    a: "Bitcoin conlleva riesgos: alta volatilidad, posibilidad de pérdida total y riesgos operativos como hackeos o pérdida de claves privadas. Sin embargo, la red Bitcoin en sí lleva más de 15 años operando sin interrupciones. La seguridad depende en gran medida de cómo custodies tus fondos.",
+  },
+  {
+    q: "¿Cuántos bitcoins existen en total?",
+    a: "El suministro máximo de Bitcoin está limitado matemáticamente a 21 millones de BTC. A febrero de 2026, ya se han minado aproximadamente 19,8 millones. Los últimos satoshis se minarán alrededor del año 2140.",
+  },
+  {
+    q: "¿Quién creó Bitcoin?",
+    a: "Bitcoin fue creado por una persona o grupo bajo el seudónimo 'Satoshi Nakamoto'. Publicó el whitepaper en octubre de 2008 y lanzó el software en enero de 2009. Su identidad real permanece desconocida hasta hoy.",
+  },
+  {
+    q: "¿Es legal Bitcoin en América Latina?",
+    a: "En la mayoría de los países de LatAm Bitcoin es legal de poseer y usar, aunque el marco regulatorio varía. El Salvador es el único país donde el BTC es moneda de curso legal. En Argentina, México, Colombia, Chile y Perú está permitido pero no es moneda legal. Venezuela permite su uso pero con controles cambiarios. Consulta siempre la regulación vigente en tu país.",
+  },
+  {
+    q: "¿Qué es un satoshi?",
+    a: "Un satoshi (sat) es la unidad mínima de Bitcoin, equivalente a 0.00000001 BTC (una cienmillonésima parte de un bitcoin). El nombre es un homenaje al creador de Bitcoin. Con satoshis puedes enviar micropagos de centavos de dólar a través de Lightning Network.",
+  },
+];
+
+const sources = [
+  { label: "Bitcoin Whitepaper – Satoshi Nakamoto (bitcoin.org)", url: "https://bitcoin.org/bitcoin.pdf" },
+  { label: "Bitcoin.org – Introducción a Bitcoin", url: "https://bitcoin.org/es/como-funciona-bitcoin" },
+  { label: "World Bank – Remittances Data 2024", url: "https://www.worldbank.org/en/topic/migrationremittancesdiasporaissues/brief/migration-remittances-data" },
+  { label: "IMF – El Salvador Bitcoin Adoption Assessment", url: "https://www.imf.org/en/Publications/CR/Issues/2024/01/25/El-Salvador-2023-Article-IV-Consultation-528258" },
+];
+
+const jsonLd = [
+  articleSchema({
+    title,
+    description,
+    url: canonical,
+    datePublished: "2024-01-01",
+    dateModified: "2026-02-23",
+  }),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Bitcoin", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <p class="last-updated">Actualizado: febrero 2026</p>
+
+    <h1>¿Qué es Bitcoin? La guía más completa para LatAm 2026</h1>
+
+    <p class="intro-lead">
+      <strong>Bitcoin (BTC) es una moneda digital descentralizada</strong> creada en 2009 por
+      Satoshi Nakamoto. No existe ningún banco central, gobierno ni empresa que la controle. Su
+      suministro máximo está fijado matemáticamente en <strong>21 millones de BTC</strong>, lo que
+      la hace resistente a la inflación por diseño. Cualquier persona con internet puede enviar y
+      recibir bitcoin sin pedir permiso a nadie.
+    </p>
+
+    <p>
+      Para millones de latinoamericanos que sufren inflación desbocada, acceso limitado a servicios
+      bancarios o costos abusivos en remesas, Bitcoin representa una alternativa real y verificable.
+      Esta guía explica cómo funciona, por qué importa en nuestra región y cómo puedes empezar hoy.
+    </p>
+
+    <!-- ===================== CÓMO FUNCIONA ===================== -->
+    <section class="section" aria-labelledby="como-funciona">
+      <h2 id="como-funciona">Cómo funciona Bitcoin</h2>
+
+      <h3>La blockchain: el libro contable público</h3>
+      <p>
+        Todas las transacciones de Bitcoin quedan registradas en una <strong>blockchain</strong>
+        (cadena de bloques), una base de datos distribuida que copian miles de computadoras (nodos)
+        alrededor del mundo. Nadie controla esta base de datos; todos la verifican. Cada bloque
+        contiene un conjunto de transacciones y un enlace criptográfico al bloque anterior, creando
+        un historial imposible de alterar sin rehacer todo el trabajo computacional acumulado.
+      </p>
+
+      <h3>La minería: cómo se crean los nuevos bitcoin</h3>
+      <p>
+        Los <strong>mineros</strong> son computadoras especializadas que compiten para resolver
+        problemas matemáticos complejos. El primero en resolverlo agrega el siguiente bloque a la
+        blockchain y recibe una recompensa en BTC (actualmente 3,125 BTC por bloque tras el halving
+        de abril 2024). Este proceso se llama <em>Proof of Work</em> y es lo que asegura la red.
+      </p>
+
+      <h3>Los nodos: los guardianes de las reglas</h3>
+      <p>
+        Un <strong>nodo completo</strong> descarga toda la blockchain y verifica que cada
+        transacción cumpla las reglas del protocolo. No necesitas ser minero para correr un nodo; un
+        Raspberry Pi con 1 TB de almacenamiento es suficiente. Cuantos más nodos existen, más
+        resistente es la red a la censura.
+      </p>
+
+      <h3>Las wallets: tu acceso a tus fondos</h3>
+      <p>
+        Una <strong>wallet</strong> (cartera) no almacena bitcoin físicamente; guarda tus
+        <em>claves privadas</em>, las firmas criptográficas que demuestran que eres el dueño de
+        ciertos fondos en la blockchain. Si pierdes tus claves privadas, pierdes acceso a tus
+        bitcoin para siempre. Por eso la frase semilla (seed phrase) de 12 o 24 palabras es el
+        activo más valioso que debes proteger.
+      </p>
+    </section>
+
+    <!-- ===================== POR QUÉ IMPORTA PARA LATAM ===================== -->
+    <section class="section" aria-labelledby="latam">
+      <h2 id="latam">¿Por qué Bitcoin importa para América Latina?</h2>
+
+      <h3>Remesas más baratas</h3>
+      <p>
+        LatAm recibe más de 145 mil millones de dólares en remesas anuales (Banco Mundial, 2024).
+        Los métodos tradicionales como Western Union o MoneyGram cobran entre 5% y 12% de comisión.
+        Enviando bitcoin por Lightning Network la comisión es de centavos, y el destinatario recibe
+        el dinero en segundos. Empresas como Strike, Remitly y Bitso ya ofrecen corredores
+        BTC-para-remesas en México, El Salvador y Guatemala.
+      </p>
+
+      <h3>Escudo contra la inflación</h3>
+      <p>
+        Argentina acumula décadas de inflación crónica. Venezuela vivió una hiperinflación superior
+        al 1.000.000% anual entre 2018 y 2019. Guardar ahorros en pesos o bolívares equivale a ver
+        cómo se evaporan. Bitcoin, con su suministro fijo, es la antítesis del dinero imprimible.
+        Si bien su precio en dólares es volátil a corto plazo, muchos latinoamericanos lo usan como
+        reserva de valor a largo plazo frente a monedas locales que se deprecian estructuralmente.
+      </p>
+
+      <h3>Inclusión financiera para los no bancarizados</h3>
+      <p>
+        Según el Banco Mundial, el 45% de los adultos en América Latina no tiene cuenta bancaria.
+        Bitcoin solo requiere un teléfono con internet. Sin formularios, sin historial crediticio,
+        sin sucursal cercana. Proyectos como Bitcoin Beach en El Salvador demostraron que comunidades
+        enteras pueden operar con bitcoin incluso sin conexión constante gracias a Lightning Network.
+      </p>
+    </section>
+
+    <!-- ===================== HISTORIA ===================== -->
+    <section class="section" aria-labelledby="historia">
+      <h2 id="historia">Historia de Bitcoin: de 0 a moneda global</h2>
+
+      <div class="timeline">
+        <div class="card timeline-item">
+          <span class="badge">2008–2009</span>
+          <h3>El génesis</h3>
+          <p>
+            El 31 de octubre de 2008, en plena crisis financiera global, Satoshi Nakamoto publicó
+            el whitepaper <em>"Bitcoin: A Peer-to-Peer Electronic Cash System"</em>. El 3 de enero
+            de 2009 minó el bloque génesis con el mensaje: <em>"The Times 03/Jan/2009 Chancellor on
+            brink of second bailout for banks"</em>, una crítica directa al sistema bancario.
+          </p>
+        </div>
+
+        <div class="card timeline-item">
+          <span class="badge">2010</span>
+          <h3>Las primeras pizzas</h3>
+          <p>
+            El 22 de mayo de 2010, Laszlo Hanyecz pagó 10.000 BTC por dos pizzas: la primera
+            transacción comercial conocida de Bitcoin. Ese día se conoce como el "Bitcoin Pizza Day"
+            y se celebra cada año en toda la comunidad crypto.
+          </p>
+        </div>
+
+        <div class="card timeline-item">
+          <span class="badge">2017</span>
+          <h3>El primer bull run masivo</h3>
+          <p>
+            Bitcoin alcanzó casi $20.000 USD en diciembre de 2017, atrayendo atención mediática
+            mundial. El debate sobre si aumentar el tamaño de los bloques dividió a la comunidad:
+            surgió Bitcoin Cash (BCH) como hard fork, pero BTC mantuvo el consenso mayoritario.
+          </p>
+        </div>
+
+        <div class="card timeline-item">
+          <span class="badge">2021</span>
+          <h3>El Salvador adopta BTC como moneda legal</h3>
+          <p>
+            El 7 de septiembre de 2021, El Salvador se convirtió en el primer país del mundo en
+            adoptar Bitcoin como moneda de curso legal junto al dólar. El presidente Bukele lanzó
+            la wallet Chivo y distribuyó $30 USD en BTC a cada ciudadano. Bitcoin llegó a $69.000
+            ese mismo año.
+          </p>
+        </div>
+
+        <div class="card timeline-item">
+          <span class="badge">2024</span>
+          <h3>Halving y ETF spot en EE.UU.</h3>
+          <p>
+            En enero de 2024, la SEC de EE.UU. aprobó los primeros ETF de Bitcoin spot, permitiendo
+            que fondos como BlackRock (iShares Bitcoin Trust) compraran BTC directamente. En abril
+            de 2024 ocurrió el cuarto halving: la recompensa por bloque se redujo a 3,125 BTC.
+            Bitcoin superó los $100.000 USD por primera vez a finales de 2024.
+          </p>
+        </div>
+
+        <div class="card timeline-item">
+          <span class="badge">2025–2026</span>
+          <h3>Estado actual</h3>
+          <p>
+            Bitcoin consolida su posición como activo institucional con más de $1 billón en activos
+            bajo gestión en ETFs. Varios estados de EE.UU. y países aprobaron o discuten reservas
+            estratégicas de BTC. Lightning Network procesa millones de transacciones diarias.
+            En LatAm, Argentina, Brasil y Colombia desarrollan marcos regulatorios más claros.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BTC VS ALTCOINS ===================== -->
+    <section class="section" aria-labelledby="vs-altcoins">
+      <h2 id="vs-altcoins">Bitcoin vs Altcoins: ¿por qué BTC es diferente?</h2>
+
+      <p>
+        Bitcoin es el original, creado en 2009. Todas las demás criptomonedas se llaman
+        <strong>altcoins</strong> (monedas alternativas). Aunque hay miles, ninguna replica las
+        propiedades únicas de BTC:
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>Bitcoin (BTC)</th>
+              <th>Ethereum (ETH)</th>
+              <th>Altcoins típicas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lanzamiento</td>
+              <td>2009 (sin ICO ni pre-minado)</td>
+              <td>2015 (con ICO)</td>
+              <td>Variable, a menudo con pre-minado</td>
+            </tr>
+            <tr>
+              <td>Suministro máximo</td>
+              <td>21 millones (fijo)</td>
+              <td>Sin límite definido</td>
+              <td>Variable o infinito</td>
+            </tr>
+            <tr>
+              <td>Descentralización</td>
+              <td>Muy alta (15.000+ nodos)</td>
+              <td>Alta</td>
+              <td>Generalmente baja</td>
+            </tr>
+            <tr>
+              <td>Historial de seguridad</td>
+              <td>+15 años sin hackeo del protocolo</td>
+              <td>+9 años</td>
+              <td>Limitado, múltiples exploits</td>
+            </tr>
+            <tr>
+              <td>Caso de uso principal</td>
+              <td>Reserva de valor / dinero digital</td>
+              <td>Plataforma para smart contracts</td>
+              <td>Diverso, muchos sin uso real</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Bitcoin no tiene CEO, no tiene sede, no puede ser actualizado sin consenso de toda la red.
+        Esa rigidez es una <strong>característica</strong>, no un defecto: es lo que garantiza que
+        las reglas no cambien en tu contra.
+      </p>
+    </section>
+
+    <!-- ===================== CÓMO EMPEZAR ===================== -->
+    <section class="section" aria-labelledby="como-empezar">
+      <h2 id="como-empezar">¿Cómo empezar con Bitcoin? 5 pasos prácticos</h2>
+
+      <ol class="steps-list">
+        <li class="card step-item">
+          <span class="step-number">1</span>
+          <div>
+            <h3>Edúcate primero</h3>
+            <p>
+              Lee el whitepaper de Satoshi (disponible en bitcoin.org), explora recursos en español
+              como este sitio, y comprende qué compras antes de gastar un solo peso o real. El
+              conocimiento es la mejor protección contra estafas.
+            </p>
+          </div>
+        </li>
+
+        <li class="card step-item">
+          <span class="step-number">2</span>
+          <div>
+            <h3>Empieza con un monto pequeño</h3>
+            <p>
+              Comienza con una cantidad que estés dispuesto a perder totalmente mientras aprendes.
+              Muchos expertos recomiendan no superar el 1-5% de tu patrimonio en crypto si eres
+              principiante. No necesitas comprar un bitcoin entero: puedes comprar $5 USD en
+              satoshis.
+            </p>
+          </div>
+        </li>
+
+        <li class="card step-item">
+          <span class="step-number">3</span>
+          <div>
+            <h3>Elige un exchange confiable</h3>
+            <p>
+              Para México: <strong>Bitso</strong>. Para Argentina: <strong>Lemon Cash</strong> o
+              <strong>Ripio</strong>. Para Brasil: <strong>Mercado Bitcoin</strong> o
+              <strong>Binance</strong>. Para Chile/Colombia: <strong>Buda</strong>. Elige exchanges
+              regulados, con buena reputación y verificación de identidad (KYC).
+            </p>
+          </div>
+        </li>
+
+        <li class="card step-item">
+          <span class="step-number">4</span>
+          <div>
+            <h3>Retira a tu propia wallet</h3>
+            <p>
+              Nunca dejes grandes cantidades en un exchange. "Not your keys, not your Bitcoin."
+              Descarga una wallet como <strong>Blue Wallet</strong> (móvil, gratuita) o invierte en
+              una <strong>hardware wallet</strong> (Ledger, Trezor) si tienes más de $500 en BTC.
+              Guarda tu seed phrase en papel, en un lugar seguro, y nunca en la nube.
+            </p>
+          </div>
+        </li>
+
+        <li class="card step-item">
+          <span class="step-number">5</span>
+          <div>
+            <h3>Practica la seguridad operacional</h3>
+            <p>
+              Activa 2FA en todos tus exchanges. No compartas cuántos bitcoin tienes con nadie. Usa
+              contraseñas únicas con un gestor de contraseñas. Desconfía de cualquier oferta que
+              prometa rendimientos garantizados: son estafas.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <FAQ items={faqs} title="Preguntas frecuentes sobre Bitcoin" />
+
+    <!-- ===================== SOURCES ===================== -->
+    <SourcesList {sources} />
+
+    <p class="disclaimer">
+      Esta guía es solo con fines educativos y no constituye asesoría financiera, fiscal o legal.
+      Invertir en Bitcoin implica riesgos significativos incluyendo la pérdida total del capital.
+      Consulta a un asesor financiero calificado antes de tomar decisiones de inversión.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .intro-lead {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--c-text);
+    border-left: 4px solid var(--c-primary);
+    padding-left: var(--space-4);
+    margin: var(--space-6) 0;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: var(--space-4) 0 var(--space-4);
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    margin: var(--space-5) 0 var(--space-2);
+    color: var(--c-text);
+  }
+
+  p {
+    margin-bottom: var(--space-4);
+    color: var(--c-text-muted);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .timeline-item h3 {
+    margin-top: 0;
+  }
+
+  /* Steps */
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    background: var(--c-primary);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50%;
+  }
+
+  .step-item h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--c-border);
+    text-align: left;
+  }
+
+  th {
+    background: var(--c-surface-1);
+    color: var(--c-text);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  td {
+    color: var(--c-text-muted);
+  }
+
+  tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+</style>

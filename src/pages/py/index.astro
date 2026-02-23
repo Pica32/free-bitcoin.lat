@@ -1,0 +1,276 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Paraguay 2026: Mineria, BTC/PYG y Regulacion BCP | free-bitcoin.lat";
+const description = "Bitcoin en Paraguay 2026: hub de mineria por energia barata de Itaipu, precio BTC/PYG, regulacion BCP, exchanges disponibles y como comprar.";
+const canonical = "https://free-bitcoin.lat/py/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["P2P PYG", "Transferencia", "Tarjeta"],
+    bestFor: "Mayor liquidez, P2P en guaranies",
+    isAffiliate: true,
+  },
+  {
+    name: "KuCoin",
+    url: "https://www.kucoin.com/r/rf/QBSKA5LH",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Altcoins, comunidad minera",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Basico" as const,
+    paymentMethods: ["P2P", "Tarjeta", "Transferencia"],
+    bestFor: "Spot y derivados",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal minar Bitcoin en Paraguay?",
+    a: "Si. Paraguay es uno de los paises mas activos en mineria de Bitcoin de America del Sur. La actividad no esta prohibida. La Ley 6858/2021 regula la mineria y el intercambio de criptomonedas, estableciendo que las empresas mineras deben registrarse y pagar impuestos sobre sus ganancias. Paraguay se ha convertido en destino preferido para mineros que buscan energia barata y legal.",
+  },
+  {
+    q: "¿Por que la energia de Itaipu hace a Paraguay ideal para mineria?",
+    a: "Itaipu Binacional, la represa hidroelectrica compartida entre Paraguay y Brasil, genera mas electricidad de la que Paraguay puede consumir internamente. El excedente se vende a Brasil a precios internacionales, pero localmente la energia es extraordinariamente barata: Paraguay tiene algunas de las tarifas electricas mas bajas del mundo. Para las granjas mineras de Bitcoin, que consumen enormes cantidades de electricidad, esto representa una ventaja competitiva global.",
+  },
+  {
+    q: "¿Es legal comprar Bitcoin en Paraguay como usuario individual?",
+    a: "Si. La Ley 6858/2021 y las resoluciones del Banco Central del Paraguay (BCP) permiten la compra y venta de criptomonedas. El BCP regula a los proveedores de servicios de activos virtuales (PSAV) que operen en el pais. Los usuarios individuales pueden usar exchanges nacionales o internacionales para comprar BTC sin restricciones.",
+  },
+  {
+    q: "¿Como compro Bitcoin con guaranies (PYG) en Paraguay?",
+    a: "La opcion mas practica es Binance P2P, donde puedes encontrar vendedores que aceptan transferencia bancaria en guaranies (PYG). Tambien puedes usar exchanges locales o intermediarios P2P via Telegram o grupos locales, aunque siempre se recomienda usar plataformas con escrow para seguridad. El proceso requiere registro KYC en la plataforma.",
+  },
+  {
+    q: "¿Que impuestos pago por Bitcoin en Paraguay?",
+    a: "Paraguay tiene un sistema fiscal simplificado con tasas relativamente bajas. Las ganancias por venta de criptomonedas estan sujetas al Impuesto a la Renta Personal (IRP) del 8% sobre la ganancia neta para personas fisicas, o el Impuesto a la Renta Empresarial (IRE) del 10% para empresas. La actividad minera tambien tributa. La Subsecretaria de Tributacion (SET) es el organismo que supervisa el cumplimiento.",
+  },
+];
+
+const sources = [
+  { label: "BCP – Banco Central del Paraguay", url: "https://www.bcp.gov.py" },
+  { label: "SET – Subsecretaria de Tributacion Paraguay", url: "https://www.set.gov.py" },
+  { label: "Ley 6858/2021 – Mineria y criptoactivos Paraguay", url: "https://www.bcp.gov.py" },
+  { label: "Itaipu Binacional", url: "https://www.itaipu.gov.py" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Paraguay", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Paraguay" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="py-hero">
+    <div class="container">
+      <div class="py-hero-inner">
+        <div class="py-hero-text">
+          <span class="hero-eyebrow">Paraguay · BTC/PYG · Hub de Mineria</span>
+          <h1>Bitcoin en Paraguay 2026: mineria por Itaipu, BTC/PYG y regulacion BCP</h1>
+          <p class="hero-sub">
+            Paraguay se ha convertido en uno de los principales hubs de mineria de Bitcoin
+            de America del Sur, impulsado por la energia hidroelectrica barata de la represa
+            <strong>Itaipu Binacional</strong>. La Ley 6858/2021 regula la actividad y el
+            BCP supervisa a los proveedores cripto. En 2026, Paraguay combina un marco
+            legal claro con las tarifas electricas mas bajas de la region.
+          </p>
+          <div class="hero-cta">
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Comprar BTC en Binance</a>
+          </div>
+        </div>
+        <div class="py-hero-widget card">
+          <LivePriceWidget currency="PYG" currencySymbol="Gs." countryName="Paraguay" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="yellow"
+        label="Regulado — Ley 6858/2021 y BCP"
+        lastUpdate="2026-02-23"
+        regulatorName="BCP – Banco Central del Paraguay"
+        regulatorUrl="https://www.bcp.gov.py"
+      />
+
+      <h2 id="regulacion-heading">Marco regulatorio: Ley 6858/2021 y el BCP</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Paraguay fue uno de los primeros paises sudamericanos en aprobar legislacion
+            especifica para criptomonedas. La <strong>Ley 6858 del 29 de septiembre de
+            2021</strong> establece el marco legal para la "mineria y el intercambio de
+            activos virtuales". La ley define activos virtuales, regula a las empresas
+            mineras y a los proveedores de servicios de intercambio, y establece las
+            obligaciones tributarias del sector.
+          </p>
+          <p>
+            El <strong>Banco Central del Paraguay (BCP)</strong> es el organismo que
+            regula a los PSAV (Proveedores de Servicios de Activos Virtuales) que operen
+            en el pais. Las empresas que quieran ofrecer servicios de compraventa de
+            criptomonedas deben inscribirse y cumplir con requisitos AML/KYC. Los usuarios
+            individuales pueden operar con exchanges internacionales sin restriccion.
+          </p>
+          <p>
+            La <strong>Subsecretaria de Tributacion (SET)</strong> determina las
+            obligaciones fiscales: las ganancias por venta de cripto tributan IRP (8%
+            para personas fisicas) o IRE (10% para empresas), dependiendo de la situacion
+            del contribuyente. La mineria empresarial tambien tiene sus propios regimenes
+            tributarios.
+          </p>
+          <div class="highlight">
+            <strong>Paraguay como hub minero:</strong> Itaipu genera mas de 100 TWh al año,
+            mas de lo que el pais puede consumir. La electricidad barata (+65% exportada a
+            Brasil) atrae inversiones mineras de EE.UU., Asia y Europa. Paraguay es ya
+            uno de los 10 mayores paises mineros de Bitcoin del mundo por hashrate.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Paraguay en numeros</h3>
+            <ul class="quick-links" role="list">
+              <li>Ley cripto: 6858/2021</li>
+              <li>Regulador: BCP</li>
+              <li>Energia: entre las mas baratas del mundo</li>
+              <li>Fuente: Itaipu (hidro)</li>
+              <li>Impuesto ganancias: 8% (persona fisica)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges disponibles en Paraguay</h2>
+      <p class="section-sub">
+        Plataformas internacionales usadas por paraguayos para comprar Bitcoin y USDT.
+        La comunidad minera tambien usa exchanges especializados para convertir BTC minado.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Paraguay — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Paraguay" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .py-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .py-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .py-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .py-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.85rem; color: var(--c-text-muted); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .py-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

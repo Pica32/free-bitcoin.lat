@@ -1,0 +1,755 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Mejores Wallets Bitcoin 2026 – Hardware vs Software para LatAm | free-bitcoin.lat";
+const description =
+  "Comparativa de las mejores wallets de Bitcoin 2026: Ledger Nano S Plus vs Trezor Safe 7 vs software wallets. Guía para elegir según tu perfil.";
+const canonical = "https://free-bitcoin.lat/seguridad/mejores-wallets/";
+
+const faqs = [
+  {
+    q: "¿Qué wallet de Bitcoin es la mejor para principiantes en LatAm?",
+    a: "Para principiantes con montos pequeños (menos de $200 USD), Blue Wallet o Muun Wallet son excelentes opciones gratuitas: fáciles de usar, no custodiales y con soporte para Lightning Network. Para montos mayores, una Ledger Nano S Plus ofrece el mejor equilibrio entre seguridad y precio.",
+  },
+  {
+    q: "¿Es necesaria una hardware wallet si tengo poco Bitcoin?",
+    a: "La regla general es: hardware wallet si tienes más de $500 USD en Bitcoin. Por debajo de eso, una buena wallet de software no custodial (Electrum, Blue Wallet, Muun) con seed phrase guardada en papel es suficiente. No tiene sentido gastar $80 en hardware para proteger $50.",
+  },
+  {
+    q: "¿Puedo comprar una Ledger o Trezor en América Latina?",
+    a: "Sí. Ledger y Trezor se venden en Amazon, Mercado Libre y tiendas especializadas de cripto en los principales países de LatAm. Precio referencial: Ledger Nano S Plus ~€79 (~$85 USD), Trezor Safe 7 ~€169 (~$185 USD). Comprando de revendedores, agrega un 20-40% por impuestos y envío.",
+  },
+  {
+    q: "¿Qué pasa si pierdo mi hardware wallet?",
+    a: "Si tienes la seed phrase (12 o 24 palabras) guardada de forma segura, puedes recuperar todos tus fondos en cualquier otra wallet compatible (Ledger, Trezor, Blue Wallet, Electrum, etc.). La seed phrase es la copia de seguridad universal. Si pierdes la hardware wallet Y la seed phrase, los fondos se pierden para siempre.",
+  },
+  {
+    q: "¿Es seguro Lightning Wallet of Satoshi para usar en LatAm?",
+    a: "Wallet of Satoshi es una wallet Lightning custodial: ellos guardan tus claves. Es muy fácil de usar, ideal para pagos cotidianos de montos pequeños (menos de $50). No es recomendable para guardar ahorros significativos. Piénsala como la billetera de bolsillo, no la caja fuerte.",
+  },
+];
+
+const sources = [
+  { label: "bitcoin.org – Choosing your wallet", url: "https://bitcoin.org/en/choose-your-wallet" },
+  { label: "Ledger – Ledger Nano S Plus oficial", url: "https://shop.ledger.com/products/ledger-nano-s-plus" },
+  { label: "Trezor – Trezor Safe 7 oficial", url: "https://trezor.io/trezor-safe-7" },
+  { label: "Cypherock – Cypherock X1 oficial", url: "https://www.cypherock.com/" },
+];
+
+const jsonLd = [
+  articleSchema({
+    title,
+    description,
+    url: canonical,
+    datePublished: "2024-01-01",
+    dateModified: "2026-02-23",
+  }),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Seguridad", item: "https://free-bitcoin.lat/seguridad/" },
+    { name: "Mejores Wallets", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <nav class="breadcrumb-nav" aria-label="Miga de pan">
+      <a href="/">Inicio</a> › <a href="/seguridad/">Seguridad</a> › <span>Mejores Wallets</span>
+    </nav>
+
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Mejores wallets de Bitcoin 2026: guía completa para LatAm</h1>
+
+    <!-- Intro: not your keys -->
+    <div class="highlight keys-highlight" role="note">
+      <p>
+        <strong>"Not your keys, not your Bitcoin."</strong> Si tu Bitcoin está en un exchange,
+        técnicamente no es tuyo: la empresa que controla el exchange guarda las claves privadas.
+        Si el exchange quiebra (como Celsius, FTX o Mt. Gox), pierde tu dinero. La única forma
+        de ser el dueño real de tu Bitcoin es controlar tus propias claves privadas.
+      </p>
+    </div>
+
+    <!-- Hardware wallets section -->
+    <section class="section" aria-labelledby="hardware-heading">
+      <h2 id="hardware-heading">Hardware wallets: la máxima seguridad</h2>
+
+      <p>
+        Una hardware wallet es un dispositivo físico diseñado específicamente para guardar claves
+        privadas offline (en frío). Incluso si tu computadora está infectada con malware, tus
+        fondos están seguros porque las claves nunca salen del dispositivo. Son obligatorias para
+        cualquier cantidad significativa de Bitcoin.
+      </p>
+
+      <!-- Ledger -->
+      <div class="card wallet-card">
+        <div class="wallet-header">
+          <div>
+            <h3 class="wallet-name">Ledger Nano S Plus</h3>
+            <span class="badge badge-recommended">Mejor relación precio/valor</span>
+          </div>
+          <span class="wallet-price">~€79 / ~$85 USD</span>
+        </div>
+
+        <div class="wallet-body">
+          <ul class="wallet-pros">
+            <li>Compatible con 5.500+ activos digitales</li>
+            <li>Aplicación Ledger Live muy intuitiva (móvil y escritorio)</li>
+            <li>Pantalla OLED para verificar transacciones</li>
+            <li>Soporte en español disponible</li>
+            <li>Ampliamente disponible en LatAm (Amazon, MercadoLibre)</li>
+          </ul>
+          <ul class="wallet-cons">
+            <li>Firmware propietario (no completamente open source)</li>
+            <li>Brecha de datos en 2020 expuso emails y direcciones de clientes</li>
+          </ul>
+        </div>
+
+        <a
+          href="https://shop.ledger.com/products/ledger-nano-s-plus"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          class="btn btn-primary wallet-btn"
+          aria-label="Comprar Ledger Nano S Plus (enlace de afiliado, abre en nueva pestaña)"
+        >
+          Ver en Ledger.com
+        </a>
+        <p class="affiliate-disclosure">
+          Enlace de afiliado: podemos recibir una comisión sin costo adicional para ti.
+        </p>
+      </div>
+
+      <!-- Trezor -->
+      <div class="card wallet-card">
+        <div class="wallet-header">
+          <div>
+            <h3 class="wallet-name">Trezor Safe 7</h3>
+            <span class="badge badge-opensource">100% Open Source</span>
+          </div>
+          <span class="wallet-price">~€169 / ~$185 USD</span>
+        </div>
+
+        <div class="wallet-body">
+          <ul class="wallet-pros">
+            <li>Hardware y firmware 100% open source (verificable)</li>
+            <li>Pantalla táctil a color, diseño premium</li>
+            <li>Sin Bluetooth (menor superficie de ataque)</li>
+            <li>Contraseña adicional (passphrase) fácil de configurar</li>
+            <li>Compatible con la mayoría de wallets de software</li>
+          </ul>
+          <ul class="wallet-cons">
+            <li>Precio elevado para LatAm</li>
+            <li>Soporte de activos más limitado que Ledger</li>
+          </ul>
+        </div>
+
+        <a
+          href="https://trezor.io/trezor-safe-7?transaction_id=102398254191a620fee5eea74faa2d&offer_id=352&affiliate_id=36693"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          class="btn btn-primary wallet-btn"
+          aria-label="Comprar Trezor Safe 7 (enlace de afiliado, abre en nueva pestaña)"
+        >
+          Ver en Trezor.io
+        </a>
+        <p class="affiliate-disclosure">
+          Enlace de afiliado: podemos recibir una comisión sin costo adicional para ti.
+        </p>
+      </div>
+
+      <!-- Cypherock -->
+      <div class="card wallet-card">
+        <div class="wallet-header">
+          <div>
+            <h3 class="wallet-name">Cypherock X1</h3>
+            <span class="badge badge-innovative">Innovador · Sin seed phrase única</span>
+          </div>
+          <span class="wallet-price">~$120 USD</span>
+        </div>
+
+        <div class="wallet-body">
+          <p>
+            El Cypherock X1 usa un enfoque diferente: en lugar de una seed phrase de 24 palabras
+            (punto único de fallo), divide la clave en 4 tarjetas usando criptografía de umbral
+            (Shamir Secret Sharing). Necesitas cualquier 2 de 4 tarjetas para recuperar tus fondos.
+          </p>
+          <ul class="wallet-pros">
+            <li>Elimina el riesgo de pérdida de un único papel con la seed phrase</li>
+            <li>Ideal para herencia y custodia familiar</li>
+            <li>Open source y auditable</li>
+          </ul>
+          <ul class="wallet-cons">
+            <li>Menor ecosistema que Ledger/Trezor</li>
+            <li>Más complejo de entender para principiantes</li>
+          </ul>
+        </div>
+
+        <a
+          href="https://www.cypherock.com/?wt_coupon=bitcoinchurch"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          class="btn btn-primary wallet-btn"
+          aria-label="Ver Cypherock X1 con cupón (enlace de afiliado, abre en nueva pestaña)"
+        >
+          Ver en Cypherock.com
+        </a>
+        <p class="affiliate-disclosure">
+          Enlace de afiliado con descuento. Podemos recibir comisión sin costo adicional.
+        </p>
+      </div>
+
+      <!-- Hardware wallet comparison table -->
+      <h3>Tabla comparativa: hardware wallets</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>Ledger Nano S Plus</th>
+              <th>Trezor Safe 7</th>
+              <th>Cypherock X1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Precio (aprox.)</td>
+              <td>€79 / ~$85 USD</td>
+              <td>€169 / ~$185 USD</td>
+              <td>~$120 USD</td>
+            </tr>
+            <tr>
+              <td>Open source</td>
+              <td>Parcial</td>
+              <td>Completo</td>
+              <td>Completo</td>
+            </tr>
+            <tr>
+              <td>Pantalla</td>
+              <td>OLED pequeña</td>
+              <td>Táctil a color</td>
+              <td>OLED</td>
+            </tr>
+            <tr>
+              <td>Bluetooth</td>
+              <td>No</td>
+              <td>No</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Seed phrase única</td>
+              <td>Sí</td>
+              <td>Sí</td>
+              <td>No (fragmentada)</td>
+            </tr>
+            <tr>
+              <td>Activos soportados</td>
+              <td>5.500+</td>
+              <td>~9.000</td>
+              <td>BTC + EVM</td>
+            </tr>
+            <tr>
+              <td>Disponibilidad LatAm</td>
+              <td>Alta (MercadoLibre)</td>
+              <td>Media (Amazon)</td>
+              <td>Importación directa</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="affiliate-disclosure">
+        Divulgación de afiliados: Los enlaces a Ledger, Trezor y Cypherock son enlaces de afiliado.
+        Si realizas una compra a través de ellos, recibimos una pequeña comisión sin costo adicional
+        para ti. Nuestras opiniones son independientes y no influenciadas por estas relaciones comerciales.
+      </div>
+    </section>
+
+    <!-- Software wallets section -->
+    <section class="section" aria-labelledby="software-heading">
+      <h2 id="software-heading">Software wallets para uso diario</h2>
+
+      <p>
+        Las wallets de software son aplicaciones en tu teléfono o computadora. Son menos seguras
+        que las hardware wallets (el dispositivo puede ser hackeado), pero son gratuitas,
+        convenientes y suficientes para montos pequeños de uso diario.
+      </p>
+
+      <div class="grid-2 sw-wallets-grid">
+        <div class="card sw-wallet-card">
+          <h3>Muun Wallet</h3>
+          <p class="sw-type">iOS · Android · No custodial</p>
+          <p>
+            Una de las mejores wallets para principiantes. Soporta Bitcoin y Lightning Network de
+            forma transparente. Muy fácil de configurar. Backup en la nube con clave de emergencia
+            para recuperación.
+          </p>
+        </div>
+
+        <div class="card sw-wallet-card">
+          <h3>Phoenix Wallet</h3>
+          <p class="sw-type">iOS · Android · No custodial · Lightning</p>
+          <p>
+            Wallet Lightning autogestiva: maneja canales automáticamente sin que debas entender los
+            detalles técnicos. Ideal para pagos cotidianos pequeños. Requiere abrir un canal
+            (costo inicial único).
+          </p>
+        </div>
+
+        <div class="card sw-wallet-card">
+          <h3>Blue Wallet</h3>
+          <p class="sw-type">iOS · Android · No custodial · Open source</p>
+          <p>
+            Wallet Bitcoin y Lightning gratuita, open source y con interfaz clara. Soporta múltiples
+            wallets, PSBT para multisig y conexión a tu propio nodo. Muy popular en LatAm.
+          </p>
+        </div>
+
+        <div class="card sw-wallet-card">
+          <h3>Electrum</h3>
+          <p class="sw-type">Windows · Mac · Linux · No custodial</p>
+          <p>
+            La wallet de escritorio más veterana y robusta para Bitcoin on-chain. Control total de
+            fees, soporte para hardware wallets (Ledger, Trezor), multisig y Lightning. Para
+            usuarios más avanzados.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightning wallets section -->
+    <section class="section" aria-labelledby="lightning-heading">
+      <h2 id="lightning-heading">Wallets Lightning para pagos cotidianos</h2>
+
+      <p>
+        Lightning Network permite pagos instantáneos con comisiones de fracciones de centavo.
+        Perfecto para remesas pequeñas, propinas y pagos diarios. Pero atención: algunas wallets
+        Lightning son custodiales.
+      </p>
+
+      <div class="grid-2 sw-wallets-grid">
+        <div class="card sw-wallet-card">
+          <h3>Strike</h3>
+          <p class="sw-type">iOS · Android · Custodial · Disponible en MX y SV</p>
+          <p>
+            Muy fácil de usar. Permite comprar BTC, enviar sats por Lightning y recibir en cuenta
+            bancaria. Ideal para remesas México-EE.UU. y El Salvador. Requiere KYC pero sin fee
+            de cambio.
+          </p>
+        </div>
+
+        <div class="card sw-wallet-card">
+          <h3>Wallet of Satoshi</h3>
+          <p class="sw-type">iOS · Android · Custodial · Solo montos pequeños</p>
+          <p>
+            La wallet Lightning más sencilla de todas. Cero configuración. Custodial: ellos guardan
+            tus claves. Úsala solo para montos pequeños (menos de $50) como billetera de bolsillo
+            para pagos cotidianos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rule of thumb -->
+    <section class="section" aria-labelledby="rule-heading">
+      <h2 id="rule-heading">La regla de oro: ¿cuándo necesitas hardware wallet?</h2>
+
+      <div class="card rule-card">
+        <div class="rule-row">
+          <span class="rule-amount">&lt; $100 USD</span>
+          <span class="rule-rec">Wallet de software no custodial es suficiente</span>
+        </div>
+        <div class="rule-divider"></div>
+        <div class="rule-row">
+          <span class="rule-amount">$100 – $500 USD</span>
+          <span class="rule-rec">Software wallet + backup seguro en papel</span>
+        </div>
+        <div class="rule-divider"></div>
+        <div class="rule-row highlight-row">
+          <span class="rule-amount">&gt; $500 USD</span>
+          <span class="rule-rec rule-rec-strong">Hardware wallet obligatoria</span>
+        </div>
+        <div class="rule-divider"></div>
+        <div class="rule-row">
+          <span class="rule-amount">&gt; $10.000 USD</span>
+          <span class="rule-rec">Hardware wallet + multisig o fragmentación de seed phrase</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- What NEVER to do -->
+    <section class="section never-section" aria-labelledby="never-heading">
+      <h2 id="never-heading">Lo que NUNCA debes hacer con tu wallet</h2>
+
+      <div class="card never-card">
+        <ul class="never-list">
+          <li>
+            <span class="never-icon" aria-hidden="true">❌</span>
+            <span>
+              <strong>Guardar la seed phrase en la nube</strong> (Google Drive, iCloud, Dropbox,
+              email, notas del teléfono). Si hackean tu cuenta, pierdes todo.
+            </span>
+          </li>
+          <li>
+            <span class="never-icon" aria-hidden="true">❌</span>
+            <span>
+              <strong>Fotografiar la seed phrase.</strong> Las fotos se sincronizan automáticamente
+              con servicios de nube y pueden ser accedidas por apps.
+            </span>
+          </li>
+          <li>
+            <span class="never-icon" aria-hidden="true">❌</span>
+            <span>
+              <strong>Compartir la seed phrase con nadie.</strong> Ni soporte técnico, ni familia,
+              ni "expertos" que te ofrecen ayuda en Telegram.
+            </span>
+          </li>
+          <li>
+            <span class="never-icon" aria-hidden="true">❌</span>
+            <span>
+              <strong>Comprar hardware wallets de revendedores no oficiales o usadas.</strong>
+              Pueden estar manipuladas de fábrica. Compra solo en la tienda oficial del fabricante.
+            </span>
+          </li>
+          <li>
+            <span class="never-icon" aria-hidden="true">❌</span>
+            <span>
+              <strong>Usar la misma contraseña para el exchange y la wallet.</strong> Una brecha en
+              el exchange no debe comprometer tu wallet.
+            </span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Preguntas frecuentes sobre wallets</h2>
+      <div class="faq" role="list">
+        {
+          faqs.map((item, i) => (
+            <div class="faq-item" role="listitem">
+              <button class="faq-question" aria-expanded="false" data-faq-trigger aria-controls={`wallet-faq-${i}`}>
+                <span>{item.q}</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="faq-answer" id={`wallet-faq-${i}`} role="region" aria-label={item.q} set:html={item.a} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <aside class="sources" aria-label="Fuentes de información">
+      <h4>Fuentes</h4>
+      <ul role="list">
+        {sources.map((s) => (
+          <li>
+            <a href={s.url} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <p class="disclaimer">
+      Esta guía es solo con fines educativos. Los precios de hardware wallets son referenciales y
+      pueden variar según el país, la tienda y el tipo de cambio. Los enlaces de afiliado nos
+      permiten mantener este sitio gratuito. No constituye asesoría financiera.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin: var(--space-6) 0 var(--space-3);
+    color: var(--c-text);
+  }
+
+  p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--c-primary);
+  }
+
+  /* Keys highlight */
+  .keys-highlight {
+    margin: var(--space-6) 0;
+    border-left: 4px solid var(--c-primary);
+  }
+
+  .keys-highlight p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--c-text);
+  }
+
+  /* Wallet cards */
+  .wallet-card {
+    margin-bottom: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .wallet-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .wallet-name {
+    font-size: 1.2rem;
+    margin: 0 0 var(--space-2);
+    color: var(--c-text);
+  }
+
+  .wallet-price {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--c-primary);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .wallet-body p {
+    margin-bottom: var(--space-2);
+  }
+
+  .wallet-pros,
+  .wallet-cons {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0 0 var(--space-3);
+  }
+
+  .wallet-pros li::before {
+    content: "✓ ";
+    color: #00c864;
+    font-weight: 700;
+  }
+
+  .wallet-cons li::before {
+    content: "✗ ";
+    color: #ff6464;
+    font-weight: 700;
+  }
+
+  .wallet-pros li,
+  .wallet-cons li {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+
+  .wallet-btn {
+    align-self: flex-start;
+  }
+
+  .badge-recommended { background: rgba(0, 200, 100, 0.15); color: #00c864; }
+  .badge-opensource { background: rgba(100, 150, 255, 0.15); color: #6496ff; }
+  .badge-innovative { background: rgba(255, 107, 0, 0.15); color: var(--c-primary); }
+
+  /* Comparison table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-3);
+    border: 1px solid var(--c-border);
+    text-align: left;
+  }
+
+  th {
+    background: var(--c-surface-1);
+    color: var(--c-text);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  td {
+    color: var(--c-text-muted);
+  }
+
+  tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* Software wallets */
+  .sw-wallets-grid {
+    margin-top: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .sw-wallet-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .sw-wallet-card h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .sw-type {
+    font-size: 0.78rem;
+    color: var(--c-primary);
+    font-family: var(--font-mono);
+    margin: 0;
+  }
+
+  .sw-wallet-card p:last-child {
+    margin: 0;
+    font-size: 0.88rem;
+  }
+
+  /* Rule of thumb */
+  .rule-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .rule-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .highlight-row {
+    background: rgba(255, 107, 0, 0.06);
+  }
+
+  .rule-amount {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--c-primary);
+    min-width: 140px;
+    font-size: 0.95rem;
+  }
+
+  .rule-rec {
+    color: var(--c-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .rule-rec-strong {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  .rule-divider {
+    height: 1px;
+    background: var(--c-border);
+  }
+
+  /* Never list */
+  .never-card {
+    padding: var(--space-5);
+  }
+
+  .never-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .never-list li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+  }
+
+  .never-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .never-list strong {
+    color: var(--c-text);
+  }
+
+  .affiliate-disclosure {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+    margin: var(--space-1) 0 0;
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((t) => t.replaceWith(t.cloneNode(true)));
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest(".faq-item");
+        if (!item) return;
+        const isOpen = item.classList.contains("open");
+        const answer = document.getElementById(trigger.getAttribute("aria-controls") ?? "");
+        if (isOpen) {
+          item.classList.remove("open");
+          trigger.setAttribute("aria-expanded", "false");
+          if (answer) answer.style.display = "none";
+        } else {
+          item.classList.add("open");
+          trigger.setAttribute("aria-expanded", "true");
+          if (answer) answer.style.display = "block";
+        }
+      });
+    });
+  }
+  initFAQ();
+  document.addEventListener("astro:page-load", initFAQ);
+</script>

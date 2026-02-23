@@ -1,0 +1,135 @@
+---
+interface FAQItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FAQItem[];
+  title?: string;
+}
+
+const { items, title = "Preguntas frecuentes" } = Astro.props;
+
+// Build FAQPage JSON-LD schema
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+
+// Generate unique ID for this FAQ instance to avoid conflicts on pages with multiple FAQs
+const faqId = `faq-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<section class="faq-section" aria-labelledby={`${faqId}-heading`}>
+  <h2 id={`${faqId}-heading`} class="faq-heading">{title}</h2>
+
+  <div class="faq" role="list">
+    {
+      items.map((item, index) => {
+        const itemId = `${faqId}-item-${index}`;
+        const answerId = `${faqId}-answer-${index}`;
+        return (
+          <div class="faq-item" role="listitem" id={itemId} data-faq-item>
+            <button
+              class="faq-question"
+              aria-expanded="false"
+              aria-controls={answerId}
+              data-faq-trigger
+            >
+              <span>{item.q}</span>
+              <svg
+                class="chevron"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div
+              class="faq-answer"
+              id={answerId}
+              role="region"
+              aria-label={item.q}
+              set:html={item.a}
+            />
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    margin: var(--space-8) 0;
+  }
+
+  .faq-heading {
+    margin-bottom: var(--space-6);
+  }
+</style>
+
+<script>
+  // Initialize all FAQ toggles on the page
+  function initFAQ() {
+    const triggers = document.querySelectorAll<HTMLButtonElement>(
+      "[data-faq-trigger]"
+    );
+
+    triggers.forEach((trigger) => {
+      // Remove any previously attached listener to avoid duplicates on page transitions
+      trigger.replaceWith(trigger.cloneNode(true));
+    });
+
+    // Re-query after replacing
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-faq-trigger]")
+      .forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          const item = trigger.closest<HTMLElement>("[data-faq-item]");
+          if (!item) return;
+
+          const isOpen = item.classList.contains("open");
+          const answer = document.getElementById(
+            trigger.getAttribute("aria-controls") ?? ""
+          );
+
+          if (isOpen) {
+            item.classList.remove("open");
+            trigger.setAttribute("aria-expanded", "false");
+            if (answer) {
+              answer.style.display = "none";
+            }
+          } else {
+            item.classList.add("open");
+            trigger.setAttribute("aria-expanded", "true");
+            if (answer) {
+              answer.style.display = "block";
+            }
+          }
+        });
+      });
+  }
+
+  // Run on initial load
+  initFAQ();
+
+  // Support Astro view transitions
+  document.addEventListener("astro:page-load", initFAQ);
+</script>

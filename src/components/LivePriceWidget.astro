@@ -1,0 +1,351 @@
+---
+interface Props {
+  currency: string;
+  currencySymbol: string;
+  countryName: string;
+}
+
+const { currency, currencySymbol, countryName } = Astro.props;
+
+// Unique widget ID to support multiple instances on one page
+const widgetId = `price-widget-${currency.toLowerCase()}`;
+---
+
+<div
+  class="price-widget"
+  id={widgetId}
+  data-currency={currency}
+  data-currency-symbol={currencySymbol}
+  data-country-name={countryName}
+  aria-label={`Precio de Bitcoin en ${countryName}`}
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <!-- Loading state (shown by default, replaced by JS) -->
+  <div class="btc-symbol" aria-hidden="true">₿</div>
+
+  <div class="price-main">
+    <div class="price-loading-row">
+      <div class="price-skeleton" aria-label="Cargando precio...">
+        <span class="price-label">BTC / {currency}</span>
+        <div class="skeleton-bar skeleton-price" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-secondary">
+    <div class="skeleton-bar skeleton-meta" aria-hidden="true"></div>
+  </div>
+
+  <noscript>
+    <p class="price-noscript">
+      Activa JavaScript para ver el precio en tiempo real.
+      <a
+        href="https://coingecko.com/en/coins/bitcoin"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Ver en CoinGecko</a>.
+    </p>
+  </noscript>
+</div>
+
+<style>
+  .price-widget {
+    position: relative;
+  }
+
+  .price-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .price-loading-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .price-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .skeleton-bar {
+    background: linear-gradient(
+      90deg,
+      var(--c-surface-2) 25%,
+      var(--c-border) 50%,
+      var(--c-surface-2) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: var(--radius-sm);
+  }
+
+  .skeleton-price {
+    height: 2rem;
+    width: 180px;
+    max-width: 100%;
+  }
+
+  .skeleton-meta {
+    height: 0.9rem;
+    width: 240px;
+    max-width: 100%;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Populated state */
+  .price-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .price-value-local {
+    font-family: var(--font-mono);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--c-text);
+    line-height: 1;
+  }
+
+  .price-currency-tag {
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+    color: var(--c-text-muted);
+  }
+
+  .price-usd-row {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .price-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+  }
+
+  .price-change {
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  .price-updated {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+  }
+
+  .price-error {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+  }
+
+  .price-noscript {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+</style>
+
+<script>
+  interface PriceData {
+    usd: number;
+    local: number;
+    change24h: number;
+    fetchedAt: number;
+  }
+
+  const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+  function getCacheKey(currency: string): string {
+    return `btc_price_${currency.toLowerCase()}`;
+  }
+
+  function readCache(currency: string): PriceData | null {
+    try {
+      const raw = localStorage.getItem(getCacheKey(currency));
+      if (!raw) return null;
+      const data = JSON.parse(raw) as PriceData;
+      if (Date.now() - data.fetchedAt > CACHE_TTL_MS * 2) {
+        localStorage.removeItem(getCacheKey(currency));
+        return null;
+      }
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeCache(currency: string, data: PriceData): void {
+    try {
+      localStorage.setItem(getCacheKey(currency), JSON.stringify(data));
+    } catch {
+      // localStorage might be unavailable in private browsing
+    }
+  }
+
+  function isStale(data: PriceData): boolean {
+    return Date.now() - data.fetchedAt > CACHE_TTL_MS;
+  }
+
+  async function fetchFromOwnApi(currency: string): Promise<PriceData> {
+    const res = await fetch(
+      `/api/price.php?currency=${encodeURIComponent(currency)}`,
+      {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(4000),
+      }
+    );
+    if (!res.ok) throw new Error(`Own API HTTP ${res.status}`);
+    const json = (await res.json()) as { usd?: number; local?: number; change24h?: number };
+    return {
+      usd: json.usd ?? 0,
+      local: json.local ?? 0,
+      change24h: json.change24h ?? 0,
+      fetchedAt: Date.now(),
+    };
+  }
+
+  async function fetchFromCoinGecko(currency: string): Promise<PriceData> {
+    const curr = currency.toLowerCase();
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,${curr}&include_24hr_change=true`;
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) throw new Error(`CoinGecko HTTP ${res.status}`);
+    const json = (await res.json()) as {
+      bitcoin: Record<string, number>;
+    };
+    const btc = json.bitcoin;
+    return {
+      usd: btc["usd"] ?? 0,
+      local: btc[curr] ?? 0,
+      change24h: btc[`${curr}_24h_change`] ?? btc["usd_24h_change"] ?? 0,
+      fetchedAt: Date.now(),
+    };
+  }
+
+  function minutesAgo(ts: number): string {
+    const mins = Math.floor((Date.now() - ts) / 60000);
+    if (mins < 1) return "hace menos de 1 min";
+    if (mins === 1) return "hace 1 min";
+    return `hace ${mins} min`;
+  }
+
+  function formatNumber(n: number, decimals = 2): string {
+    return n.toLocaleString("es-419", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+
+  function renderPrice(
+    container: HTMLElement,
+    data: PriceData,
+    currencySymbol: string,
+    currency: string
+  ): void {
+    const changeClass =
+      data.change24h >= 0 ? "change-up" : "change-down";
+    const changeSign = data.change24h >= 0 ? "+" : "";
+    const localDecimals = data.local > 10000 ? 0 : 2;
+
+    container.innerHTML = `
+      <div class="btc-symbol" aria-hidden="true">₿</div>
+      <div class="price-main">
+        <div class="price-value-row">
+          <span class="price-value price-value-local">${currencySymbol} ${formatNumber(data.local, localDecimals)}</span>
+          <span class="price-currency-tag">${currency}</span>
+        </div>
+        <p class="price-usd-row">≈ $${formatNumber(data.usd, 0)} USD</p>
+      </div>
+      <div class="price-secondary">
+        <div class="price-meta-row">
+          <span class="price-change ${changeClass}" aria-label="Cambio en 24 horas: ${changeSign}${formatNumber(data.change24h)}%">
+            ${changeSign}${formatNumber(data.change24h)}% (24h)
+          </span>
+          <span class="price-updated" aria-label="Precio actualizado ${minutesAgo(data.fetchedAt)}">
+            Actualizado ${minutesAgo(data.fetchedAt)}
+          </span>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderError(container: HTMLElement, currency: string): void {
+    container.innerHTML = `
+      <div class="btc-symbol" aria-hidden="true">₿</div>
+      <div class="price-main">
+        <p class="price-error">
+          No se pudo cargar el precio de BTC/${currency}.
+          <a href="https://coingecko.com/en/coins/bitcoin" target="_blank" rel="noopener noreferrer">
+            Ver en CoinGecko
+          </a>.
+        </p>
+      </div>
+    `;
+  }
+
+  async function loadPrice(widget: HTMLElement): Promise<void> {
+    const currency = widget.dataset.currency ?? "USD";
+    const currencySymbol = widget.dataset.currencySymbol ?? "$";
+
+    // Stale-while-revalidate: show cached immediately, refresh in background if stale
+    const cached = readCache(currency);
+    if (cached) {
+      renderPrice(widget, cached, currencySymbol, currency);
+      if (!isStale(cached)) return; // Fresh — no need to refetch
+    }
+
+    // Fetch fresh data
+    try {
+      let data: PriceData;
+      try {
+        data = await fetchFromOwnApi(currency);
+      } catch {
+        // Fall back to CoinGecko
+        data = await fetchFromCoinGecko(currency);
+      }
+      writeCache(currency, data);
+      renderPrice(widget, data, currencySymbol, currency);
+    } catch {
+      if (!cached) {
+        // Only show error if we have no cached data at all
+        renderError(widget, currency);
+      }
+      // If we already rendered cached data, keep it — error in background refresh
+    }
+  }
+
+  function initPriceWidgets(): void {
+    const widgets = document.querySelectorAll<HTMLElement>("[data-currency][data-currency-symbol]");
+    widgets.forEach((widget) => {
+      if (widget.id.startsWith("price-widget-")) {
+        loadPrice(widget);
+      }
+    });
+  }
+
+  initPriceWidgets();
+  document.addEventListener("astro:page-load", initPriceWidgets);
+</script>

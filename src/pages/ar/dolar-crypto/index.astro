@@ -1,0 +1,148 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Dólar Cripto Argentina 2026: Qué Es y Cómo Funciona | free-bitcoin.lat";
+const description = "¿Qué es el dólar cripto en Argentina? Cómo calcularlo, diferencias con dólar blue y oficial, cómo comprar USDT con pesos en 2026 y riesgos legales.";
+const canonical = "https://free-bitcoin.lat/ar/dolar-crypto/";
+
+const faqItems = [
+  { q: "¿Qué es el dólar cripto?", a: "Es la cotización del dólar estadounidense que se obtiene al comprar USDT u otras stablecoins dolarizadas en exchanges de criptomonedas con pesos argentinos. Sirve como alternativa al dólar blue y es legal cuando se opera a través de un PSAV registrado en la CNV." },
+  { q: "¿Es legal comprar dólar cripto en Argentina?", a: "Sí. Comprar USDT en un exchange registrado como PSAV ante la CNV (como Binance, Ripio, Lemon) es legal. Las operaciones son informadas a la AFIP/ARCA, así que debes declararlas en tus impuestos." },
+  { q: "¿Cuál es la diferencia entre dólar cripto y dólar blue?", a: "El dólar cripto se opera digitalmente en exchanges regulados (legal). El dólar blue es el mercado informal de divisas que opera en las 'cuevas' (zona gris legal). El cripto suele cotizar entre el oficial y el blue. El cripto deja rastro fiscal; el blue no." },
+  { q: "¿El dólar cripto está controlado por el BCRA?", a: "No directamente. El BCRA controla el dólar oficial y el acceso a divisas vía el cepo cambiario. El dólar cripto opera fuera del cepo pero dentro del marco regulatorio de la CNV para PSAVs." },
+  { q: "¿Cuántos dólares puedo comprar vía cripto?", a: "No hay límite mensual específico para la compra de USDT como activo, a diferencia del cupo de $200/mes para dólar oficial. Sin embargo, las plataformas aplican sus propios límites KYC y anti-lavado." },
+  { q: "¿Qué riesgos tiene el dólar cripto?", a: "Riesgo del exchange (quiebra o hackeo), riesgo de de-peg del stablecoin (muy bajo para USDT), riesgo regulatorio (cambios de política), y riesgo fiscal (AFIP/ARCA puede auditar). Guarda siempre tus USDT en tu propia wallet, no en el exchange." },
+];
+
+const sources = [
+  { label: "BCRA – Comunicaciones cambiarias", url: "https://www.bcra.gob.ar" },
+  { label: "CNV – Registro PSAV (RG 994/2024)", url: "https://www.cnv.gov.ar" },
+  { label: "AFIP/ARCA – Impuestos sobre activos digitales", url: "https://www.afip.gob.ar" },
+  { label: "Ámbito Financiero – Cotizaciones", url: "https://www.ambito.com" },
+  { label: "Banco Central de la República Argentina", url: "https://www.bcra.gob.ar" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Argentina", item: "https://free-bitcoin.lat/ar/" },
+    { name: "Dólar Cripto", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container" style="padding-top:var(--space-8)">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Argentina", href: "/ar/" },
+      { label: "Dólar Cripto" },
+    ]} />
+
+    <article>
+      <header style="margin-bottom:var(--space-8)">
+        <h1>Dólar cripto en Argentina 2026: qué es y cómo funciona</h1>
+        <div class="last-updated">📅 Última actualización: 2026-02-23</div>
+      </header>
+
+      <p class="lead">El <strong>dólar cripto</strong> en Argentina es la cotización del dólar estadounidense que se obtiene al comprar o vender stablecoins como USDT en exchanges de criptomonedas. Sirve como alternativa al dólar blue y suele ubicarse entre la cotización oficial del BCRA y la del mercado paralelo, con variaciones según el exchange y el momento del día.</p>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>¿Qué es exactamente el dólar cripto?</h2>
+        <p>El dólar cripto es un <em>tipo de cambio implícito</em>: si compras 1 USDT (Tether, una stablecoin anclada al dólar) con pesos argentinos, el precio en pesos que pagás dividido por 1 te da la cotización del dólar en el mercado cripto.</p>
+        <p>Por ejemplo: si pagas $1.060 ARS por 1 USDT, el "dólar cripto" cotiza a $1.060. Este valor cambia durante el día según la oferta y demanda en cada exchange.</p>
+        <div class="highlight">
+          <strong>Fórmula:</strong> Dólar cripto = Precio de compra de 1 USDT en ARS
+        </div>
+        <p>El concepto se volvió central para millones de argentinos porque el cepo cambiario del BCRA limita la compra de dólares oficiales a $200/mes por persona. El cripto ofrece acceso sin límites mensuales formales, aunque con sus propios riesgos.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Tipos de dólar en Argentina 2026</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Tipo</th><th>Referencia aprox.</th><th>Dónde</th><th>Legal</th><th>Rastro fiscal</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Dólar oficial (BCRA)</td><td>$1.020–$1.050</td><td>Bancos (cupo $200/mes)</td><td>✓ Sí</td><td>Sí (banco)</td></tr>
+              <tr><td>Dólar MEP (bursátil)</td><td>$1.050–$1.080</td><td>Brokers, venta de bonos</td><td>✓ Sí</td><td>Sí (CNV)</td></tr>
+              <tr><td>Dólar cripto (USDT)</td><td>$1.050–$1.090</td><td>Exchanges PSAV CNV</td><td>✓ Sí</td><td>Sí (AFIP)</td></tr>
+              <tr><td>Dólar blue</td><td>$1.070–$1.110</td><td>Cuevas informales</td><td>⚠️ Zona gris</td><td>No</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="disclaimer">Nota: las cotizaciones son referenciales a principios de 2026. Verificá siempre en tiempo real en tu exchange o en fuentes como Ámbito Financiero.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Cómo comprar dólar cripto paso a paso</h2>
+        <ol style="line-height:2;padding-left:1.5rem">
+          <li><strong>Abrí cuenta</strong> en un exchange registrado como PSAV ante la CNV: Binance, Ripio, Lemon Cash, Decrypto.</li>
+          <li><strong>Completá el KYC</strong> (DNI + selfie). Es obligatorio por la normativa AFIP.</li>
+          <li><strong>Depositá pesos</strong> via transferencia bancaria (CVU o CBU).</li>
+          <li><strong>Comprá USDT</strong> en el mercado spot (par USDT/ARS).</li>
+          <li><strong>Guardá en tu wallet</strong> propia (no en el exchange) para mayor seguridad.</li>
+        </ol>
+        <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-primary" rel="noopener noreferrer sponsored" target="_blank">Abrir cuenta en Binance</a>
+        <p class="affiliate-disclosure">Este es un enlace de afiliado. Si te registrás, recibimos una pequeña comisión sin costo adicional para vos.</p>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Dólar cripto vs dólar blue: diferencias clave</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="color:var(--c-success)">Dólar cripto ✓</h3>
+            <ul style="line-height:2;padding-left:1.2rem">
+              <li>100% legal vía PSAV registrado</li>
+              <li>Digital, disponible 24/7</li>
+              <li>Rastro fiscal (AFIP lo sabe)</li>
+              <li>No requiere salir de casa</li>
+              <li>Límites por KYC, no por BCRA</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color:var(--c-warning)">Dólar blue ⚠️</h3>
+            <ul style="line-height:2;padding-left:1.2rem">
+              <li>Zona gris / informal</li>
+              <li>Requiere presencia física</li>
+              <li>Sin rastro fiscal</li>
+              <li>Riesgo de billetes falsos</li>
+              <li>Sin límites, pero sin protección</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>Riesgos del dólar cripto</h2>
+        <ul style="line-height:2;padding-left:1.2rem">
+          <li><strong>Riesgo del exchange:</strong> si la plataforma quiebra o es hackeada, podés perder fondos. Usá siempre tu propia wallet.</li>
+          <li><strong>Riesgo de de-peg:</strong> USDT tiene historial sólido, pero no está garantizado por ningún gobierno. El riesgo es bajo pero existe.</li>
+          <li><strong>Riesgo regulatorio:</strong> el BCRA o la CNV pueden cambiar las reglas. Mantente informado.</li>
+          <li><strong>Riesgo fiscal:</strong> AFIP/ARCA puede pedirte justificación de origen de fondos. Conservá comprobantes.</li>
+        </ul>
+      </section>
+
+      <section style="margin:var(--space-8) 0">
+        <h2>¿Cuándo conviene usar dólar cripto vs MEP?</h2>
+        <p>El <strong>MEP</strong> requiere abrir cuenta en un broker regulado por CNV, comprar bonos en ARS y venderlos en USD. Es legal, deja rastro fiscal, y suele tener una cotización similar al cripto. La ventaja del cripto es la <em>inmediatez</em> (minutos vs. días de parking del MEP) y la disponibilidad 24/7.</p>
+        <p>Para montos grandes (más de $500.000 ARS), algunos prefieren el MEP por mayor liquidez. Para operaciones frecuentes y menores, el dólar cripto es más práctico.</p>
+      </section>
+
+      <FAQ items={faqItems} />
+
+      <SourcesList sources={sources} />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .lead { font-size:1.1rem; line-height:1.7; border-left:3px solid var(--c-primary); padding-left:var(--space-4); margin-bottom:var(--space-6); }
+</style>

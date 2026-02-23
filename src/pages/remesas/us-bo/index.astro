@@ -1,0 +1,276 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de EE.UU. a Bolivia con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Bolivia levantó la prohibición de Bitcoin en 2024. Ahora puedes enviar remesas desde EE.UU. a Bolivia con Lightning. Costo desde $0.50 vs $30 de bancos. Guía 2026.";
+const canonical = "https://free-bitcoin.lat/remesas/us-bo/";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → Bolivia", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Cuándo se levantó la prohibición de Bitcoin en Bolivia?",
+    a: "El Banco Central de Bolivia (BCB) emitió en junio de 2024 la Resolución de Directorio N° 044/2024, que autorizó a las entidades financieras reguladas a realizar operaciones con criptomonedas. Esto revirtió la prohibición de 2020 y abrió el camino para que exchanges y billeteras operen legalmente en el país. Los ciudadanos bolivianos pueden comprar, vender y recibir criptomonedas.",
+  },
+  {
+    q: "¿Por qué el USD es escaso en Bolivia y cómo ayuda el Bitcoin?",
+    a: "Bolivia enfrenta desde 2023 una escasez significativa de divisas extranjeras, especialmente dólares. El tipo de cambio oficial del boliviano (BOB) está artificialmente fijo a 6.97 por USD, mientras que en el mercado paralelo el dólar cotiza con una prima del 10–25%. Bitcoin actúa como reserva de valor en divisas fuertes y permite al receptor acceder a dólares digitales (USDT) sin depender de los canales bancarios oficiales.",
+  },
+  {
+    q: "¿Cómo convierte el receptor Bitcoin a bolivianos (BOB)?",
+    a: "En Bolivia, la conversión puede hacerse vía Binance P2P con el par USDT/BOB, aunque la liquidez es menor que en otros países. También es posible usar intermediarios locales o comerciantes P2P en plataformas como LocalBitcoins o Paxful. Otra opción es mantener los fondos en USDT si el receptor tiene cuenta en un exchange internacional.",
+  },
+];
+
+const sources = [
+  { label: "Banco Central de Bolivia – Resolución 044/2024 sobre criptoactivos", url: "https://www.bcb.gob.bo/" },
+  { label: "Banco Mundial – Precios de remesas globales", url: "https://remittanceprices.worldbank.org/" },
+  { label: "Reuters – Bolivia autoriza criptomonedas 2024", url: "https://www.reuters.com/" },
+  { label: "BID – Informe remesas sudamérica 2024", url: "https://www.iadb.org/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[breadcrumbSchema]}
+>
+  <div class="container">
+
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → Bolivia</li>
+      </ol>
+    </nav>
+
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+        <span class="badge badge-yellow">Prohibición levantada 2024</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a Bolivia con Bitcoin: guía 2026</h1>
+      <p class="hero-lead">
+        En junio de 2024, Bolivia levantó su prohibición de Bitcoin y criptomonedas, autorizando a entidades financieras reguladas a operar con ellas. Esto abre el corredor EE.UU.–Bolivia para remesas con Lightning Network. En un contexto de escasez de dólares y tipo de cambio paralelo elevado, el Bitcoin representa una alternativa particularmente valiosa para las familias bolivianas que reciben fondos del exterior.
+      </p>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning por $200</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$30</span>
+        <span class="stat-label">Costo banco tradicional</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">2024</span>
+        <span class="stat-label">Año del levantamiento de prohibición</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">+15%</span>
+        <span class="stat-label">Prima USD paralelo (aprox. 2025)</span>
+      </div>
+    </div>
+
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">Compara los costos: EE.UU. → Bolivia (BOB)</h2>
+      <p>
+        Bolivia tiene algunos de los costos de remesa más altos del hemisferio, con bancos cobrando hasta el 15% del monto. Las plataformas tradicionales de remesas como Western Union cobran entre $9–$12 por un envío de $200. Lightning Network permite reducir este costo al mínimo absoluto.
+      </p>
+      <RemittanceCalculator
+        corridor="us-bo"
+        fromCountry="EE.UU."
+        toCountry="Bolivia"
+        toCurrency="BOB"
+      />
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-contexto">
+      <h2 id="sec-contexto">Por qué el Bitcoin es especialmente valioso en Bolivia ahora</h2>
+
+      <p>
+        Bolivia enfrenta una crisis de divisas sin precedentes. El tipo de cambio oficial del boliviano (BOB) está fijado artificialmente en 6.97 por dólar desde hace décadas, mientras que la realidad del mercado muestra una prima del 10–25% en el mercado paralelo. Los bolivianos tienen dificultades para acceder a dólares a través de los canales bancarios oficiales.
+      </p>
+
+      <p>
+        En este contexto, <strong>USDT (Tether)</strong> —una stablecoin anclada al dólar— se ha convertido en una forma popular de acceder a dólares digitales sin depender del sistema bancario. El receptor boliviano puede recibir USDT desde un envío Lightning, mantenerlos como dólares digitales o venderlos al tipo de cambio del mercado P2P, obteniendo más bolivianos que a través del canal oficial.
+      </p>
+
+      <p>
+        El levantamiento de la prohibición en 2024 da mayor seguridad jurídica a estos usuarios. Las entidades financieras reguladas pueden ahora ofrecer servicios relacionados con criptoactivos, lo que progresivamente aumentará la infraestructura disponible para convertir Bitcoin y USDT a bolivianos.
+      </p>
+    </section>
+
+    <section class="content-section" aria-labelledby="sec-como">
+      <h2 id="sec-como">Cómo enviar a Bolivia con Bitcoin en 2026</h2>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>Remitente: usa Strike o envía USDT desde un exchange</h3>
+            <p>Strike permite enviar Lightning directamente. Alternativamente, compra USDT en Coinbase o Binance y envíalo por la red Tron (TRC-20) al receptor; el costo de red TRC-20 es menor a $1 USD y el receptor recibe dólares estables.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>Receptor: recibe en wallet Bitcoin o USDT</h3>
+            <p>El receptor boliviano puede usar Muun Wallet para recibir Lightning, o cualquier wallet que soporte USDT (TRC-20 o ERC-20) como Trust Wallet o MetaMask. Desde 2024, con la regulación actualizada, algunos exchanges locales también permiten recibir transferencias.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Conversión a bolivianos vía P2P</h3>
+            <p>El receptor vende USDT o BTC en Binance P2P a compradores bolivianos, recibiendo transferencia bancaria en BOB. La prima del mercado paralelo puede resultar en un tipo de cambio más favorable que el oficial.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="warning-box card">
+        <strong>Nota importante:</strong> La regulación boliviana aún está en desarrollo. Verifica la situación regulatoria vigente antes de realizar operaciones de alto valor. Para pequeños envíos familiares regulares, el marco legal es permisivo con el uso individual de criptomonedas.
+      </div>
+    </section>
+
+    <FAQ items={faqItems} title="Preguntas frecuentes: remesas EE.UU.–Bolivia" />
+
+    <SourcesList sources={sources} title="Fuentes" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumb a { color: var(--c-text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--c-primary); }
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--space-4);
+  }
+  .hero-lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+  .content-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+  .step-content h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+  .step-content p { font-size: 0.9rem; margin-bottom: 0; }
+  .warning-box {
+    padding: var(--space-4) var(--space-6);
+    border-left: 3px solid var(--c-warning);
+    margin-top: var(--space-6);
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+  }
+  .warning-box strong {
+    color: var(--c-warning);
+  }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .step-item { flex-direction: column; }
+  }
+</style>

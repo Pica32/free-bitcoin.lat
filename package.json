@@ -1,0 +1,15 @@
+{
+  "name": "free-bitcoin-lat-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/generate-sitemaps.mjs && node scripts/generate-llms.mjs",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.15.0"
+  },
+  "devDependencies": {}
+}

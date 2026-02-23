@@ -1,0 +1,425 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { webAppSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Calculadoras Bitcoin para América Latina 2026 | free-bitcoin.lat";
+const description =
+  "Calculadoras gratuitas de Bitcoin para LatAm: conversor BTC a 15 monedas, DCA, comisiones, remesas y premium BTC/ARS Venezuela.";
+const canonical = "https://free-bitcoin.lat/calculadoras/";
+
+const jsonLd = [
+  webAppSchema({
+    name: "Calculadoras Bitcoin LatAm",
+    description,
+    url: canonical,
+  }),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Calculadoras", item: canonical },
+  ]),
+];
+
+const calcCards = [
+  {
+    title: "Conversor BTC ↔ Moneda Local",
+    desc: "Convierte bitcoin a tu moneda local en tiempo real. Soporta 13 monedas de LatAm.",
+    href: "#converter",
+    label: "Usar conversor",
+  },
+  {
+    title: "Calculadora DCA",
+    desc: "Simula tu estrategia de Dollar Cost Averaging y calcula tu precio promedio de compra.",
+    href: "/calculadoras/dca/",
+    label: "Calcular DCA",
+  },
+  {
+    title: "Calculadora de Remesas",
+    desc: "Compara el costo real de enviar dinero a LatAm con Bitcoin versus métodos tradicionales.",
+    href: "/calculadoras/remesas/",
+    label: "Calcular remesa",
+  },
+  {
+    title: "Premium BTC Argentina / Venezuela",
+    desc: "Índice de brecha entre el precio oficial y el precio real del BTC en AR y VE.",
+    href: "/calculadoras/premium-btc/",
+    label: "Ver premium",
+  },
+  {
+    title: "Calculadora de Comisiones",
+    desc: "Compara las tarifas de Lightning Network, on-chain, USDT TRC-20/ERC-20 y SWIFT.",
+    href: "/calculadoras/comisiones/",
+    label: "Comparar comisiones",
+  },
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Calculadoras Bitcoin para América Latina</h1>
+
+    <p class="page-intro">
+      Herramientas gratuitas para tomar mejores decisiones con Bitcoin en nuestra región. Todas las
+      calculadoras funcionan en tu navegador; los datos de precio se obtienen directamente de
+      CoinGecko con caché de 5 minutos para no sobrecargar la API.
+    </p>
+
+    <!-- Calculadora cards grid -->
+    <section class="section" aria-label="Todas las calculadoras">
+      <div class="grid-3 calc-grid">
+        {
+          calcCards.map((card) => (
+            <a href={card.href} class="card calc-card" aria-label={card.title}>
+              <h2 class="calc-card-title">{card.title}</h2>
+              <p class="calc-card-desc">{card.desc}</p>
+              <span class="btn btn-primary calc-card-btn">{card.label}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Embedded BTC Converter -->
+    <section class="section" id="converter" aria-labelledby="converter-heading">
+      <h2 id="converter-heading">Conversor BTC ↔ Moneda Local</h2>
+      <p>
+        Escribe una cantidad en BTC o en tu moneda local para ver la conversión al precio actual de
+        mercado.
+      </p>
+
+      <div class="card converter-card">
+        <div class="converter-top">
+          <label for="curr-select" class="converter-label">Moneda local</label>
+          <select id="curr-select" class="converter-select" aria-label="Seleccionar moneda">
+            <option value="USD">Dólar USD ($)</option>
+            <option value="MXN">Peso MXN ($)</option>
+            <option value="BRL">Real BRL (R$)</option>
+            <option value="ARS">Peso ARS ($)</option>
+            <option value="COP">Peso COP ($)</option>
+            <option value="CLP">Peso CLP ($)</option>
+            <option value="PEN">Sol PEN (S/.)</option>
+            <option value="GTQ">Quetzal GTQ (Q)</option>
+            <option value="BOB">Boliviano BOB (Bs.)</option>
+            <option value="PYG">Guaraní PYG (₲)</option>
+            <option value="UYU">Peso UYU ($)</option>
+            <option value="HNL">Lempira HNL (L)</option>
+            <option value="PAB">Balboa PAB (B/.)</option>
+          </select>
+        </div>
+
+        <div class="converter-row">
+          <div class="converter-field">
+            <label for="btc-input">Bitcoin (BTC)</label>
+            <input
+              type="number"
+              id="btc-input"
+              class="converter-input"
+              placeholder="0.001"
+              min="0"
+              step="any"
+              aria-label="Cantidad en BTC"
+            />
+            <p class="converter-result">
+              = <span id="fiat-output" aria-live="polite">—</span> <span id="fiat-symbol"></span>
+            </p>
+          </div>
+
+          <div class="converter-divider" aria-hidden="true">⇄</div>
+
+          <div class="converter-field">
+            <label for="fiat-input">Moneda local</label>
+            <input
+              type="number"
+              id="fiat-input"
+              class="converter-input"
+              placeholder="100"
+              min="0"
+              step="any"
+              aria-label="Cantidad en moneda local"
+            />
+            <p class="converter-result">
+              = <span id="btc-output" aria-live="polite">—</span> BTC
+            </p>
+          </div>
+        </div>
+
+        <p id="price-ref" class="price-ref" aria-live="polite">Cargando precio…</p>
+        <p class="price-loading" id="price-loading" aria-live="polite" hidden>Actualizando…</p>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Las calculadoras son herramientas educativas. Los precios son aproximados y pueden diferir del
+      precio real en exchanges debido a spreads y comisiones. No constituyen asesoría financiera.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-intro {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    max-width: 680px;
+    margin-bottom: var(--space-6);
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  /* Calc cards */
+  .calc-grid {
+    margin-top: var(--space-4);
+  }
+
+  .calc-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .calc-card:hover {
+    border-color: var(--c-primary);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  .calc-card-title {
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--c-text);
+  }
+
+  .calc-card-desc {
+    color: var(--c-text-muted);
+    font-size: 0.9rem;
+    flex: 1;
+    margin: 0;
+  }
+
+  .calc-card-btn {
+    align-self: flex-start;
+    font-size: 0.85rem;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* Converter */
+  .converter-card {
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .converter-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .converter-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-text);
+    white-space: nowrap;
+  }
+
+  .converter-select {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    cursor: pointer;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .converter-select:focus {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 2px;
+  }
+
+  .converter-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .converter-field {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .converter-field label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .converter-input {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  .converter-input:focus {
+    outline: none;
+    border-color: var(--c-primary);
+  }
+
+  .converter-input::-webkit-outer-spin-button,
+  .converter-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  .converter-result {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  .converter-result span {
+    font-family: var(--font-mono);
+    color: var(--c-primary);
+    font-weight: 600;
+  }
+
+  .converter-divider {
+    font-size: 1.6rem;
+    color: var(--c-text-muted);
+    padding-top: var(--space-5);
+    user-select: none;
+  }
+
+  .price-ref {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    text-align: right;
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  .price-loading {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .converter-divider {
+      transform: rotate(90deg);
+      padding: 0;
+    }
+  }
+</style>
+
+<script>
+  const CURRENCIES: Record<string, { label: string; symbol: string }> = {
+    USD: { label: "Dólar USD", symbol: "$" },
+    MXN: { label: "Peso MXN", symbol: "$" },
+    BRL: { label: "Real BRL", symbol: "R$" },
+    ARS: { label: "Peso ARS", symbol: "$" },
+    COP: { label: "Peso COP", symbol: "$" },
+    CLP: { label: "Peso CLP", symbol: "$" },
+    PEN: { label: "Sol PEN", symbol: "S/." },
+    GTQ: { label: "Quetzal GTQ", symbol: "Q" },
+    BOB: { label: "Boliviano BOB", symbol: "Bs." },
+    PYG: { label: "Guaraní PYG", symbol: "₲" },
+    UYU: { label: "Peso UYU", symbol: "$" },
+    HNL: { label: "Lempira HNL", symbol: "L" },
+    PAB: { label: "Balboa PAB", symbol: "B/." },
+  };
+
+  let currentPrice: number | null = null;
+
+  async function loadPrice(curr: string) {
+    const c = curr.toLowerCase();
+    try {
+      const cached = JSON.parse(localStorage.getItem("fblt_price_v1") || "null");
+      if (cached && Date.now() - cached.updatedAt < 300000 && cached.currencies[curr]) {
+        currentPrice = cached.currencies[curr];
+        return;
+      }
+      const r = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${c}&include_24hr_change=true`
+      );
+      const j = await r.json();
+      currentPrice = j.bitcoin[c];
+      const stored = JSON.parse(
+        localStorage.getItem("fblt_price_v1") || '{"currencies":{},"updatedAt":0}'
+      );
+      stored.currencies[curr] = currentPrice;
+      stored.updatedAt = Date.now();
+      localStorage.setItem("fblt_price_v1", JSON.stringify(stored));
+    } catch (e) {
+      currentPrice = null;
+    }
+  }
+
+  async function recalc() {
+    const sel = document.getElementById("curr-select") as HTMLSelectElement | null;
+    const curr = sel?.value || "USD";
+    await loadPrice(curr);
+    const btcIn = parseFloat((document.getElementById("btc-input") as HTMLInputElement)?.value) || 0;
+    const fiatIn =
+      parseFloat((document.getElementById("fiat-input") as HTMLInputElement)?.value) || 0;
+    const fiatOutput = document.getElementById("fiat-output");
+    const btcOutput = document.getElementById("btc-output");
+    const priceRef = document.getElementById("price-ref");
+
+    if (currentPrice) {
+      if ((document.activeElement as HTMLElement)?.id === "btc-input") {
+        if (fiatOutput)
+          fiatOutput.textContent = new Intl.NumberFormat("es-419", {
+            maximumFractionDigits: 2,
+          }).format(btcIn * currentPrice);
+      } else {
+        if (btcOutput) btcOutput.textContent = (fiatIn / currentPrice).toFixed(8);
+      }
+      if (priceRef)
+        priceRef.textContent = `1 BTC = ${new Intl.NumberFormat("es-419", {
+          maximumFractionDigits: 0,
+        }).format(currentPrice)} ${curr}`;
+    } else {
+      if (priceRef) priceRef.textContent = "No se pudo obtener el precio. Intenta más tarde.";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("curr-select")?.addEventListener("change", recalc);
+    document.getElementById("btc-input")?.addEventListener("input", recalc);
+    document.getElementById("fiat-input")?.addEventListener("input", recalc);
+    recalc();
+  });
+</script>

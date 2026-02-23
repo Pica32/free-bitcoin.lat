@@ -1,0 +1,888 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const title = "Como Comprar Bitcoin no Brasil com PIX 2026 – Guia Passo a Passo | free-bitcoin.lat";
+const description = "Guia completo para comprar Bitcoin no Brasil em 2026 com PIX, cartão ou boleto. Passo a passo nas melhores corretoras: Binance, Mercado Bitcoin, Bybit.";
+const canonical = "https://free-bitcoin.lat/br/como-comprar-bitcoin/";
+
+const faqItems = [
+  {
+    q: "Quanto tempo demora para comprar Bitcoin com PIX?",
+    a: "Com PIX, o depósito chega instantaneamente na corretora. Após confirmação do depósito (geralmente em segundos), a compra de Bitcoin é executada em menos de 1 minuto. Todo o processo, da abertura de conta à primeira compra, leva menos de 15 minutos.",
+  },
+  {
+    q: "Qual o valor mínimo para comprar Bitcoin no Brasil?",
+    a: "A maioria das corretoras permite comprar frações de Bitcoin a partir de R$ 1. Na Binance, o valor mínimo de compra via PIX é de R$ 10. Não é necessário comprar 1 Bitcoin inteiro — você pode comprar 0,0001 BTC ou qualquer fração.",
+  },
+  {
+    q: "Preciso de CPF para comprar Bitcoin no Brasil?",
+    a: "Sim. Todas as corretoras regulamentadas no Brasil exigem CPF para o processo de KYC (verificação de identidade), conforme as normas do Banco Central e da Receita Federal. Sem KYC, não é possível depositar ou sacar em reais.",
+  },
+  {
+    q: "É seguro comprar Bitcoin pela Binance no Brasil?",
+    a: "A Binance é a maior exchange de criptoativos do mundo em volume e opera no Brasil com registro junto ao Banco Central. Como qualquer exchange, há riscos de custódia: recomendamos não manter grandes quantias na exchange por tempo prolongado. Transfira Bitcoin para uma carteira própria (hardware wallet) para maior segurança.",
+  },
+  {
+    q: "Como funciona o golpe do PIX com Bitcoin?",
+    a: "Os golpes mais comuns envolvem: (1) compradores de P2P que fazem o PIX e depois contestam a transação no banco alegando fraude — saiba que PIX NÃO é reversível automaticamente; (2) sites falsos de exchange que solicitam depósito via PIX e somem com o dinheiro. Sempre verifique o URL e opere apenas em exchanges regulamentadas.",
+  },
+  {
+    q: "Posso comprar Bitcoin anonimamente no Brasil?",
+    a: "Não é possível comprar Bitcoin com reais de forma anônima em exchanges regulamentadas, pois o KYC é obrigatório. É tecnicamente possível comprar Bitcoin com dinheiro em espécie via P2P, mas há riscos legais e de segurança elevados. A Receita Federal monitora transações via DeCripto.",
+  },
+];
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Como comprar Bitcoin no Brasil com PIX",
+  description:
+    "Guia passo a passo para comprar Bitcoin no Brasil usando PIX na Binance em 2026.",
+  totalTime: "PT15M",
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Criar conta na Binance",
+      text: "Acesse o site da Binance pelo link de registro e crie sua conta com e-mail e senha segura.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Verificar identidade (KYC)",
+      text: "Envie seu CPF, foto do documento de identidade ou CNH e uma selfie. O processo é automático e leva 5 a 10 minutos.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Depositar via PIX",
+      text: "Vá em 'Depositar', selecione BRL, escolha PIX e copie o código QR ou chave PIX gerada pela Binance.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Transferir o PIX do seu banco",
+      text: "Abra o aplicativo do seu banco, escaneie o QR code ou cole a chave PIX e confirme a transferência. O crédito aparece na Binance em segundos.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "Comprar Bitcoin",
+      text: "Com o saldo em BRL disponível, acesse 'Comprar Cripto', selecione BTC, insira o valor em reais que deseja investir e confirme a compra.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 6,
+      name: "Transferir para carteira própria",
+      text: "Para maior segurança, saque o Bitcoin para uma carteira de hardware (Ledger, Trezor) ou carteira de software que você controle as chaves privadas.",
+    },
+  ],
+};
+
+const jsonLd = [
+  howToSchema,
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Brasil", item: "https://free-bitcoin.lat/br/" },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Como comprar Bitcoin",
+        item: canonical,
+      },
+    ],
+  },
+];
+
+const steps = [
+  {
+    num: 1,
+    title: "Crie sua conta na Binance",
+    body: "Acesse a Binance pelo link abaixo e clique em \"Registrar\". Informe seu e-mail e crie uma senha forte (use letras maiúsculas, minúsculas, números e símbolos). Ative a autenticação de dois fatores (2FA) imediatamente após criar a conta — é essencial para proteger seu saldo.",
+    link: "https://accounts.binance.com/register?ref=346436875",
+    linkText: "Criar conta na Binance",
+  },
+  {
+    num: 2,
+    title: "Verifique sua identidade (KYC)",
+    body: "Navegue até o menu de verificação de identidade. Você precisará de: CPF, um documento oficial com foto (RG ou CNH) e uma selfie com o documento. O processo é automatizado pela Binance e leva entre 5 e 10 minutos. Sem KYC completo, você não pode depositar ou sacar em reais.",
+    link: null,
+    linkText: null,
+  },
+  {
+    num: 3,
+    title: "Vá em 'Depositar' e selecione PIX",
+    body: "No menu principal, clique em 'Carteira' → 'Depositar' → selecione a moeda BRL. Escolha a opção PIX. A Binance gerará um QR code e uma chave PIX exclusiva para o seu depósito. Cada chave é válida por um período limitado, então use-a imediatamente.",
+    link: null,
+    linkText: null,
+  },
+  {
+    num: 4,
+    title: "Faça a transferência PIX pelo seu banco",
+    body: "Abra o aplicativo do seu banco. Acesse a área de PIX e escolha 'Pagar' (QR code) ou 'Transferir' (chave PIX). Escaneie ou cole o código fornecido pela Binance, confirme o valor e finalize a transação. O saldo em BRL aparecerá na sua carteira Binance em segundos — 24 horas por dia, incluindo fins de semana e feriados.",
+    link: null,
+    linkText: null,
+  },
+  {
+    num: 5,
+    title: "Compre Bitcoin (BTC)",
+    body: "Com saldo em BRL disponível, acesse 'Comprar Cripto' → 'Comprar com BRL' → selecione BTC. Insira o valor em reais que deseja investir. A Binance exibirá a quantidade de Bitcoin que você receberá ao preço atual. Confirme a compra. O Bitcoin será creditado na sua carteira spot instantaneamente.",
+    link: null,
+    linkText: null,
+  },
+  {
+    num: 6,
+    title: "Transfira para sua própria carteira (recomendado)",
+    body: "Manter Bitcoin em uma exchange implica risco de custódia — se a exchange sofrer ataque ou falir, você pode perder o saldo. Para valores acima de R$ 5.000, recomendamos fortemente transferir para uma hardware wallet (Ledger ou Trezor) ou, no mínimo, para uma carteira de software onde você controle as chaves privadas, como a Electrum ou Sparrow.",
+    link: null,
+    linkText: null,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container">
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Navegação estrutural">
+      <ol role="list">
+        <li><a href="/">Início</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/br/">Brasil</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">Como comprar Bitcoin</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge-green">Guia passo a passo</span>
+        <span class="badge-orange">Atualizado 2026</span>
+      </div>
+      <h1>Como comprar Bitcoin no Brasil 2026: guia passo a passo</h1>
+      <p class="hero-lead">
+        Para comprar Bitcoin no Brasil em 2026, o método mais rápido é usar PIX em uma corretora regulamentada. O processo completo leva menos de 15 minutos: criar conta, verificar identidade com CPF, depositar via PIX e comprar BTC. Veja o guia detalhado abaixo.
+      </p>
+    </header>
+
+    <!-- Quick stats -->
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 15 min</span>
+        <span class="stat-label">Tempo total da primeira compra</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">R$ 1</span>
+        <span class="stat-label">Valor mínimo de compra</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">R$ 0</span>
+        <span class="stat-label">Taxa de depósito via PIX</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">24/7</span>
+        <span class="stat-label">PIX disponível</span>
+      </div>
+    </div>
+
+    <!-- Section: Métodos de pagamento -->
+    <section class="content-section" aria-labelledby="sec-metodos">
+      <h2 id="sec-metodos">Métodos de pagamento disponíveis no Brasil</h2>
+      <p>
+        Existem quatro formas principais de depositar reais em uma exchange de Bitcoin no Brasil. Cada uma tem características distintas em termos de velocidade, custo e risco.
+      </p>
+
+      <div class="methods-grid">
+        <div class="card method-card method-recommended">
+          <div class="method-badge">Recomendado</div>
+          <h3>PIX</h3>
+          <p>
+            O método mais prático e sem custo para o usuário. Transferências chegam em segundos, disponíveis 24 horas por dia todos os dias do ano. Binance, Bybit e Mercado Bitcoin aceitam depósitos em BRL via PIX. Não há taxa de depósito por parte das exchanges — apenas verifique se seu banco cobra pelo envio (a maioria não cobra para PF).
+          </p>
+          <ul class="method-info">
+            <li><strong>Velocidade:</strong> Instantâneo (segundos)</li>
+            <li><strong>Taxa:</strong> R$ 0 na maioria das exchanges</li>
+            <li><strong>Disponibilidade:</strong> 24/7, incluindo feriados</li>
+            <li><strong>Onde:</strong> Binance, Bybit, Mercado Bitcoin, Foxbit</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>Boleto bancário</h3>
+          <p>
+            Opção para quem não tem conta bancária digital ou prefere boleto. O prazo de compensação é de 1 a 3 dias úteis — o Bitcoin só pode ser comprado após a confirmação do pagamento. Algumas corretoras brasileiras não cobram taxa de boleto, mas o prazo elimina a agilidade do PIX.
+          </p>
+          <ul class="method-info">
+            <li><strong>Velocidade:</strong> 1 a 3 dias úteis</li>
+            <li><strong>Taxa:</strong> Geralmente gratuito</li>
+            <li><strong>Onde:</strong> Mercado Bitcoin, Foxbit, Bitso</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>Cartão de crédito ou débito</h3>
+          <p>
+            Método instantâneo, mas com custo elevado. As corretoras cobram de 3% a 5% sobre o valor da compra. Há ainda o risco de incidência de IOF (Imposto sobre Operações Financeiras) conforme a classificação feita pelo seu banco. Verifique sua fatura — algumas operadoras classificam a compra como "saque" internacional, com IOF de 6,38%.
+          </p>
+          <ul class="method-info">
+            <li><strong>Velocidade:</strong> Instantâneo</li>
+            <li><strong>Taxa:</strong> 3% a 5% + possível IOF</li>
+            <li><strong>Onde:</strong> Binance, Bybit</li>
+          </ul>
+        </div>
+
+        <div class="card method-card method-warning">
+          <div class="method-badge-warn">Atenção: risco P2P</div>
+          <h3>P2P (compra direta de outro usuário)</h3>
+          <p>
+            No P2P da Binance, você negocia diretamente com outros usuários. O preço pode ser mais favorável, mas há riscos importantes: golpe do PIX (comprador contesta a transação), anúncios fraudulentos e identidade falsa. Opere P2P apenas com usuários de alta reputação (mais de 500 transações, +98% de aprovação) e <strong>jamais</strong> libere o Bitcoin antes de confirmar o recebimento do PIX.
+          </p>
+          <ul class="method-info">
+            <li><strong>Velocidade:</strong> 10 a 30 minutos</li>
+            <li><strong>Taxa:</strong> Embutida no spread do anúncio</li>
+            <li><strong>Risco:</strong> Médio a alto sem precauções</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Passo a passo -->
+    <section class="content-section" aria-labelledby="sec-passos">
+      <h2 id="sec-passos">Passo a passo: comprar Bitcoin com PIX na Binance</h2>
+      <p>
+        O guia abaixo usa a Binance por ter maior liquidez e aceitação de PIX. O processo é semelhante nas demais corretoras.
+      </p>
+
+      <ol class="steps-list" aria-label="Passos para comprar Bitcoin">
+        {steps.map((step) => (
+          <li class="step-item">
+            <div class="step-number" aria-hidden="true">{step.num}</div>
+            <div class="step-content">
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+              {step.link && (
+                <a
+                  href={step.link}
+                  class="btn btn-primary"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  {step.linkText}
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="tip-box card">
+        <strong>Dica de segurança:</strong> Nunca compartilhe sua senha, chave privada ou seed phrase (frase de recuperação) com ninguém — nem com o suporte da corretora. A Binance jamais pedirá sua senha por e-mail, WhatsApp ou telefone.
+      </div>
+    </section>
+
+    <!-- Section: Golpe do PIX -->
+    <section class="content-section" aria-labelledby="sec-golpes">
+      <h2 id="sec-golpes">Golpe do PIX: como se proteger ao comprar Bitcoin</h2>
+      <p>
+        O Brasil registrou um aumento expressivo de golpes envolvendo PIX e criptoativos. Os principais esquemas são:
+      </p>
+
+      <div class="scam-grid">
+        <div class="card scam-card scam-red">
+          <h3>Golpe da contestação de PIX (P2P)</h3>
+          <p>
+            Em operações P2P, um comprador mal-intencionado envia o PIX e, após receber o Bitcoin, liga para o banco alegando que a transferência foi feita por engano. Bancos às vezes bloqueiam temporariamente a conta do vendedor. Para se proteger: opere apenas com usuários verificados e de alta reputação, guarde comprovantes e comunicados da transação.
+          </p>
+        </div>
+
+        <div class="card scam-card scam-red">
+          <h3>Exchange falsa (phishing)</h3>
+          <p>
+            Sites que imitam Binance, Mercado Bitcoin ou outras exchanges pedem depósito via PIX e desaparecem. Sinais de alerta: URLs diferentes do oficial (ex.: "binance-brasil.com" em vez de "binance.com"), atendimento apenas via WhatsApp, promessa de rendimento garantido. Sempre verifique o certificado SSL e o endereço exato da URL.
+          </p>
+        </div>
+
+        <div class="card scam-card scam-red">
+          <h3>Golpe do "investimento" garantido</h3>
+          <p>
+            Grupos no WhatsApp ou Telegram prometem retornos de 5% a 20% ao mês investindo em Bitcoin. É sempre pirâmide ou esquema Ponzi. Retornos garantidos acima da Selic (que já é alta) não existem em ativos de risco. Denuncie à CVM e ao Banco Central.
+          </p>
+        </div>
+      </div>
+
+      <div class="tip-box card">
+        <strong>Regra de ouro:</strong> Só envie PIX para contas de exchanges com CNPJ verificável e site oficial. Nunca para CPF de terceiro em troca de Bitcoin.
+      </div>
+    </section>
+
+    <!-- Section: Imposto de Renda -->
+    <section class="content-section" aria-labelledby="sec-ir">
+      <h2 id="sec-ir">Imposto de Renda na compra de Bitcoin</h2>
+      <p>
+        A compra de Bitcoin em si não gera obrigação tributária imediata — o imposto incide sobre o <strong>ganho de capital</strong> no momento da venda. Porém, todo saldo de criptoativos acima de R$ 5.000 deve ser declarado anualmente na ficha "Bens e Direitos" do IRPF, pelo custo de aquisição.
+      </p>
+      <p>
+        A partir de 2025, as exchanges com clientes brasileiros são obrigadas a reportar as transações à Receita Federal via sistema DeCripto (IN RFB 2.291/2025). Isso significa que a Receita já tem acesso às suas operações — declare corretamente para evitar multas e autuações.
+      </p>
+      <a href="/br/impostos-bitcoin/" class="btn btn-primary">
+        Guia completo: Imposto de Renda sobre Bitcoin no Brasil &rarr;
+      </a>
+    </section>
+
+    <!-- Section: Melhores corretoras -->
+    <section class="content-section" aria-labelledby="sec-corretoras">
+      <h2 id="sec-corretoras">Melhores corretoras para comprar Bitcoin no Brasil em 2026</h2>
+      <p>
+        Estas são as principais opções para comprar Bitcoin no Brasil, com aceite de PIX e diferentes perfis de usuário:
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Corretora</th>
+              <th>Taxa</th>
+              <th>PIX</th>
+              <th>Regulada BR</th>
+              <th>Melhor para</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Binance</strong></td>
+              <td class="mono">0,10%</td>
+              <td>Sim</td>
+              <td>Registro BCB</td>
+              <td>Maior liquidez</td>
+              <td>
+                <a
+                  href="https://accounts.binance.com/register?ref=346436875"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Criar conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Bybit</strong></td>
+              <td class="mono">0,10%</td>
+              <td>Sim</td>
+              <td>Registro BCB</td>
+              <td>Traders avançados</td>
+              <td>
+                <a
+                  href="https://www.bybit.com/en/invite/?ref=NX1PKE"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Criar conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Kraken</strong></td>
+              <td class="mono">0,16%</td>
+              <td>Não</td>
+              <td>Regulada EUA</td>
+              <td>Segurança e reputação</td>
+              <td>
+                <a
+                  href="https://invite.kraken.com/JDNW/aywgmsis"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Criar conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Mercado Bitcoin</strong></td>
+              <td class="mono">0,30%–0,70%</td>
+              <td>Sim</td>
+              <td>100% brasileira</td>
+              <td>Iniciantes no Brasil</td>
+              <td>
+                <a
+                  href="https://www.mercadobitcoin.com.br/"
+                  class="btn btn-secondary btn-sm"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Ver site
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="affiliate-disclosure">
+        Links com "Criar conta" são links de afiliado. Se você abrir conta por meio deles, recebemos uma comissão sem custo adicional para você.
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq content-section" aria-labelledby="faq-titulo">
+      <h2 id="faq-titulo">Perguntas frequentes</h2>
+      <div class="faq-list">
+        {faqItems.map((item) => (
+          <details class="faq-item card">
+            <summary class="faq-question">{item.q}</summary>
+            <p class="faq-answer">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="sources content-section" aria-labelledby="fontes-titulo">
+      <h2 id="fontes-titulo">Fontes</h2>
+      <ul class="sources-list">
+        <li><a href="https://www.bcb.gov.br" rel="noopener noreferrer" target="_blank">Banco Central do Brasil — Registro de PSAVs</a></li>
+        <li><a href="https://www.gov.br/receitafederal" rel="noopener noreferrer" target="_blank">Receita Federal — DeCripto / IN RFB 2.291/2025</a></li>
+        <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14478.htm" rel="noopener noreferrer" target="_blank">Lei 14.478/2022 — Marco Legal de Criptoativos</a></li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      <strong>Aviso:</strong> Este conteúdo é informativo e não constitui assessoria financeira. Criptoativos são ativos de alto risco. Invista apenas o que pode perder. Última atualização: 2026-02-23.
+    </p>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .badge-orange {
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+
+  .stat-card {
+    padding: var(--space-4) var(--space-5);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+
+  .highlight {
+    color: var(--c-primary);
+  }
+
+  /* Content sections */
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+
+  .content-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+
+  /* Methods grid */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .method-card {
+    padding: var(--space-5) var(--space-6);
+    position: relative;
+  }
+
+  .method-recommended {
+    border-color: #22c55e;
+  }
+
+  .method-warning {
+    border-color: #f59e0b;
+  }
+
+  .method-badge {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2em 0.7em;
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .method-badge-warn {
+    display: inline-block;
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2em 0.7em;
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .method-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .method-card p {
+    font-size: 0.88rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .method-info {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .method-info li {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--c-border);
+  }
+
+  .method-info strong {
+    color: var(--c-text);
+  }
+
+  /* Steps */
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+    padding: 0;
+  }
+
+  .step-item {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 2px;
+  }
+
+  .step-content h3 {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-3);
+  }
+
+  /* Tip box */
+  .tip-box {
+    padding: var(--space-4) var(--space-6);
+    border-left: 3px solid var(--c-primary);
+    margin-top: var(--space-6);
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.65;
+  }
+
+  .tip-box strong {
+    color: var(--c-primary);
+  }
+
+  /* Scam grid */
+  .scam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .scam-card {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .scam-red {
+    border-left: 3px solid #ef4444;
+  }
+
+  .scam-card h3 {
+    font-size: 0.95rem;
+    color: #ef4444;
+    margin-bottom: var(--space-3);
+  }
+
+  .scam-card p {
+    font-size: 0.87rem;
+    margin-bottom: 0;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: var(--space-6) 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-surface-1);
+    color: var(--c-text-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-text);
+    vertical-align: middle;
+    font-size: 0.88rem;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .btn-sm {
+    padding: 0.35em 0.9em;
+    font-size: 0.82rem;
+  }
+
+  /* Affiliate disclosure */
+  .affiliate-disclosure {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    background: rgba(255, 107, 0, 0.04);
+    border: 1px solid rgba(255, 107, 0, 0.15);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .faq-item {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .faq-question {
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: "+";
+    color: var(--c-primary);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  details[open] .faq-question::after {
+    content: "−";
+  }
+
+  .faq-answer {
+    margin-top: var(--space-3);
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* Sources */
+  .sources-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .sources-list li::before {
+    content: "→ ";
+    color: var(--c-primary);
+  }
+
+  .sources-list a {
+    color: var(--c-text-muted);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .sources-list a:hover {
+    color: var(--c-primary);
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    padding: var(--space-6) 0 var(--space-2);
+  }
+
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--c-primary);
+  }
+
+  @media (max-width: 640px) {
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .step-item {
+      flex-direction: column;
+    }
+    .step-number {
+      margin-top: 0;
+    }
+  }
+</style>

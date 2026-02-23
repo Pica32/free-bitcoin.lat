@@ -1,0 +1,148 @@
+---
+interface Props {
+  status: "green" | "yellow" | "red";
+  label: string;
+  lastUpdate: string;
+  regulatorName: string;
+  regulatorUrl: string;
+}
+
+const { status, label, lastUpdate, regulatorName, regulatorUrl } = Astro.props;
+
+const statusConfig = {
+  green: {
+    icon: "✓",
+    ariaLabel: "Estado regulatorio: positivo",
+  },
+  yellow: {
+    icon: "⚠",
+    ariaLabel: "Estado regulatorio: en desarrollo",
+  },
+  red: {
+    icon: "✕",
+    ariaLabel: "Estado regulatorio: sin marco legal claro",
+  },
+};
+
+const config = statusConfig[status];
+
+// Format the last update date
+const formattedDate = new Date(lastUpdate).toLocaleDateString("es-419", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<div class="regulatory-badge-wrap">
+  <div
+    class={`badge badge-${status} regulatory-badge`}
+    role="status"
+    aria-label={config.ariaLabel}
+  >
+    <span class="badge-icon" aria-hidden="true">{config.icon}</span>
+    <span>{label}</span>
+  </div>
+
+  <div class="regulatory-meta">
+    <span class="regulatory-update">
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+      Actualizado: <time datetime={lastUpdate}>{formattedDate}</time>
+    </span>
+
+    {
+      regulatorUrl && regulatorUrl !== "#" ? (
+        <a
+          href={regulatorUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="regulatory-link"
+          aria-label={`Sitio oficial de ${regulatorName} (abre en nueva pestaña)`}
+        >
+          {regulatorName}
+          <svg
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            aria-hidden="true"
+          >
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
+      ) : (
+        <span class="regulatory-name">{regulatorName}</span>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .regulatory-badge-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: flex-start;
+  }
+
+  .regulatory-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8rem;
+  }
+
+  .badge-icon {
+    font-size: 0.85em;
+    font-style: normal;
+  }
+
+  .regulatory-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .regulatory-update {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+  }
+
+  .regulatory-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .regulatory-link:hover {
+    color: var(--c-primary);
+    text-decoration: underline;
+  }
+
+  .regulatory-name {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+  }
+</style>

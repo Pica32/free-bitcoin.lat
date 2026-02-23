@@ -1,0 +1,613 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import RemittanceCalculator from "@components/RemittanceCalculator.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+
+const title = "Enviar Dinero de Estados Unidos a México con Bitcoin 2026 | free-bitcoin.lat";
+const description = "Guía completa para enviar remesas de EE.UU. a México con Bitcoin Lightning en 2026. Costos desde $0.50 USD vs $27 de los bancos. Paso a paso con Strike y SPEI.";
+const canonical = "https://free-bitcoin.lat/remesas/us-mx/";
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "Cómo enviar dinero de EE.UU. a México con Bitcoin Lightning",
+  description: "Guía paso a paso para enviar remesas baratas de Estados Unidos a México usando Bitcoin Lightning Network y Strike.",
+  totalTime: "PT10M",
+  estimatedCost: {
+    "@type": "MonetaryAmount",
+    currency: "USD",
+    value: "0.50",
+  },
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Instalar Strike",
+      text: "Descarga la app Strike en iOS o Android desde strike.me. Strike es el principal proveedor para remesas EE.UU.–México por Lightning.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Verificar identidad",
+      text: "Completa el proceso KYC de Strike: sube tu identificación (pasaporte, licencia de conducir) y toma una selfie. El proceso tarda 5–15 minutos.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Agregar fondos",
+      text: "Vincula tu tarjeta de débito/crédito o cuenta bancaria ACH para cargar dólares en tu cuenta Strike. No hay comisión por depósito ACH.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Enviar al número de teléfono mexicano",
+      text: "En Strike, toca 'Enviar', ingresa el número de teléfono mexicano del destinatario (quien debe tener Strike instalado) o usa una dirección Lightning. El destinatario puede no tener cuenta Strike si usas una dirección LN o LNURL.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "El destinatario recibe en MXN vía SPEI",
+      text: "Strike convierte automáticamente la transferencia a pesos mexicanos y los deposita vía SPEI en la cuenta bancaria del destinatario en México. El proceso completo tarda menos de 1 minuto.",
+    },
+  ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "¿Cuánto cuesta enviar $200 USD a México con Bitcoin?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Con Bitcoin Lightning (Strike), el costo total es menor a $0.50 USD para envíos de $200. Los bancos tradicionales cobran entre $10 y $27 USD por la misma operación.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Es legal enviar remesas con Bitcoin a México?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sí. No existe ninguna ley en México o en EE.UU. que prohíba recibir o enviar remesas en Bitcoin. El Banxico no restringe que particulares reciban criptomonedas. Strike opera bajo licencia en EE.UU. como transmisor de dinero.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿El destinatario necesita saber de Bitcoin?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. Cuando se usa Strike, el destinatario recibe pesos mexicanos directamente en su cuenta bancaria vía SPEI. No necesita entender Bitcoin ni instalar ninguna wallet.",
+      },
+    },
+  ],
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { "@type": "ListItem", position: 2, name: "Remesas", item: "https://free-bitcoin.lat/remesas/" },
+    { "@type": "ListItem", position: 3, name: "EE.UU. → México", item: canonical },
+  ],
+};
+
+const faqItems = [
+  {
+    q: "¿Cuánto cuesta enviar $200 USD a México con Bitcoin Lightning?",
+    a: "Con Strike usando Lightning Network, el costo total suele ser <strong>menor a $0.50 USD</strong>. Strike cobra $0 de comisión por el envío, aunque puede existir un diferencial cambiario mínimo (spread) de menos del 0.5%. Los bancos cobran entre $10 y $27 por el mismo envío.",
+  },
+  {
+    q: "¿El receptor necesita tener Bitcoin o Strike?",
+    a: "No necesariamente. Si el destinatario tiene Strike instalado, recibe MXN directamente vía SPEI. También puede recibir en otra wallet Lightning o en USDT P2P si prefiere. El destinatario <em>nunca</em> necesita tocar Bitcoin si no quiere.",
+  },
+  {
+    q: "¿Es legal enviar remesas con Bitcoin a México?",
+    a: "Sí, es completamente legal. El Banco de México (Banxico) no prohíbe que personas físicas reciban fondos en criptomonedas. Strike opera bajo licencia FinCEN en EE.UU. como Money Services Business (MSB). Los envíos a cuentas bancarias en México son transferencias electrónicas normales.",
+  },
+  {
+    q: "¿Qué pasa si la transferencia falla?",
+    a: "En Lightning Network, si el pago no puede completar la ruta, el dinero regresa automáticamente al remitente en segundos, sin cargo. No existe el riesgo de que el dinero se 'pierda en tránsito' como puede ocurrir con transferencias SWIFT.",
+  },
+  {
+    q: "¿Hay límites de envío con Strike?",
+    a: "Strike permite envíos de hasta $999 USD por semana sin verificación adicional y hasta $10,000 USD/semana con KYC completo. Para montos muy altos o envíos frecuentes, Airtm o una cuenta de exchange regulada pueden ser mejores opciones.",
+  },
+];
+
+const sources = [
+  { label: "Banco Mundial – Costos de remesas Q3 2025", url: "https://remittanceprices.worldbank.org/" },
+  { label: "Strike – Envíos internacionales", url: "https://strike.me/features/send-money/" },
+  { label: "Banxico – Regulación de activos virtuales", url: "https://www.banxico.org.mx/sistema-de-pagos/activos-virtuales.html" },
+  { label: "CNBV – Disposiciones Fintech 2024", url: "https://www.cnbv.gob.mx/SECTORES-SUPERVISADOS/OTROS-SUPERVISADOS/Paginas/Fintech.aspx" },
+  { label: "Lightning Network – Estadísticas de red 2025", url: "https://1ml.com/" },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={[howToSchema, breadcrumbSchema]}
+>
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/remesas/">Remesas</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">EE.UU. → México</li>
+      </ol>
+    </nav>
+
+    <!-- Hero -->
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Actualizado 2026</span>
+        <span class="badge badge-yellow">Bitcoin Lightning</span>
+      </div>
+      <h1>Enviar dinero de EE.UU. a México: guía completa 2026</h1>
+      <p class="hero-lead">
+        Bitcoin Lightning es la forma más barata de enviar dinero de Estados Unidos a México en 2026, con costos menores a $0.50 USD frente a los $5–$27 que cobran los métodos tradicionales. En esta guía te explicamos cómo hacerlo paso a paso, qué herramientas usar y qué tan seguro es.
+      </p>
+    </header>
+
+    <!-- Quick stats -->
+    <div class="stats-row">
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">$0.50</span>
+        <span class="stat-label">Costo Lightning (envío $200)</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$27</span>
+        <span class="stat-label">Costo banco tradicional</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono highlight">&lt; 1 min</span>
+        <span class="stat-label">Tiempo de llegada</span>
+      </div>
+      <div class="stat-card card">
+        <span class="stat-value mono">$68 mil M</span>
+        <span class="stat-label">Remesas MX/año (Banxico 2024)</span>
+      </div>
+    </div>
+
+    <!-- Section 1: Calculator -->
+    <section class="content-section" aria-labelledby="sec-costos">
+      <h2 id="sec-costos">¿Cuánto cuesta enviar dinero a México?</h2>
+      <p>
+        El costo real de una remesa incluye la comisión del proveedor más el diferencial cambiario (spread FX). Los bancos y casas de cambio tradicionales suelen cobrar hasta un 5–8% del total entre ambos conceptos. Bitcoin Lightning elimina prácticamente ambos costos.
+      </p>
+      <RemittanceCalculator
+        corridor="us-mx"
+        fromCountry="EE.UU."
+        toCountry="México"
+        toCurrency="MXN"
+      />
+    </section>
+
+    <!-- Section 2: Methods -->
+    <section class="content-section" aria-labelledby="sec-metodos">
+      <h2 id="sec-metodos">Métodos disponibles para enviar dinero a México</h2>
+
+      <div class="method-grid">
+        <div class="card method-card">
+          <div class="method-header">
+            <span class="badge badge-green">Recomendado</span>
+            <h3>Bitcoin Lightning Network</h3>
+          </div>
+          <p>
+            Strike y Muun permiten enviar satoshis de EE.UU. a México en segundos. Strike convierte automáticamente a MXN y deposita vía SPEI. El costo total rara vez supera $0.50 USD independientemente del monto. No requiere que el destinatario sepa de Bitcoin.
+          </p>
+          <ul class="method-details">
+            <li><strong>Costo:</strong> $0–$0.50 USD</li>
+            <li><strong>Velocidad:</strong> Menos de 1 minuto</li>
+            <li><strong>KYC:</strong> Básico en Strike (foto ID)</li>
+            <li><strong>Destinatario:</strong> Cuenta bancaria MX o wallet Lightning</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>USDT P2P (Binance P2P / LocalBitcoins)</h3>
+          <p>
+            Otra opción económica. El remitente compra USDT y lo transfiere a un receptor en México que puede vender en plataformas P2P a cambio de pesos. Costo aproximado 0.5–1% incluyendo spread. Requiere que el destinatario tenga conocimientos básicos de criptomonedas.
+          </p>
+          <ul class="method-details">
+            <li><strong>Costo:</strong> $1–$3 USD aprox.</li>
+            <li><strong>Velocidad:</strong> 10–30 minutos</li>
+            <li><strong>Riesgo:</strong> Medio (contrapartes P2P)</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>Airtm</h3>
+          <p>
+            Plataforma regulada que usa criptomonedas internamente. El remitente deposita dólares y el destinatario puede retirar en MXN vía SPEI o Oxxo. Interfaz simple, sin necesidad de saber de Bitcoin.
+          </p>
+          <ul class="method-details">
+            <li><strong>Costo:</strong> ~$3 USD sobre $200</li>
+            <li><strong>Velocidad:</strong> 1–24 horas</li>
+            <li><strong>Riesgo:</strong> Bajo (plataforma regulada)</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>Western Union / MoneyGram</h3>
+          <p>
+            Opción tradicional con amplia red de puntos de pago en México. Cobran entre $5 y $15 USD más un spread FX del 2–4%. La ventaja es la posibilidad de pago en efectivo en ambos extremos.
+          </p>
+          <ul class="method-details">
+            <li><strong>Costo:</strong> $8–$15 USD sobre $200</li>
+            <li><strong>Velocidad:</strong> Minutos a horas</li>
+            <li><strong>Riesgo:</strong> Muy bajo</li>
+          </ul>
+        </div>
+
+        <div class="card method-card">
+          <h3>Transferencia bancaria (SWIFT / ACH)</h3>
+          <p>
+            El método más caro. Los bancos cobran comisiones fijas ($15–$45 USD) más un diferencial cambiario elevado. Tarda 1–3 días hábiles. Solo recomendable para montos muy altos donde el porcentaje relativo sea menor.
+          </p>
+          <ul class="method-details">
+            <li><strong>Costo:</strong> $25–$35 USD sobre $200 (hasta 17%)</li>
+            <li><strong>Velocidad:</strong> 1–3 días hábiles</li>
+            <li><strong>Riesgo:</strong> Muy bajo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Step by step -->
+    <section class="content-section" aria-labelledby="sec-pasos">
+      <h2 id="sec-pasos">Paso a paso: enviar con Bitcoin Lightning</h2>
+      <p>
+        Esta es la guía más económica disponible en 2026. Todo el proceso toma menos de 10 minutos la primera vez (principalmente por la verificación de identidad) y menos de 30 segundos en envíos posteriores.
+      </p>
+
+      <ol class="steps-list">
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">1</div>
+          <div class="step-content">
+            <h3>Instalar Strike en tu teléfono</h3>
+            <p>
+              Descarga la aplicación <strong>Strike</strong> desde <a href="https://strike.me" rel="noopener noreferrer" target="_blank">strike.me</a> en iOS o Android. Strike está disponible en todos los estados de EE.UU. y es una de las apps más populares para remesas a México por su integración directa con SPEI.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">2</div>
+          <div class="step-content">
+            <h3>Verificar tu identidad (KYC)</h3>
+            <p>
+              Strike requiere verificación básica de identidad conforme a la regulación FinCEN. Necesitas: foto de tu ID (pasaporte o licencia de conducir válida en EE.UU.) y una selfie. El proceso es automático y tarda 5–15 minutos. No se requiere número de seguro social.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">3</div>
+          <div class="step-content">
+            <h3>Agregar fondos con tarjeta o ACH</h3>
+            <p>
+              Vincula tu tarjeta de débito o cuenta bancaria. Los depósitos vía ACH (transferencia bancaria) son gratuitos; las tarjetas pueden tener una comisión pequeña según tu banco emisor. Los fondos están disponibles de inmediato para enviar.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">4</div>
+          <div class="step-content">
+            <h3>Enviar al número de teléfono o wallet del destinatario</h3>
+            <p>
+              Toca "Enviar" e ingresa el número de teléfono mexicano del destinatario (si tiene Strike), su nombre de usuario en Strike, o cualquier dirección Lightning (por ejemplo, <span class="mono">juan@walletofsatoshi.com</span>). Selecciona el monto en USD y confirma.
+            </p>
+          </div>
+        </li>
+
+        <li class="step-item">
+          <div class="step-number" aria-hidden="true">5</div>
+          <div class="step-content">
+            <h3>El destinatario recibe pesos vía SPEI automáticamente</h3>
+            <p>
+              Strike convierte los dólares a pesos mexicanos al tipo de cambio spot y los transfiere vía SPEI a la cuenta bancaria registrada del destinatario en México. El proceso completo tarda <strong>menos de 1 minuto</strong>. El destinatario recibe una notificación por SMS o en la app.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="tip-box card">
+        <strong>Consejo:</strong> Si el destinatario no quiere crear una cuenta Strike, puede usar <strong>Muun Wallet</strong> (solo Lightning, sin KYC) o cualquier wallet Lightning compatible. En ese caso, recibirá satoshis que puede vender localmente.
+      </div>
+    </section>
+
+    <!-- Section 4: Legal -->
+    <section class="content-section" aria-labelledby="sec-legal">
+      <h2 id="sec-legal">¿Es legal enviar remesas con Bitcoin a México?</h2>
+
+      <p>
+        <strong>Sí, es completamente legal</strong> desde ambos lados de la frontera. No existe ninguna ley mexicana o estadounidense que prohíba que particulares envíen o reciban remesas usando Bitcoin o cualquier criptomoneda.
+      </p>
+
+      <div class="legal-grid">
+        <div class="card legal-card">
+          <h3>Desde EE.UU.</h3>
+          <ul>
+            <li>Strike opera bajo licencia FinCEN como <em>Money Services Business</em> (MSB) en todos los estados.</li>
+            <li>Los envíos al exterior no requieren declaración especial por debajo de $10,000 USD.</li>
+            <li>No hay restricciones de la OFAC para envíos a México.</li>
+          </ul>
+        </div>
+        <div class="card legal-card">
+          <h3>En México</h3>
+          <ul>
+            <li>El Banxico no prohíbe que personas físicas <em>reciban</em> criptomonedas o su equivalente en pesos.</li>
+            <li>La Ley Fintech (2018) regula a las instituciones de tecnología financiera, no a usuarios individuales.</li>
+            <li>Los depósitos SPEI son transferencias bancarias ordinarias sin restricciones adicionales.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        Esta información es educativa y no constituye asesoría legal o fiscal. Para montos superiores a $10,000 USD anuales, consulta con un contador sobre obligaciones de reporte en EE.UU. (FBAR, FATCA).
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre remesas EE.UU.–México" />
+
+    <!-- Sources -->
+    <SourcesList sources={sources} title="Fuentes y referencias" />
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    padding: var(--space-6) 0 var(--space-4);
+  }
+
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  .breadcrumb a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--c-primary);
+  }
+
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+  }
+
+  .stat-card {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    line-height: 1.4;
+  }
+
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+
+  .content-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .method-card {
+    padding: var(--space-6);
+  }
+
+  .method-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+  }
+
+  .method-card h3 {
+    font-size: 1rem;
+  }
+
+  .method-card p {
+    font-size: 0.9rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .method-details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .method-details li {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--c-border);
+  }
+
+  .method-details strong {
+    color: var(--c-text);
+  }
+
+  /* Steps */
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+    counter-reset: steps;
+  }
+
+  .step-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+
+  .step-content h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  .tip-box {
+    padding: var(--space-4) var(--space-6);
+    border-left: 3px solid var(--c-primary);
+    margin-top: var(--space-6);
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+  }
+
+  .tip-box strong {
+    color: var(--c-primary);
+  }
+
+  /* Legal */
+  .legal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+  }
+
+  .legal-card {
+    padding: var(--space-6);
+  }
+
+  .legal-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-3);
+    color: var(--c-primary);
+  }
+
+  .legal-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .legal-card li {
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    padding-left: var(--space-4);
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .legal-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--c-success);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .step-item {
+      flex-direction: column;
+    }
+  }
+</style>

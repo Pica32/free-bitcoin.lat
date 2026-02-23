@@ -1,0 +1,264 @@
+---
+interface Props {
+  country: string;
+  maxItems?: number;
+}
+
+const { country, maxItems = 3 } = Astro.props;
+
+const forumUrl = `/foro/${country}/`;
+const widgetId = `forum-preview-${country}`;
+---
+
+<section class="forum-preview card" aria-labelledby={`${widgetId}-heading`}>
+  <div class="forum-preview-header">
+    <h3 id={`${widgetId}-heading`} class="forum-preview-title">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+        ></path>
+      </svg>
+      Foro — últimas discusiones
+    </h3>
+    <a href={forumUrl} class="btn btn-secondary btn-sm">
+      Ver todo el foro
+    </a>
+  </div>
+
+  <div
+    id={widgetId}
+    class="forum-threads-list"
+    data-country={country}
+    data-max-items={maxItems}
+    aria-live="polite"
+    aria-busy="true"
+  >
+    <div class="forum-loading">
+      <div class="forum-loading-spinner" aria-hidden="true"></div>
+      <span>Cargando últimos hilos...</span>
+    </div>
+  </div>
+
+  <div class="forum-preview-footer">
+    <a href={forumUrl} class="forum-more-link">
+      Ver más hilos sobre {country} →
+    </a>
+  </div>
+</section>
+
+<style>
+  .forum-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .forum-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .forum-preview-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .forum-threads-list {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .forum-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--c-text-muted);
+    font-size: 0.875rem;
+    padding: var(--space-4) 0;
+  }
+
+  .forum-loading-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--c-border);
+    border-top-color: var(--c-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .forum-thread-item {
+    border-bottom: 1px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+
+  .forum-thread-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .forum-thread-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--c-text);
+    margin-bottom: var(--space-1);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .forum-thread-title:hover {
+    color: var(--c-primary);
+  }
+
+  .forum-thread-meta {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+  }
+
+  .forum-error {
+    font-size: 0.875rem;
+    color: var(--c-text-muted);
+    padding: var(--space-3) 0;
+  }
+
+  .forum-preview-footer {
+    border-top: 1px solid var(--c-border);
+    padding-top: var(--space-3);
+  }
+
+  .forum-more-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .forum-more-link:hover {
+    color: #ff9040;
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  interface ThreadData {
+    id: string | number;
+    title: string;
+    url?: string;
+    replyCount?: number;
+    author?: string;
+    createdAt?: string;
+  }
+
+  async function loadForumThreads(
+    container: HTMLElement,
+    country: string,
+    maxItems: number
+  ): Promise<void> {
+    const apiUrl = `/api/forum.php?action=list_threads&category=${encodeURIComponent(country)}&limit=${maxItems}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(5000),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = (await response.json()) as { threads?: ThreadData[] };
+      const threads: ThreadData[] = Array.isArray(data)
+        ? data
+        : (data.threads ?? []);
+
+      if (!threads.length) {
+        container.setAttribute("aria-busy", "false");
+        container.innerHTML =
+          '<p class="forum-error">No hay hilos recientes. <a href="/foro/">Sé el primero en publicar</a>.</p>';
+        return;
+      }
+
+      const forumPath = `/foro/${country}/`;
+
+      container.setAttribute("aria-busy", "false");
+      container.innerHTML = threads
+        .slice(0, maxItems)
+        .map((thread) => {
+          const threadUrl = thread.url ?? `${forumPath}${thread.id}/`;
+          const replies =
+            thread.replyCount !== undefined
+              ? `${thread.replyCount} respuesta${thread.replyCount !== 1 ? "s" : ""}`
+              : "";
+          const author = thread.author ? `por ${thread.author}` : "";
+          const metaParts = [replies, author].filter(Boolean).join(" · ");
+
+          return `
+            <div class="forum-thread-item">
+              <a href="${threadUrl}" class="forum-thread-title">${escapeHtml(thread.title)}</a>
+              ${metaParts ? `<p class="forum-thread-meta">${escapeHtml(metaParts)}</p>` : ""}
+            </div>
+          `;
+        })
+        .join("");
+    } catch {
+      container.setAttribute("aria-busy", "false");
+      container.innerHTML = `
+        <p class="forum-error">
+          No se pudieron cargar los hilos del foro.
+          <a href="/foro/${encodeURIComponent(country)}/">Ver el foro directamente</a>.
+        </p>
+      `;
+    }
+  }
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function initForumPreviews() {
+    const widgets = document.querySelectorAll<HTMLElement>(
+      "[data-country][data-max-items]"
+    );
+
+    widgets.forEach((widget) => {
+      const country = widget.dataset.country ?? "";
+      const maxItems = parseInt(widget.dataset.maxItems ?? "3", 10);
+
+      if (country) {
+        loadForumThreads(widget, country, maxItems);
+      }
+    });
+  }
+
+  initForumPreviews();
+  document.addEventListener("astro:page-load", initForumPreviews);
+</script>

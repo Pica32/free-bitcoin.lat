@@ -1,0 +1,166 @@
+{
+  "exchanges": {
+    "binance": {
+      "url": "https://accounts.binance.com/register?ref=346436875",
+      "name": "Binance",
+      "countries": ["all"],
+      "tier": 1
+    },
+    "bybit": {
+      "url": "https://www.bybit.com/en/invite/?ref=NX1PKE",
+      "name": "Bybit",
+      "countries": ["all"],
+      "tier": 1
+    },
+    "kraken": {
+      "url": "https://invite.kraken.com/JDNW/aywgmsis",
+      "name": "Kraken",
+      "countries": ["mx","br","ar","co","cl","pe","uy","pa"],
+      "tier": 1
+    },
+    "kucoin": {
+      "url": "https://www.kucoin.com/r/rf/QBSKA5LH",
+      "name": "KuCoin",
+      "countries": ["all"],
+      "tier": 1
+    },
+    "gemini": {
+      "url": "https://exchange.gemini.com/register?referral=mzyzyvns7&type=referral",
+      "name": "Gemini",
+      "countries": ["mx","br","co","cl","pa"],
+      "tier": 1
+    },
+    "etoro": {
+      "url": "https://www.etoro.com/?ref=46049942",
+      "name": "eToro",
+      "countries": ["all"],
+      "tier": 1
+    },
+    "cryptocom": {
+      "url": "https://crypto.com/app/3srf3k2sf8",
+      "name": "Crypto.com",
+      "countries": ["all"],
+      "tier": 1
+    },
+    "coinmate": {
+      "url": "https://coinmate.io?invite=VWpsaloyUlVUREp4YjNaTVVXaEdieTA1UjNnelFRPT0",
+      "name": "Coinmate",
+      "countries": ["all"],
+      "tier": 2
+    },
+    "poloniex": {
+      "url": "https://www.poloniex.com/signup?c=NDJRGRFJ",
+      "name": "Poloniex",
+      "countries": ["all"],
+      "tier": 2
+    },
+    "airtm": {
+      "url": "https://app.airtm.com/ivt/kokot5m1iwkq0",
+      "name": "Airtm",
+      "countries": ["ve","ar","mx","co","gt","hn","sv"],
+      "tier": 2,
+      "note": "critical_for_venezuela_argentina"
+    },
+    "uphold": {
+      "url": "https://wallet.uphold.com/signup?referral=ef7b858c55",
+      "name": "Uphold",
+      "countries": ["all"],
+      "tier": 2
+    },
+    "revolut": {
+      "url": "https://revolut.com/referral/?referral-code=kari420!JAN1-26-AR-H1",
+      "name": "Revolut",
+      "countries": ["mx","br","ar","co","cl"],
+      "tier": 2
+    },
+    "anycoin": {
+      "url": "https://www.anycoin.cz/register?ref=d82dk0",
+      "name": "Anycoin",
+      "countries": ["all"],
+      "tier": 2
+    },
+    "trading212": {
+      "url": "https://www.trading212.com/invite/11Q8q6QkEB",
+      "name": "Trading212",
+      "countries": ["all"],
+      "tier": 2
+    },
+    "degiro": {
+      "url": "https://www.degiro.cz/?id=52F0C5F2",
+      "name": "DeGiro",
+      "countries": ["cl","br","uy","pa"],
+      "tier": 2,
+      "note": "etf_stocks_angle"
+    },
+    "plus500": {
+      "url": "https://www.plus500.com/cs-cz/refer-friend?rut=h8PD43j-9dcCVPPfHr_f2xy7mVCNZCpG69JVIttXoOLpkL7UqXE4oxcngHSelG4lG9-xijAgMdVaY3GJVVMzU-8VL3LtavUuvl7_TosydLE1",
+      "name": "Plus500",
+      "countries": ["all"],
+      "tier": 2,
+      "warning": "cfd_risk_disclaimer_required"
+    }
+  },
+  "wallets": {
+    "ledger": {
+      "url": "https://shop.ledger.com/pages/ledger-nano-s-plus/?r=3771127e7ec5",
+      "name": "Ledger Nano S Plus",
+      "tier": 3
+    },
+    "trezor": {
+      "url": "https://trezor.io/trezor-safe-7?transaction_id=102398254191a620fee5eea74faa2d&offer_id=352&affiliate_id=36693",
+      "name": "Trezor Safe 7",
+      "tier": 3
+    },
+    "cypherock": {
+      "url": "https://www.cypherock.com/?wt_coupon=bitcoinchurch",
+      "name": "Cypherock",
+      "tier": 3
+    },
+    "bitcoincom": {
+      "url": "https://branch.wallet.bitcoin.com/invite?code=ciLXNZoY",
+      "name": "Bitcoin.com Wallet",
+      "tier": 4
+    }
+  },
+  "nonkyc": {
+    "bingx": {
+      "url": "https://bingxdao.com/invite/PIHJRF/",
+      "name": "BingX DAO",
+      "countries": ["ve","gt","hn"],
+      "tier": 4
+    },
+    "coinex": {
+      "url": "https://www.coinex.com/register?rc=ksvwm",
+      "name": "CoinEx",
+      "countries": ["ve","gt","hn","bo"],
+      "tier": 4
+    },
+    "mexc": {
+      "url": "https://promote.mexc.com/r/37KwK6My",
+      "name": "MEXC",
+      "countries": ["ve","gt","hn","bo"],
+      "tier": 4
+    }
+  },
+  "defi": {
+    "apex": {
+      "url": "https://omni.apex.exchange/referral?referralCode=OQXEF27X!",
+      "name": "ApeX Protocol",
+      "tier": 5
+    },
+    "apollox": {
+      "url": "https://www.apollox.finance/en/invite/ref/1000000552679",
+      "name": "ApolloX",
+      "tier": 5
+    }
+  },
+  "lending": {
+    "firefish": {
+      "url": "https://firefish.io?ref=satoshi713",
+      "name": "Firefish",
+      "countries": ["sv","ar","cl","uy"],
+      "tier": 6,
+      "note": "btc_backed_loans"
+    }
+  }
+}

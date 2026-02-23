@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/cache/
+Disallow: /api/forum_data/
+
+# Sitemaps
+Sitemap: https://free-bitcoin.lat/sitemap-index.xml
+
+# AI crawlers — allow for AEO (AI Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# llms.txt for AI models
+# https://free-bitcoin.lat/llms.txt
+# https://free-bitcoin.lat/llms-full.txt

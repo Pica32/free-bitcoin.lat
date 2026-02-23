@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-global.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-calculadoras.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-remesas.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-mx.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-br.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-ar.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-ve.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://free-bitcoin.lat/sitemaps/sitemap-other.xml</loc>
+    <lastmod>2026-02-23</lastmod>
+  </sitemap>
+</sitemapindex>

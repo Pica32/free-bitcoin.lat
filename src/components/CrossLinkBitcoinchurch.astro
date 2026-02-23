@@ -1,0 +1,35 @@
+---
+// CrossLinkBitcoinchurch — footer-only cross-link component
+// Never include in main navigation
+---
+
+<p class="crosslink-bitcoinchurch">
+  <a
+    href="https://bitcoinchurch.eu"
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Recurso Bitcoin en español europeo"
+  >
+    ¿Hablas español europeo? Visita bitcoinchurch.eu
+  </a>
+</p>
+
+<style>
+  .crosslink-bitcoinchurch {
+    margin-top: var(--space-4);
+    margin-bottom: 0;
+  }
+
+  .crosslink-bitcoinchurch a {
+    color: var(--c-text-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+    transition: color var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .crosslink-bitcoinchurch a:hover {
+    color: var(--c-primary);
+    text-decoration: underline;
+  }
+</style>

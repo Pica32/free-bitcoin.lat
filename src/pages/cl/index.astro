@@ -1,0 +1,311 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import ForumPreview from "@components/ForumPreview.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Bitcoin en Chile 2026: Precio BTC/CLP, Exchanges y Ley 21.521 | free-bitcoin.lat";
+const description = "Bitcoin en Chile 2026: precio BTC/CLP en tiempo real, Ley 21.521 activos digitales, regulación CMF, impuestos SII y mejores exchanges.";
+const canonical = "https://free-bitcoin.lat/cl/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Transferencia bancaria", "P2P", "Tarjeta"],
+    bestFor: "Mayor liquidez BTC/CLP",
+    isAffiliate: true,
+  },
+  {
+    name: "Kraken",
+    url: "https://invite.kraken.com/JDNW/aywgmsis",
+    fees: "0.16% maker / 0.26% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Wire", "Tarjeta", "P2P"],
+    bestFor: "Seguridad y usuarios avanzados",
+    isAffiliate: true,
+  },
+  {
+    name: "Bybit",
+    url: "https://www.bybit.com/en/invite/?ref=NX1PKE",
+    fees: "0.10% maker/taker",
+    kycLevel: "Básico" as const,
+    paymentMethods: ["P2P", "Tarjeta"],
+    bestFor: "Derivados, spot activo",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Qué dice la Ley 21.521 sobre Bitcoin en Chile?",
+    a: "La Ley 21.521, promulgada en 2023, regula la oferta, intermediación y custodia de activos digitales en Chile. Establece un marco de licencias para los proveedores de servicios de activos virtuales (PSAV) supervisados por la Comisión para el Mercado Financiero (CMF). La ley no prohíbe el uso personal de Bitcoin; más bien crea reglas claras para las empresas que ofrecen servicios relacionados, haciendo de Chile uno de los países con el marco regulatorio más sólido de la región.",
+  },
+  {
+    q: "¿Debo pagar impuestos al SII por mis ganancias en Bitcoin?",
+    a: "Sí. El Servicio de Impuestos Internos (SII) actualizó en 2025 su FAQ sobre criptomonedas, confirmando que las ganancias por la venta de Bitcoin tributan como renta del capital. Para personas naturales que no son habituales en el comercio de cripto, la ganancia de capital puede estar sujeta al Impuesto Global Complementario. El SII exige llevar registro de cada transacción: fecha, precio de adquisición y precio de venta.",
+  },
+  {
+    q: "¿Cómo compro Bitcoin con transferencia bancaria en Chile?",
+    a: "Binance permite depósitos en pesos chilenos (CLP) mediante transferencia bancaria desde cualquier banco chileno a la cuenta CLP asignada por la plataforma. El proceso toma entre 1 y 24 horas hábiles. También puedes usar el mercado P2P de Binance o Bybit donde contrapartes chilenas aceptan transferencia por cualquier banco. Alternativamente, exchanges locales como Buda.com (no afiliado) operan con transferencia y tienen registro ante la CMF.",
+  },
+  {
+    q: "¿Necesito una hardware wallet en Chile?",
+    a: "No es obligatorio, pero sí muy recomendado para quienes guarden montos significativos. Una hardware wallet como Ledger Nano S Plus o Trezor Model T almacena tus claves privadas fuera de internet, eliminando el riesgo de hackeos a exchanges. Si dejas tus Bitcoin en un exchange, asumes el riesgo de custodia de esa plataforma. La regla básica: 'not your keys, not your coins'. Para compras pequeñas o uso frecuente, una wallet de software es suficiente.",
+  },
+  {
+    q: "¿Los exchanges en Chile están regulados por la CMF?",
+    a: "Desde la Ley 21.521, la CMF publicó la Norma de Carácter General 502 (NCG 502) que establece los requisitos para que los PSAV operen en Chile. Los exchanges deben registrarse ante la CMF, cumplir controles AML/KYC, separar fondos de clientes y presentar reportes periódicos. Algunos exchanges internacionales como Binance operan en Chile bajo sus licencias globales mientras completan los trámites locales. Binance Chile está en proceso de adaptación a la NCG 502.",
+  },
+];
+
+const sources = [
+  { label: "CMF – Comisión para el Mercado Financiero Chile", url: "https://www.cmfchile.cl" },
+  { label: "SII – Servicio de Impuestos Internos", url: "https://www.sii.cl" },
+  { label: "Banco Central de Chile (BCCh)", url: "https://www.bcentral.cl" },
+  { label: "Ley 21.521 – Biblioteca del Congreso Nacional", url: "https://www.bcn.cl" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Bitcoin en Chile 2026: guía completa",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    author: { "@type": "Organization", name: "free-bitcoin.lat" },
+    publisher: { "@type": "Organization", name: "free-bitcoin.lat", url: "https://free-bitcoin.lat" },
+    inLanguage: "es",
+    about: { "@type": "Thing", name: "Bitcoin en Chile" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Chile", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Chile" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="country-hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="hero-eyebrow">🇨🇱 Chile · BTC/CLP</span>
+          <h1>Bitcoin en Chile 2026: guía completa</h1>
+          <p class="hero-sub">
+            Chile cuenta con el marco regulatorio de activos digitales más claro de América Latina
+            gracias a la <strong>Ley 21.521</strong> y la NCG 502 de la CMF. El SII actualizó en
+            2025 su guía tributaria para criptomonedas. Chile no solo permite el uso de Bitcoin —lo
+            regula con transparencia, aportando certeza jurídica tanto a usuarios como a empresas.
+            Si buscas comprar BTC con pesos chilenos (CLP), Binance, Kraken y Bybit son las opciones
+            más utilizadas en el país.
+          </p>
+          <div class="hero-cta">
+            <a href="#exchanges" class="btn btn-primary">Ver exchanges disponibles</a>
+            <a href="#faq" class="btn btn-secondary">Preguntas frecuentes</a>
+          </div>
+        </div>
+        <div class="hero-widget card">
+          <LivePriceWidget currency="CLP" currencySymbol="$" countryName="Chile" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <div class="reg-summary card">
+        <div class="reg-badge-row">
+          <span class="badge badge-yellow">Ley 21.521 vigente</span>
+          <span class="reg-authority">Regulador: CMF</span>
+          <span class="reg-date">Actualizado: feb. 2026</span>
+        </div>
+        <h2 id="regulacion-heading">Estado regulatorio en Chile 2026</h2>
+        <p>
+          La <strong>Ley 21.521</strong>, promulgada el 4 de enero de 2023 y plenamente vigente,
+          convierte a Chile en el primer país de América Latina con una ley específica para activos
+          digitales que regula toda la cadena: oferta, intermediación y custodia. La
+          <strong>CMF (Comisión para el Mercado Financiero)</strong> es el organismo supervisor y
+          publicó la <strong>Norma de Carácter General 502 (NCG 502)</strong> con los requisitos
+          técnicos, de capital y de cumplimiento que deben cumplir los Proveedores de Servicios
+          de Activos Virtuales (PSAV).
+        </p>
+        <p>
+          El <strong>SII (Servicio de Impuestos Internos)</strong> tiene una postura clara desde
+          2018 y la actualizó en 2025: las criptomonedas son activos sujetos a tributación. Las
+          ganancias de capital tributan conforme al régimen de renta del contribuyente. Para
+          personas naturales no habituales, aplica el impuesto de primera categoría con crédito al
+          Global Complementario. El SII comenzó a cruzar información con exchanges para detectar
+          contribuyentes que no declaran.
+        </p>
+        <p>
+          El <strong>Banco Central de Chile (BCCh)</strong> mantiene una postura de observación y
+          ha publicado informes sobre las implicancias macroeconómicas de los activos digitales,
+          sin haber restringido su uso. Chile es, en 2026, la jurisdicción más predecible de la
+          región para usuarios e inversionistas en Bitcoin.
+        </p>
+        <div class="highlight">
+          <strong>Resumen:</strong> Chile tiene el marco legal más claro de Latinoamérica para
+          Bitcoin. Puedes comprar, vender y guardar BTC legalmente. Registra tus operaciones y
+          declara las ganancias al SII para cumplir con tus obligaciones tributarias.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" id="exchanges" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Mejores exchanges para Chile</h2>
+      <p class="section-sub">
+        Plataformas con soporte para pesos chilenos (CLP) y alta reputación en seguridad y
+        cumplimiento regulatorio. Para compras con transferencia bancaria local, Binance es la
+        opción con mayor liquidez en el par BTC/CLP.
+      </p>
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges con disponibilidad en Chile — febrero 2026"
+      />
+      <div class="exchange-notes">
+        <p>
+          <strong>Transferencia bancaria CLP:</strong> Disponible en Binance. Sin comisión de
+          depósito. Acreditación en 1–24 horas hábiles según el banco emisor.
+        </p>
+        <p>
+          <strong>Marco CMF:</strong> Los exchanges listados cumplen AML/KYC internacional.
+          Para exchanges con registro formal en la NCG 502, consulta el registro público de
+          la CMF en <a href="https://www.cmfchile.cl" target="_blank" rel="noopener noreferrer">cmfchile.cl</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprar BTC -->
+  <section class="section" aria-labelledby="comprar-heading">
+    <div class="container">
+      <h2 id="comprar-heading">Cómo comprar Bitcoin en Chile paso a paso</h2>
+      <p>
+        El método más directo para un chileno es usar Binance con transferencia bancaria en CLP.
+        El proceso completo toma menos de 48 horas la primera vez:
+      </p>
+      <ol class="steps-list">
+        <li>Crear cuenta en Binance y completar verificación de identidad (KYC) con cédula de identidad chilena y selfie.</li>
+        <li>En la sección "Comprar cripto", seleccionar depósito en CLP por transferencia bancaria a la cuenta asignada por Binance.</li>
+        <li>Realizar la transferencia desde tu banco (BancoEstado, Santander, BCI, etc.) con el código de referencia indicado.</li>
+        <li>Una vez acreditados los CLP (1–24 hrs hábiles), ir al mercado spot y comprar BTC en el par BTC/CLP o BTC/USDT.</li>
+        <li>Para mayor seguridad a largo plazo, retirar el BTC a una hardware wallet personal (Ledger, Trezor).</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container" id="faq">
+    <FAQ items={faqItems} title="Preguntas frecuentes: Bitcoin en Chile" />
+  </div>
+
+  <!-- Forum -->
+  <div class="container">
+    <ForumPreview country="cl" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal:</strong> Este contenido es solo informativo y no constituye asesoría
+      financiera, legal ni fiscal. Consulta a un contador o abogado especializado en Chile para
+      tu situación particular. La regulación puede cambiar. Última verificación: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .country-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .hero-widget { padding: var(--space-6); }
+  .reg-summary { padding: var(--space-6); }
+  .reg-badge-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+  }
+  .reg-authority, .reg-date { font-size: 0.85rem; color: var(--c-text-muted); }
+  .reg-summary h2 { margin-bottom: var(--space-4); }
+  .reg-summary p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .exchange-notes { margin-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+  .exchange-notes p { font-size: 0.875rem; color: var(--c-text-muted); }
+  .section-dark { background: var(--c-surface-1); }
+  .steps-list { padding-left: 1.5rem; display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-4); }
+  .steps-list li { color: var(--c-text); line-height: 1.6; }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+  }
+</style>

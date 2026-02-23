@@ -1,0 +1,275 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import RegulatoryStatusBadge from "@components/RegulatoryStatusBadge.astro";
+import ExchangeComparisonTable from "@components/ExchangeComparisonTable.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en Panama 2026: Precio USD, Ley 247 y Exchanges | free-bitcoin.lat";
+const description = "Bitcoin en Panama 2026: Proyecto de Ley 247 en debate, precio BTC en USD, Panama como hub financiero regional, mejores exchanges y estado legal.";
+const canonical = "https://free-bitcoin.lat/pa/";
+
+const exchanges = [
+  {
+    name: "Binance",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    fees: "0.10% maker/taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Transferencia USD", "P2P", "Tarjeta"],
+    bestFor: "Mayor liquidez, depositos en USD",
+    isAffiliate: true,
+  },
+  {
+    name: "Kraken",
+    url: "https://invite.kraken.com/JDNW/aywgmsis",
+    fees: "0.16% maker / 0.26% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Wire USD", "Tarjeta", "Transferencia"],
+    bestFor: "Seguridad, usuarios avanzados",
+    isAffiliate: false,
+  },
+  {
+    name: "Gemini",
+    url: "https://exchange.gemini.com/register?referral=mzyzyvns7&type=referral",
+    fees: "0.20% maker / 0.40% taker",
+    kycLevel: "Completo" as const,
+    paymentMethods: ["Wire USD", "ACH", "Tarjeta"],
+    bestFor: "Exchange regulado, hub financiero regional",
+    isAffiliate: true,
+  },
+];
+
+const faqItems = [
+  {
+    q: "¿Es legal Bitcoin en Panama?",
+    a: "Bitcoin no es moneda de curso legal en Panama, pero su uso personal no esta prohibido. Panama usa el dolar estadounidense como moneda oficial (balboa en paridad 1:1 con USD). La Superintendencia del Mercado de Valores (SMV) supervisa el mercado de capitales, pero no ha regulado formalmente las criptomonedas. El Proyecto de Ley 247, debatido en la Asamblea Nacional, busca crear ese marco regulatorio.",
+  },
+  {
+    q: "¿Que es el Proyecto de Ley 247 de Panama?",
+    a: "El Proyecto de Ley 247 es una iniciativa legislativa que busca regular el uso de criptomonedas en Panama, estableciendo un marco legal para activos digitales, exchanges y proveedores de servicios cripto. En enero de 2026 el proyecto continua en debate en la Asamblea Nacional. Si es aprobado, Panama podria convertirse en uno de los marcos regulatorios cripto mas avanzados de Centroamerica.",
+  },
+  {
+    q: "¿Por que Panama es un hub financiero para cripto?",
+    a: "Panama tiene ventajas estructurales como hub financiero: uso del dolar USD (sin riesgo cambiario), sistema bancario internacional robusto con presencia de bancos de mas de 60 paises, zona franca de Colon, baja tributacion internacional y posicion geografica estrategica. Estas condiciones atraen a empresas cripto que buscan establecer operaciones regionales en America Latina.",
+  },
+  {
+    q: "¿Pago impuestos por ganancias de Bitcoin en Panama?",
+    a: "Panama tiene un sistema fiscal territorial: solo se gravan los ingresos de fuente panamena. Las ganancias por trading de criptomonedas obtenidas fuera de Panama —en exchanges internacionales— generalmente no estan sujetas al impuesto sobre la renta panameno. Sin embargo, el Proyecto de Ley 247 podria modificar esto. Consulta con un abogado fiscal panameno para tu situacion especifica.",
+  },
+  {
+    q: "¿Como compro Bitcoin en Panama?",
+    a: "Al estar dolarizado, Panama ofrece la ventaja de operar directamente en USD. Los exchanges internacionales como Binance, Kraken y Gemini aceptan usuarios panamenos. Puedes depositar via transferencia bancaria en USD, tarjeta de credito o debito. El proceso: crear cuenta, completar KYC (cedula o pasaporte + comprobante de domicilio), depositar USD y comprar BTC.",
+  },
+];
+
+const sources = [
+  { label: "SMV – Superintendencia del Mercado de Valores Panama", url: "https://www.smv.gob.pa" },
+  { label: "Asamblea Nacional Panama – Proyecto de Ley 247", url: "https://www.asamblea.gob.pa" },
+  { label: "Banco Nacional de Panama", url: "https://www.banconal.com.pa" },
+  { label: "Chainalysis – Global Crypto Adoption Index 2024", url: "https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Panama", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Panama" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="pa-hero">
+    <div class="container">
+      <div class="pa-hero-inner">
+        <div class="pa-hero-text">
+          <span class="hero-eyebrow">Panama · BTC/USD · Hub Financiero Regional</span>
+          <h1>Bitcoin en Panama 2026: precio USD, Ley 247 y exchanges</h1>
+          <p class="hero-sub">
+            Panama, hub financiero de America Central y el Caribe, opera en dolares
+            estadounidenses sin riesgo cambiario. El <strong>Proyecto de Ley 247</strong>,
+            en debate desde enero de 2026 en la Asamblea Nacional, busca convertir a Panama
+            en el marco regulatorio cripto mas avanzado de la region. Los exchanges
+            internacionales estan disponibles para usuarios panamenos desde ya.
+          </p>
+          <div class="hero-cta">
+            <a href="https://accounts.binance.com/register?ref=346436875" class="btn btn-primary" target="_blank" rel="noopener noreferrer sponsored">Comprar BTC en Binance</a>
+            <a href="https://exchange.gemini.com/register?referral=mzyzyvns7&type=referral" class="btn btn-secondary" target="_blank" rel="noopener noreferrer sponsored">Gemini (regulado)</a>
+          </div>
+        </div>
+        <div class="pa-hero-widget card">
+          <LivePriceWidget currency="USD" currencySymbol="$" countryName="Panama" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regulatory Status -->
+  <section class="section" aria-labelledby="regulacion-heading">
+    <div class="container">
+      <RegulatoryStatusBadge
+        status="yellow"
+        label="En debate — Proyecto de Ley 247"
+        lastUpdate="2026-02-23"
+        regulatorName="SMV – Superintendencia del Mercado de Valores"
+        regulatorUrl="https://www.smv.gob.pa"
+      />
+
+      <h2 id="regulacion-heading">Estado legal de Bitcoin en Panama 2026</h2>
+      <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+
+      <div class="content-grid">
+        <div class="content-main">
+          <p>
+            Panama no cuenta todavia con una ley especifica para criptomonedas, pero es
+            uno de los paises de la region con mayor vocacion para convertirse en hub cripto.
+            Su sistema fiscal territorial, la dolarizacion total con el USD, el sistema
+            bancario internacional y la infraestructura financiera establecida hacen de
+            Panama un destino atractivo para empresas del sector blockchain y fintech.
+          </p>
+          <p>
+            El <strong>Proyecto de Ley 247</strong> —tambien conocido como Ley de Activos
+            Digitales— fue presentado en la Asamblea Nacional y ha pasado por varias
+            rondas de debate desde 2021. En enero de 2026 continua en discusion. La
+            propuesta define activos digitales, establece requisitos para proveedores de
+            servicios cripto (VASP), y crea un regimen de autorizaciones ante la SMV.
+          </p>
+          <p>
+            Mientras el proyecto no sea aprobado, el uso personal de Bitcoin en Panama
+            no es ilegal ni esta regulado formalmente. El ciudadano panameno puede comprar,
+            vender y guardar criptomonedas usando exchanges internacionales sin restriccion
+            legal expresa. La <strong>SMV</strong> supervisa mercados de valores pero no
+            ha clasificado oficialmente a las criptomonedas bajo su jurisdiccion.
+          </p>
+          <div class="highlight">
+            <strong>Ventaja fiscal:</strong> El sistema tributario territorial de Panama
+            generalmente no grava ingresos de fuente extranjera. Las ganancias por trading
+            en exchanges internacionales podrian no estar sujetas al ISR panameno. Consulta
+            con un especialista fiscal local.
+          </div>
+        </div>
+
+        <div class="content-sidebar">
+          <div class="card">
+            <h3>Por que Panama es hub cripto</h3>
+            <ul class="quick-links" role="list">
+              <li>Moneda oficial: USD (sin riesgo cambiario)</li>
+              <li>Sistema fiscal territorial</li>
+              <li>Banca internacional robusta</li>
+              <li>Ley 247 en debate (enero 2026)</li>
+              <li>Zona franca financiera</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exchanges -->
+  <section class="section section-dark" aria-labelledby="exchanges-heading">
+    <div class="container">
+      <h2 id="exchanges-heading">Exchanges recomendados para Panama</h2>
+      <p class="section-sub">
+        Al operar en USD, Panama tiene acceso directo a los exchanges internacionales mas
+        importantes sin necesidad de conversion de moneda local.
+      </p>
+
+      <ExchangeComparisonTable
+        exchanges={exchanges}
+        caption="Comparativa de exchanges para Panama — febrero 2026"
+      />
+
+      <p class="affiliate-disclosure" style="margin-top:var(--space-4)">
+        Este es un enlace de afiliado. Si te registras, recibimos una pequeña comision sin costo adicional para ti.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes sobre Bitcoin en Panama" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y referencias" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .pa-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .pa-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .hero-eyebrow {
+    display: block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    width: fit-content;
+  }
+  .pa-hero-text h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1rem; margin-bottom: var(--space-6); line-height: 1.7; }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .pa-hero-widget { padding: var(--space-6); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-8);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+  .content-main p { margin-bottom: var(--space-4); color: var(--c-text); line-height: 1.75; }
+  .content-sidebar .card { padding: var(--space-5); }
+  .content-sidebar h3 { font-size: 0.95rem; margin-bottom: var(--space-4); }
+  .quick-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: 0.9rem; color: var(--c-text-muted); }
+  .highlight {
+    background: rgba(255, 107, 0, 0.08);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    border-radius: 8px;
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: var(--c-text);
+  }
+  .section-dark { background: var(--c-surface-1); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .affiliate-disclosure { font-size: 0.8rem; color: var(--c-text-muted); font-style: italic; }
+  .disclaimer { font-size: 0.85rem; color: var(--c-text-muted); border: 1px solid var(--c-border); border-radius: 6px; padding: var(--space-4); margin-bottom: var(--space-8); }
+  @media (max-width: 900px) {
+    .pa-hero-inner { grid-template-columns: 1fr; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-sidebar { order: -1; }
+  }
+</style>

@@ -1,0 +1,367 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+import { articleSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "P2P Seguro 2026: Como Comprar Bitcoin sin ser Estafado | free-bitcoin.lat";
+const description = "Guia completa de P2P seguro para comprar Bitcoin y USDT en 2026 en America Latina. Checklist, senales de alerta y plataformas con escrow.";
+const canonical = "https://free-bitcoin.lat/seguridad/p2p-seguro/";
+
+const faqItems = [
+  {
+    q: "¿Que es el comercio P2P de criptomonedas?",
+    a: "P2P (peer-to-peer) es la compraventa directa de criptomonedas entre dos personas, sin que un exchange centralizado actue como contraparte. El comprador y el vendedor acuerdan precio y metodo de pago, y la plataforma P2P —como Binance P2P o Airtm— actua como intermediario de confianza mediante un sistema de escrow (custodia de fondos). Es la forma mas comun de comprar Bitcoin en America Latina con monedas locales.",
+  },
+  {
+    q: "¿Cuales son los principales riesgos del P2P en America Latina?",
+    a: "Los riesgos mas comunes son: comprobante de pago falso (el estafador envia imagen de transferencia que nunca ocurrio), chargeback (pago con metodo reversible como tarjeta o PayPal y posterior reversion), phishing (sitio falso similar al exchange real), presion para liberar fondos antes de confirmar el pago, y vendedores con reputacion inexistente o falsificada. Todos son evitables usando plataformas con escrow y verificando el pago en tu banco.",
+  },
+  {
+    q: "¿Como funciona el escrow en P2P y por que es crucial?",
+    a: "El escrow es un sistema de custodia automatizado: cuando inicia una orden P2P en Binance, la plataforma retiene los criptoactivos del vendedor. El comprador paga al vendedor por el metodo acordado. Solo cuando el vendedor confirma la recepcion del pago (verificando en su banco), se liberan los cripto al comprador. Si hay disputa, el equipo de la plataforma arbitra. Esto hace imposible el robo directo durante la transaccion.",
+  },
+  {
+    q: "¿Es seguro usar P2P sin cuenta bancaria?",
+    a: "Depende del metodo alternativo. En muchos paises de LatAm hay metodos de pago movil (Yape en Peru, Pago Movil en Venezuela, NEQUI en Colombia, Pix en Brasil) que son seguros para P2P porque las transferencias son inmediatas y generalmente no reversibles. Lo que debes evitar es pagar con tarjeta de credito, PayPal o cualquier metodo que permita chargeback. Confirma siempre el pago en tu cuenta antes de liberar cripto.",
+  },
+  {
+    q: "¿Que hago si creo que me estafaron en P2P?",
+    a: "Actua inmediatamente: 1) Abre una disputa en la plataforma P2P (boton de disputa en la orden) antes de que venza el tiempo; 2) Presenta todas las evidencias: capturas del chat, comprobante de pago real, TxID si aplica; 3) No liberes los fondos bajo ninguna presion mientras la disputa este abierta; 4) Si la plataforma no resuelve favorablemente, denuncia ante la policia cibernetica de tu pais con todas las evidencias. Las transacciones cripto son irreversibles, por lo que la prevencion es clave.",
+  },
+];
+
+const sources = [
+  { label: "Binance P2P – Centro de ayuda y guia de seguridad", url: "https://www.binance.com/es/support/faq/p2p" },
+  { label: "Chainalysis – 2024 Crypto Crime Report", url: "https://www.chainalysis.com/blog/2024-crypto-crime-report-introduction/" },
+  { label: "INTERPOL – Cryptocurrency fraud", url: "https://www.interpol.int/en/Crimes/Financial-crime/Cryptocurrency-fraud" },
+  { label: "BitcoinAbuse – Base de datos de direcciones fraudulentas", url: "https://bitcoinabuse.com" },
+];
+
+const platforms = [
+  {
+    name: "Binance P2P",
+    url: "https://accounts.binance.com/register?ref=346436875",
+    isAffiliate: true,
+    description: "La plataforma P2P mas grande del mundo. Disponible en todos los paises de LatAm. Escrow automatico, sistema de reputacion robusto, resolucion de disputas por equipo de Binance. Acepta docenas de metodos de pago locales.",
+    methods: "Transferencia bancaria, Pago Movil, Yape, Plin, Pix, NEQUI, Zelle, y mas",
+    minVolume: "100+ operaciones para considerar vendedor confiable",
+  },
+  {
+    name: "Airtm",
+    url: "https://app.airtm.com/ivt/kokot5m1iwkq0",
+    isAffiliate: true,
+    description: "Plataforma P2P con fuerte presencia en Venezuela, Colombia, Peru y Mexico. Permite convertir entre dolares, monedas locales y USDT con multiples metodos de pago regionales. Ideal para remesas y freelancers.",
+    methods: "Pago Movil VES, Transferencia COP/PEN/MXN, Zelle, Wallet",
+    minVolume: "Revisar reputacion y tiempo en plataforma",
+  },
+];
+
+const jsonLd = [
+  articleSchema({ title, description, url: canonical, datePublished: "2026-01-01", dateModified: "2026-02-23" }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Seguridad", item: "https://free-bitcoin.lat/seguridad/" },
+    { name: "P2P Seguro", item: canonical },
+  ]),
+];
+
+const redFlags = [
+  "Precio significativamente por debajo del mercado (mas del 3-5%).",
+  "Vendedor con 0 operaciones o menos de 10 transacciones completadas.",
+  "Tasa de completado por debajo del 90%.",
+  "Te presiona para liberar el cripto antes de que confirmes el pago.",
+  "Te pide pagar a una cuenta diferente a la registrada en el KYC.",
+  "Solo quiere operar fuera de la plataforma (por WhatsApp o Telegram directo).",
+  "El comprobante de pago es solo una captura de pantalla.",
+  "Te ofrece un 'descuento especial' si operas fuera del escrow.",
+  "No responde preguntas concretas sobre el metodo de pago.",
+  "Su perfil fue creado recientemente (menos de 30 dias).",
+];
+
+const safesteps = [
+  { step: "1", title: "Usa solo plataformas con escrow", desc: "Binance P2P y Airtm tienen escrow automatico. El cripto queda en custodia hasta que ambas partes confirmen la transaccion. Nunca operes fuera de estas plataformas con desconocidos." },
+  { step: "2", title: "Verifica la reputacion del contraparte", desc: "Minimo 100 operaciones completadas, tasa de completado mayor al 95%, y cuenta con mas de 3 meses de antiguedad. Lee las reseñas de otros usuarios." },
+  { step: "3", title: "Confirma el pago en tu banco, no en capturas", desc: "Accede directamente a tu app bancaria o internet banking y verifica que el dinero aparece acreditado. Una captura de pantalla puede ser falsa. Solo libera cripto cuando el dinero este en tu cuenta real." },
+  { step: "4", title: "Acepta solo metodos de pago no reversibles", desc: "Transferencia bancaria local, pago movil (Yape, Plin, NEQUI, Pix, Pago Movil VES). Rechaza: tarjetas de credito, PayPal, Venmo, o cualquier metodo que permita chargeback." },
+  { step: "5", title: "Verifica que el pagador coincida con el KYC", desc: "El nombre de quien te paga debe coincidir con el nombre registrado en la plataforma. Pagos de terceros son señal de alerta: el comprador no deberia usar la cuenta de otra persona." },
+  { step: "6", title: "Activa 2FA y usa URL oficial", desc: "Activa autenticacion de dos factores (2FA) con Google Authenticator en tu cuenta de exchange. Guarda la URL oficial en favoritos y nunca ingreses desde links de emails o mensajes." },
+  { step: "7", title: "En caso de disputa, abre ticket inmediatamente", desc: "Si hay un problema, abre la disputa ANTES de que venza el tiempo de la orden. Presenta todas las evidencias. No cedas a presiones para liberar cripto antes de resolver la disputa." },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container" style="padding-top:var(--space-8)">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "Seguridad", href: "/seguridad/" },
+      { label: "P2P Seguro" },
+    ]} />
+
+    <article>
+      <header style="margin-bottom:var(--space-6)">
+        <h1>P2P seguro en America Latina 2026: como comprar Bitcoin sin ser estafado</h1>
+        <p class="last-updated">Ultima actualizacion: 2026-02-23</p>
+      </header>
+
+      <p class="lead">
+        El comercio P2P (peer-to-peer) es el metodo mas comun para comprar Bitcoin y USDT
+        con monedas locales en America Latina. Tambien es el ambiente donde ocurren mas
+        estafas. Esta guia te enseña exactamente como protegerte: que es el P2P, cuales
+        son los riesgos reales, un checklist de seguridad paso a paso, y cuales plataformas
+        usar en 2026.
+      </p>
+
+      <!-- Que es P2P -->
+      <section style="margin:var(--space-8) 0">
+        <h2>¿Que es el comercio P2P de criptomonedas?</h2>
+        <p>
+          P2P (peer-to-peer, o persona a persona) es la compraventa directa de criptomonedas
+          entre dos usuarios, sin que el exchange actue como contraparte de la operacion.
+          En una operacion P2P tipica:
+        </p>
+        <ol class="steps-list">
+          <li>El comprador busca un vendedor que ofrezca el cripto que quiere (ej. USDT) al precio y metodo de pago que necesita (ej. transferencia bancaria en pesos).</li>
+          <li>El comprador inicia una orden en la plataforma. La plataforma <strong>bloquea los fondos del vendedor en escrow</strong> (custodia automatica).</li>
+          <li>El comprador transfiere el dinero al vendedor segun el metodo acordado.</li>
+          <li>El vendedor verifica el pago en su cuenta bancaria y <strong>libera el cripto</strong> al comprador desde el escrow.</li>
+          <li>La transaccion se completa. Ambos usuarios se califican mutuamente.</li>
+        </ol>
+        <p>
+          El escrow es el elemento clave de seguridad: mientras el cripto esta en custodia
+          de la plataforma, el vendedor no puede quedarselo ni el comprador puede tomarlo
+          sin que el vendedor confirme el pago. Esto hace el P2P seguro cuando se usa
+          correctamente.
+        </p>
+      </section>
+
+      <!-- Señales de alerta -->
+      <section style="margin:var(--space-8) 0">
+        <h2>10 señales de alerta: cuando NO operar en P2P</h2>
+        <p>
+          Si identificas cualquiera de estas señales, cancela la orden y busca otro vendedor.
+          Un buen vendedor nunca generara ninguna de estas situaciones.
+        </p>
+        <ul class="redflag-list">
+          {redFlags.map((flag) => (
+            <li class="redflag-item">
+              <span class="redflag-icon">&#9888;</span>
+              <span>{flag}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Checklist -->
+      <section style="margin:var(--space-8) 0">
+        <h2>Checklist de P2P seguro: 7 pasos obligatorios</h2>
+        <p>
+          Sigue estos pasos en cada operacion P2P para protegerte al maximo. No hay
+          atajos: cada paso existe porque corresponde a un riesgo real documentado.
+        </p>
+
+        {safesteps.map((s) => (
+          <div class="safe-step card">
+            <div class="step-header">
+              <span class="step-num">{s.step}</span>
+              <h3>{s.title}</h3>
+            </div>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </section>
+
+      <!-- Plataformas recomendadas -->
+      <section style="margin:var(--space-8) 0">
+        <h2>Plataformas P2P recomendadas para America Latina</h2>
+        <p>
+          Solo recomendamos plataformas con escrow integrado y sistema de reputacion
+          verificable. Evita operar P2P fuera de estas plataformas con desconocidos.
+        </p>
+
+        <div class="platform-list">
+          {platforms.map((p) => (
+            <div class="platform-card card">
+              <h3>{p.name}</h3>
+              <p>{p.description}</p>
+              <div class="platform-detail">
+                <strong>Metodos de pago:</strong> {p.methods}
+              </div>
+              <div class="platform-detail">
+                <strong>Recomendacion:</strong> {p.minVolume}
+              </div>
+              <a
+                href={p.url}
+                class="btn btn-primary"
+                target="_blank"
+                rel={p.isAffiliate ? "noopener noreferrer sponsored" : "noopener noreferrer"}
+                style="margin-top:var(--space-4);display:inline-block"
+              >
+                Abrir cuenta en {p.name}
+              </a>
+              {p.isAffiliate && (
+                <p class="affiliate-disclosure">
+                  Este es un enlace de afiliado. Si te registras, recibimos una pequeña
+                  comision sin costo adicional para ti.
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Estafas comunes -->
+      <section style="margin:var(--space-8) 0">
+        <h2>Las 5 estafas P2P mas comunes en LatAm</h2>
+
+        <div class="scam-grid">
+          <div class="scam-item card">
+            <h3>1. Comprobante falso</h3>
+            <p>Envia una imagen editada de transferencia. Solucion: verifica el deposito en tu app bancaria, no en capturas.</p>
+          </div>
+          <div class="scam-item card">
+            <h3>2. Chargeback</h3>
+            <p>Paga con metodo reversible y revierte despues. Solucion: solo acepta pagos no reversibles (transferencia local, pago movil).</p>
+          </div>
+          <div class="scam-item card">
+            <h3>3. Phishing de plataforma</h3>
+            <p>Te dirige a un sitio falso para robar credenciales. Solucion: guarda la URL oficial en favoritos, activa 2FA.</p>
+          </div>
+          <div class="scam-item card">
+            <h3>4. Presion para liberar fuera de escrow</h3>
+            <p>Te convence de operar fuera de la plataforma. Solucion: nunca opera P2P fuera del escrow de la plataforma.</p>
+          </div>
+          <div class="scam-item card">
+            <h3>5. Pago de tercero</h3>
+            <p>El pago viene de una cuenta diferente al perfil KYC. Solucion: rechaza cualquier pago que no coincida con el nombre KYC.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guias por pais -->
+      <section style="margin:var(--space-8) 0">
+        <h2>Guias P2P por pais</h2>
+        <p>
+          Cada pais tiene sus particularidades: metodos de pago locales, regulacion diferente
+          y estafas comunes especificas. Consulta la guia de tu pais para informacion mas
+          detallada:
+        </p>
+        <ul class="country-links">
+          <li><a href="/ve/p2p-seguro/">P2P seguro en Venezuela 2026</a></li>
+          <li><a href="/mx/">P2P en Mexico (SPEI, OXXO)</a></li>
+          <li><a href="/co/">P2P en Colombia (NEQUI, Daviplata)</a></li>
+          <li><a href="/ar/">P2P en Argentina (transferencia ARS)</a></li>
+          <li><a href="/pe/">P2P en Peru (Yape, Plin)</a></li>
+          <li><a href="/br/">P2P en Brasil (Pix)</a></li>
+        </ul>
+        <p>
+          Para una guia mas amplia de seguridad cripto, consulta nuestro articulo
+          <a href="/seguridad/como-evitar-estafas/">como evitar estafas de Bitcoin 2026</a>.
+        </p>
+      </section>
+
+      <!-- FAQ -->
+      <FAQ items={faqItems} title="Preguntas frecuentes sobre P2P seguro" />
+
+      <!-- Sources -->
+      <SourcesList sources={sources} title="Fuentes y referencias" />
+
+      <p class="disclaimer">
+        Esto no es asesoria financiera. Ultima actualizacion: 2026-02-23.
+      </p>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: var(--space-4); }
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    border-left: 3px solid var(--c-primary);
+    padding-left: var(--space-4);
+    margin-bottom: var(--space-8);
+    line-height: 1.75;
+  }
+  article h2 { margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--c-border); }
+  article p { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  .steps-list {
+    padding-left: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .steps-list li { color: var(--c-text-muted); line-height: 1.6; font-size: 0.95rem; }
+  .redflag-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .redflag-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: 0.93rem;
+    color: var(--c-text-muted);
+    line-height: 1.5;
+  }
+  .redflag-icon { color: #ff6b6b; font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .safe-step { margin-bottom: var(--space-4); }
+  .step-header { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-3); }
+  .step-num {
+    background: var(--c-primary);
+    color: #000;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .step-header h3 { margin: 0; font-size: 1rem; }
+  .safe-step p { font-size: 0.93rem; margin: 0; }
+  .platform-list { display: flex; flex-direction: column; gap: var(--space-5); }
+  .platform-card h3 { margin-bottom: var(--space-3); }
+  .platform-detail { font-size: 0.88rem; color: var(--c-text-muted); margin-bottom: var(--space-2); }
+  .affiliate-disclosure {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+    margin-top: var(--space-2);
+  }
+  .scam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  .scam-item h3 { font-size: 0.95rem; margin-bottom: var(--space-2); }
+  .scam-item p { font-size: 0.88rem; margin: 0; }
+  .country-links {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+  .country-links li a {
+    color: var(--c-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .country-links li a:hover { text-decoration: underline; }
+  .disclaimer {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    border: 1px solid var(--c-border);
+    border-radius: 6px;
+    padding: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  @media (max-width: 600px) {
+    .scam-grid { grid-template-columns: 1fr; }
+    .country-links { grid-template-columns: 1fr; }
+  }
+</style>

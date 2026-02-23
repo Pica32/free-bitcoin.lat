@@ -1,0 +1,17 @@
+# API directory .htaccess
+# Deny direct access to cache and forum_data directories
+Options -Indexes
+
+<Files "*.json">
+    Order deny,allow
+    Deny from all
+</Files>
+
+<FilesMatch "^(price|premium|remittance|forum)\.php$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# PHP error handling - hide errors in production
+php_flag display_errors Off
+php_flag log_errors On

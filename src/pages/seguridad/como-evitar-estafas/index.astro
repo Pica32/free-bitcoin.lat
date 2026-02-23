@@ -1,0 +1,554 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const title = "Cómo Evitar Estafas de Bitcoin 2026 – Guía Seguridad | free-bitcoin.lat";
+const description = "Guía completa para evitar estafas de Bitcoin y criptomonedas 2026. Los 10 fraudes más comunes en LatAm, cómo identificarlos y qué hacer si eres víctima.";
+const canonical = "https://free-bitcoin.lat/seguridad/como-evitar-estafas/";
+
+const faqs = [
+  {
+    q: "¿Pueden recuperar mis Bitcoin si fui estafado?",
+    a: "En la gran mayoría de los casos, no. Las transacciones en blockchain son irreversibles. Los servicios que prometen recuperar tus fondos por un pago previo son, casi siempre, otra estafa llamada 'recovery scam'. Documenta todo y denuncia ante las autoridades, pero no pagues a nadie para recuperar cripto."
+  },
+  {
+    q: "¿Cómo sé si un exchange es legítimo?",
+    a: "Verifica que esté registrado ante el regulador financiero de tu país (por ejemplo, CNBV en México, SFC en Colombia, CMF en Chile). Busca su nombre en Google junto a 'estafa' o 'scam'. Un exchange legítimo tiene dominio propio verificable, atención al cliente por canales oficiales y transparencia sobre sus fundadores."
+  },
+  {
+    q: "¿Es seguro comprar Bitcoin por Telegram o WhatsApp?",
+    a: "No directamente. Muchos fraudes P2P ocurren por estas plataformas. Si debes usar canales informales, verifica la reputación del vendedor, usa plataformas P2P con escrow (como Binance P2P), exige confirmación en la blockchain antes de entregar cualquier pago fiat, y nunca aceptes comprobantes de pago sin verificar en tu banco."
+  },
+  {
+    q: "¿Qué es un rug pull y cómo evitarlo?",
+    a: "Un rug pull ocurre cuando los creadores de un token nuevo o proyecto DeFi abandonan el proyecto de repente y se llevan los fondos de los inversores. Para evitarlo: invierte solo en proyectos con código auditado por terceros, equipos doxxed (identidades públicas), liquidez bloqueada en smart contracts y comunidad activa y verificable."
+  },
+  {
+    q: "¿Debo denunciar si me estafaron aunque sea poco dinero?",
+    a: "Sí. Incluso si el monto es pequeño, tu denuncia ayuda a las autoridades a rastrear patrones y puede proteger a otras personas. Además, si la estafa ocurrió en una plataforma como Binance o Coinbase, el reporte puede resultar en que bloqueen la cuenta del estafador."
+  },
+  {
+    q: "¿Los influencers de cripto son confiables?",
+    a: "Muchos promueven proyectos a cambio de pago sin declararlo (práctica ilegal en varios países). Antes de seguir una 'señal' de un influencer, investiga si tiene conflictos de interés, si el proyecto que promueve tiene whitepaper real, equipo verificable y auditorías. Recuerda: nadie puede predecir el mercado con certeza."
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cómo evitar estafas de Bitcoin 2026: guía definitiva para América Latina",
+    "description": description,
+    "url": canonical,
+    "datePublished": "2026-01-15",
+    "dateModified": "2026-02-23",
+    "author": { "@type": "Organization", "name": "free-bitcoin.lat", "url": "https://free-bitcoin.lat" },
+    "publisher": { "@type": "Organization", "name": "free-bitcoin.lat", "url": "https://free-bitcoin.lat" },
+    "inLanguage": "es",
+    "about": { "@type": "Thing", "name": "Seguridad Bitcoin" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", "position": 2, "name": "Seguridad", "item": "https://free-bitcoin.lat/seguridad/" },
+      { "@type": "ListItem", "position": 3, "name": "Cómo evitar estafas", "item": canonical },
+    ],
+  },
+];
+
+const scams = [
+  {
+    num: "1",
+    title: "Esquemas Ponzi y pirámides",
+    examples: "OneCoin, HyperVerse, BitConnect",
+    desc: "Prometen rendimientos extraordinarios pagando a inversores antiguos con el dinero de los nuevos. Eventualmente colapsan y los últimos en entrar pierden todo.",
+    flags: ["Garantizan un % de ganancia mensual fijo (ej. 5%, 10%, 20%)", "Ofrecen comisiones por referir nuevos participantes", "Documentos corporativos vagos o falsificados", "Sin producto o servicio real detrás"],
+    how: "Si te prometen ganancias garantizadas en cripto, es una mentira. Ninguna inversión es garantizada. Verifica el registro de la empresa ante el regulador financiero de tu país.",
+  },
+  {
+    num: "2",
+    title: "Exchanges y wallets falsas (phishing)",
+    examples: "Sitios clon de Binance, MetaMask falso en app stores",
+    desc: "Crean sitios web o aplicaciones idénticas a plataformas reales para robar tus credenciales o seed phrase.",
+    flags: ["URL ligeramente diferente (ej. bínance.com, metamäsk.io)", "App en tienda con pocas descargas o reseñas recientes sospechosas", "Te piden ingresar tu frase semilla en un formulario web", "Errores ortográficos o diseño ligeramente diferente al original"],
+    how: "Guarda los URLs oficiales en favoritos. Siempre verifica el dominio exacto. Nunca ingreses tu seed phrase en ningún sitio web. Descarga apps solo desde los links oficiales del fabricante.",
+  },
+  {
+    num: "3",
+    title: "Estafas P2P",
+    examples: "Comprobante de pago falso, chargeback bancario",
+    desc: "En operaciones persona a persona, el estafador envía un comprobante de transferencia falso o usa pagos reversibles (tarjeta de crédito) para hacer chargeback después de recibir el cripto.",
+    flags: ["Insiste en pagar con PayPal 'friends', tarjeta de crédito u otro método reversible", "Envía captura de pantalla en lugar de comprobante verificable", "Presiona para liberar el cripto antes de confirmar el depósito", "Precio muy por debajo del mercado"],
+    how: "Usa plataformas P2P con escrow integrado (Binance P2P, LocalBitcoins). Verifica el depósito directamente en tu cuenta bancaria antes de liberar cualquier cripto. Nunca aceptes métodos de pago reversibles.",
+  },
+  {
+    num: "4",
+    title: "Rug pulls en DeFi y tokens nuevos",
+    examples: "Squid Game Token (2021), miles de tokens en Solana/BSC",
+    desc: "Los creadores lanzan un token, generan hype, acumulan liquidez y luego retiran todo el dinero del pool de liquidez, dejando el token sin valor.",
+    flags: ["Token muy nuevo sin auditoría de código", "Liquidez no bloqueada (verificable en DexScreener o Unicrypt)", "Equipo anónimo sin historial verificable", "Promesas de 'x100' o 'moonshot' sin fundamentos"],
+    how: "Invierte solo en proyectos con auditorías públicas de firmas reconocidas (CertiK, Trail of Bits). Verifica que la liquidez esté bloqueada. Nunca pongas más de lo que puedes perder en tokens desconocidos.",
+  },
+  {
+    num: "5",
+    title: "Influencers y señales de trading falsas",
+    examples: "'Gurús' en TikTok, Telegram, Instagram",
+    desc: "Ofrecen señales de trading 'exclusivas' por suscripción mensual, o promueven tokens pagados sin declarar el conflicto de interés (práctica conocida como pump-and-dump orquestado).",
+    flags: ["Muestran ganancias extraordinarias en screenshots sin auditar", "Cobran por acceso a grupos VIP de señales", "Promueven tokens desconocidos con urgencia", "Eliminan posts cuando el precio cae"],
+    how: "Ningún trader honesto necesita cobrarte por señales cuando podría ganar más tradando. Las ganancias en screenshots son fácilmente manipulables. Sé escéptico de cualquier promesa de rendimiento.",
+  },
+  {
+    num: "6",
+    title: "Soporte técnico falso",
+    examples: "Cuentas de Twitter/X que se hacen pasar por Binance, Coinbase, MetaMask",
+    desc: "Monitorizan menciones de exchanges en redes sociales y se comunican con usuarios que reportan problemas, ofreciendo 'ayuda' que en realidad busca robar sus fondos o acceso a cuenta.",
+    flags: ["Te contactan ellos primero (el soporte real nunca hace esto)", "Te piden tu contraseña, 2FA o seed phrase", "Te dirigen a un enlace externo al sitio oficial", "Te piden instalar software de acceso remoto (TeamViewer, AnyDesk)"],
+    how: "El soporte legítimo nunca te pedirá tu contraseña ni tu seed phrase. Solo contacta al soporte a través del portal oficial del exchange. Ignora y reporta cualquier mensaje no solicitado.",
+  },
+  {
+    num: "7",
+    title: "Recuperadores de cripto (recovery scams)",
+    examples: "Servicios que prometen recuperar fondos de estafas anteriores",
+    desc: "Aprovechan la desesperación de las víctimas. Prometen recuperar fondos perdidos en estafas previas, cobrando un anticipo. Al pagar, desaparecen o exigen más dinero.",
+    flags: ["Te contactan después de que publicaste sobre haber sido estafado", "Prometen recuperar fondos de transacciones ya confirmadas en blockchain", "Cobran un porcentaje por adelantado", "Testimonios no verificables o falsos"],
+    how: "Es técnicamente imposible revertir transacciones confirmadas en Bitcoin. Cualquier servicio que prometa lo contrario es una estafa. Denuncia ante autoridades, pero no pagues a nadie.",
+  },
+  {
+    num: "8",
+    title: "Pump and dump de altcoins",
+    examples: "Grupos de Telegram coordinando compras masivas de tokens de baja capitalización",
+    desc: "Un grupo organizado compra masivamente una altcoin de baja capitalización para inflar su precio, luego vende todo coordinadamente cuando entran nuevos compradores atraídos por el alza.",
+    flags: ["Altcoin sube 200-500% en minutos o pocas horas sin noticias reales", "Grupos de Telegram con miles de miembros coordinando 'señales'", "Volumen de trading anormalmente alto para la capitalización del token"],
+    how: "Evita comprar en medio de un alza explosiva sin fundamentos. Si llegas tarde al pump, eres la salida de liquidez de los que coordinaron el esquema.",
+  },
+  {
+    num: "9",
+    title: "Romance scams / pig butchering",
+    examples: "Estafas románticas que migran a inversiones cripto",
+    desc: "El estafador construye una relación romántica o de amistad durante semanas o meses, luego introduce el tema de inversiones en cripto. La víctima ve ganancias iniciales (ficticias) antes de que todo desaparezca.",
+    flags: ["Conocido en red social o app de citas, luego migra la conversación a WhatsApp/Telegram", "Menciona inversiones cripto de manera 'casual' después de crear confianza", "Te muestra su plataforma de trading 'exclusiva' con ganancias sorprendentes", "Siempre tiene excusas para no hacer videollamada o reunirse"],
+    how: "Si alguien que conociste en línea te recomienda una plataforma de inversión, es una señal de alerta crítica. Investiga la plataforma independientemente y consulta con alguien de confianza antes de depositar nada.",
+  },
+  {
+    num: "10",
+    title: "Malware y keyloggers",
+    examples: "Apps modificadas, extensiones de Chrome maliciosas, archivos de estafa en Discord",
+    desc: "Software malicioso instalado en tu dispositivo captura contraseñas, frases semilla e información bancaria, o modifica direcciones de wallet en el portapapeles.",
+    flags: ["Aplicaciones cripto descargadas de fuentes no oficiales", "Extensiones de navegador con muchos permisos sobre el portapapeles", "Archivos .exe o .apk recibidos por Discord, Telegram u otras apps"],
+    how: "Descarga software solo desde fuentes oficiales. Revisa siempre la dirección de destino antes de confirmar una transacción cripto (el malware de clipboard suele cambiarla). Usa un antivirus actualizado y considera un dispositivo dedicado para manejar cripto importantes.",
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <ol>
+        <li><a href="/">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/seguridad/">Seguridad</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">Cómo evitar estafas</li>
+      </ol>
+    </nav>
+
+    <div class="last-updated">Actualizado: 23 de febrero de 2026</div>
+
+    <h1>Cómo evitar estafas de Bitcoin 2026: guía definitiva</h1>
+
+    <p class="intro-text">
+      En América Latina, las estafas de Bitcoin y criptomonedas costaron más de <strong>1.000 millones de dólares</strong> a usuarios en 2023-2024, según datos de Chainalysis. Los fraudes más comunes incluyen exchanges falsos, esquemas Ponzi, estafas P2P y rug pulls en proyectos DeFi. Esta guía te enseña a identificar cada tipo de fraude y protegerte antes de perder tu dinero.
+    </p>
+
+    <!-- Section 1: Los 10 tipos de estafas -->
+    <section class="section-content" aria-labelledby="estafas-heading">
+      <h2 id="estafas-heading">Los 10 tipos de estafas cripto más comunes en LatAm</h2>
+      <p>Conocer los patrones de cada fraude es tu mejor defensa. A continuación, los 10 tipos de estafas más frecuentes en la región, con ejemplos reales, señales de alerta y cómo evitarlos.</p>
+
+      {scams.map((scam) => (
+        <article class="scam-card card">
+          <div class="scam-header">
+            <span class="scam-num">{scam.num}</span>
+            <div>
+              <h3>{scam.title}</h3>
+              <span class="scam-examples">Ejemplos: {scam.examples}</span>
+            </div>
+          </div>
+          <p>{scam.desc}</p>
+          <div class="scam-flags">
+            <h4>Señales de alerta:</h4>
+            <ul>
+              {scam.flags.map((flag) => (
+                <li>{flag}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="scam-how">
+            <h4>Como evitarlo:</h4>
+            <p>{scam.how}</p>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <!-- Section 2: Red flags universales -->
+    <section class="section-content" aria-labelledby="redflags-heading">
+      <h2 id="redflags-heading">Señales de alerta universales (red flags)</h2>
+      <p>Independientemente del tipo de estafa, estos patrones aparecen una y otra vez. Si detectas cualquiera de estas señales, detente y verifica antes de continuar.</p>
+
+      <div class="redflags-grid">
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Prometen retornos garantizados</strong>
+            <p>Ninguna inversión en cripto ni en ningún activo puede garantizar ganancias. Cualquier promesa de "10% mensual garantizado" es una mentira.</p>
+          </div>
+        </div>
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Urgencia artificial</strong>
+            <p>"Solo por 24 horas", "últimos cupos", "precio especial de hoy". La presión para decidir rápido evita que pienses con calma o consultes a alguien.</p>
+          </div>
+        </div>
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Soporte solo por WhatsApp o Telegram</strong>
+            <p>Un negocio legítimo tiene canales de soporte verificables: email corporativo, teléfono, portal web oficial. Si solo existe en mensajería, es sospechoso.</p>
+          </div>
+        </div>
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Sin empresa o dirección verificable</strong>
+            <p>Busca el nombre de la empresa en el registro mercantil de su país. Si no aparece, o si la dirección física no existe, es una señal muy seria.</p>
+          </div>
+        </div>
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Piden acceso remoto a tu dispositivo</strong>
+            <p>Ningún soporte técnico legítimo necesita tomar control de tu computadora o teléfono para resolver un problema de cripto. Si lo piden, corta la comunicación.</p>
+          </div>
+        </div>
+        <div class="redflag-item card">
+          <span class="redflag-icon">&#9888;</span>
+          <div>
+            <strong>Te piden enviar cripto para "verificar" o "desbloquear"</strong>
+            <p>Frases como "envía 0.1 BTC para verificar tu wallet" o "paga comisión para desbloquear tus ganancias" son el sello de una estafa. Ningún servicio legítimo hace esto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Qué hacer si fuiste estafado -->
+    <section class="section-content" aria-labelledby="victima-heading">
+      <h2 id="victima-heading">Qué hacer si fuiste estafado</h2>
+      <p>Si ya ocurrió, actúa rápido. Aunque las probabilidades de recuperar los fondos son bajas, documentar y denunciar puede ayudar a las autoridades y a otras potenciales víctimas.</p>
+
+      <ol class="steps-list">
+        <li>
+          <strong>Documenta todo inmediatamente:</strong> Toma capturas de pantalla de todas las conversaciones, transacciones, URLs visitadas y perfiles de quien te contactó. Anota los Transaction IDs (TxIDs) de los movimientos en blockchain. Esta evidencia es crucial para cualquier denuncia.
+        </li>
+        <li>
+          <strong>Denuncia ante la autoridad local:</strong> Aunque la jurisdicción cripto es compleja, presentar la denuncia es importante. Los organismos relevantes por país incluyen: la Unidad de Inteligencia Financiera (UIF) en México y Argentina, la UIAF en Colombia, la UAF en Chile, la UIF en Perú, y el Ministerio Público en Venezuela, Brasil y el resto de la región.
+        </li>
+        <li>
+          <strong>Reporta en la plataforma donde ocurrió:</strong> Si la estafa ocurrió en un exchange como Binance o Coinbase, reporta el incidente a través de sus canales oficiales. En algunos casos pueden congelar fondos del estafador si aún están en la plataforma.
+        </li>
+        <li>
+          <strong>Reporta la dirección Bitcoin en bitcoinabuse.com:</strong> El sitio <a href="https://bitcoinabuse.com" target="_blank" rel="noopener noreferrer">bitcoinabuse.com</a> es una base de datos pública de direcciones cripto asociadas a fraudes. Tu reporte protege a futuros usuarios que verifiquen esa dirección.
+        </li>
+        <li>
+          <strong>No contactes "recovery services":</strong> Son, en casi el 100% de los casos, otra estafa que aprovecha tu desesperación. No pagues nada a nadie que prometa recuperar tus fondos.
+        </li>
+      </ol>
+    </section>
+
+    <!-- Section 4: Exchanges y wallets seguros -->
+    <section class="section-content" aria-labelledby="seguros-heading">
+      <h2 id="seguros-heading">Exchanges y wallets seguros: cómo proteger tus fondos</h2>
+
+      <h3>Usa exchanges con KYC y regulados</h3>
+      <p>Los exchanges de mayor reputación en América Latina incluyen Binance, Coinbase, Bitso (México), Mercado Bitcoin (Brasil) y Buda (Chile/Colombia/Perú). Todos implementan KYC (verificación de identidad) y tienen algún nivel de registro regulatorio. Evita plataformas sin KYC que solo existen en Telegram.</p>
+
+      <h3>Hardware wallet para tus ahorros</h3>
+      <p>Si acumulas una cantidad significativa de Bitcoin (más de $500 USD equivalente), considera una hardware wallet para mantener tus fondos fuera de exchanges. Las dos marcas más reconocidas son:</p>
+      <ul class="wallet-list">
+        <li><strong><a href="https://shop.ledger.com/pages/ledger-nano-s-plus/?r=3771127e7ec5" target="_blank" rel="noopener noreferrer sponsored">Ledger Nano S Plus</a></strong> — Desde ~€79. Compatible con más de 5.500 activos. App Ledger Live intuitiva.</li>
+        <li><strong><a href="https://trezor.io/trezor-safe-7?transaction_id=102398254191a620fee5eea74faa2d&offer_id=352&affiliate_id=36693" target="_blank" rel="noopener noreferrer sponsored">Trezor Safe 7</a></strong> — Desde ~€169. Código abierto. Sin Bluetooth (menor superficie de ataque). Marca checa con historial limpio.</li>
+      </ul>
+      <p class="affiliate-disclosure">Divulgación: los links de Ledger y Trezor son links de afiliado. Si compras a través de ellos, recibimos una pequeña comisión sin costo adicional para ti. Solo recomendamos productos que consideramos seguros y verificados.</p>
+
+      <h3>La regla más importante: nunca compartas tu seed phrase</h3>
+      <p>Tu frase semilla (12 o 24 palabras) es la llave maestra de tu wallet. <strong>Nadie</strong> —ni el soporte de Ledger, ni Trezor, ni ningún exchange, ni este sitio— tiene razón alguna para pedirte tu seed phrase. Si alguien la pide, es una estafa garantizada.</p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-content faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Preguntas frecuentes</h2>
+      {faqs.map((faq) => (
+        <details class="faq-item">
+          <summary>{faq.q}</summary>
+          <p>{faq.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <!-- Sources -->
+    <section class="sources" aria-labelledby="sources-heading">
+      <h2 id="sources-heading">Fuentes</h2>
+      <ul>
+        <li>Chainalysis — <em>2024 Crypto Crime Report</em> (<a href="https://www.chainalysis.com/blog/2024-crypto-crime-report-introduction/" target="_blank" rel="noopener noreferrer">chainalysis.com</a>)</li>
+        <li>INTERPOL — <em>Financial Crime: Cryptocurrency fraud</em> (<a href="https://www.interpol.int/en/Crimes/Financial-crime/Cryptocurrency-fraud" target="_blank" rel="noopener noreferrer">interpol.int</a>)</li>
+        <li>CNBV México — Alertas sobre esquemas de inversión no autorizados (<a href="https://www.cnbv.gob.mx/Paginas/entidades-no-autorizadas.aspx" target="_blank" rel="noopener noreferrer">cnbv.gob.mx</a>)</li>
+        <li>SFC Colombia — Alertas de fraude financiero (<a href="https://www.superfinanciera.gov.co" target="_blank" rel="noopener noreferrer">superfinanciera.gov.co</a>)</li>
+        <li>CMF Chile — Registro de entidades no autorizadas (<a href="https://www.cmfchile.cl" target="_blank" rel="noopener noreferrer">cmfchile.cl</a>)</li>
+        <li>BitcoinAbuse — Base de datos de direcciones fraudulentas (<a href="https://bitcoinabuse.com" target="_blank" rel="noopener noreferrer">bitcoinabuse.com</a>)</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      <strong>Aviso:</strong> Esta guía es de carácter educativo e informativo. No constituye asesoría legal ni financiera. Si has sido víctima de un fraude, consulta con un abogado especializado en tu jurisdicción.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+  .breadcrumbs a { color: var(--c-text-muted); }
+  .breadcrumbs a:hover { color: var(--c-primary); }
+  .last-updated {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+  }
+  h1 { margin-bottom: var(--space-6); }
+  .intro-text {
+    font-size: 1.1rem;
+    color: var(--c-text-muted);
+    border-left: 3px solid var(--c-primary);
+    padding-left: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  .section-content {
+    margin-bottom: var(--space-12);
+  }
+  .section-content h2 {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .section-content h3 {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+  .scam-card {
+    margin-bottom: var(--space-6);
+  }
+  .scam-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .scam-num {
+    background: var(--c-primary);
+    color: #000;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .scam-header h3 {
+    margin: 0 0 var(--space-1);
+    font-size: 1.15rem;
+  }
+  .scam-examples {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+  }
+  .scam-flags {
+    background: rgba(255,23,68,0.06);
+    border: 1px solid rgba(255,23,68,0.2);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    margin: var(--space-4) 0;
+  }
+  .scam-flags h4 {
+    color: var(--c-error);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-2);
+  }
+  .scam-flags ul {
+    margin: 0;
+    padding-left: var(--space-5);
+  }
+  .scam-flags li {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-1);
+  }
+  .scam-how {
+    background: rgba(0,200,83,0.06);
+    border: 1px solid rgba(0,200,83,0.2);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+  }
+  .scam-how h4 {
+    color: var(--c-success);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-2);
+  }
+  .scam-how p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--c-text-muted);
+  }
+  .redflags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  .redflag-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .redflag-icon {
+    font-size: 1.4rem;
+    color: var(--c-error);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .redflag-item strong {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-family: var(--font-display);
+  }
+  .redflag-item p {
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+  .steps-list {
+    padding-left: var(--space-5);
+    counter-reset: steps;
+  }
+  .steps-list li {
+    margin-bottom: var(--space-5);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .wallet-list {
+    padding-left: var(--space-5);
+    margin: var(--space-4) 0;
+  }
+  .wallet-list li {
+    margin-bottom: var(--space-3);
+    font-size: 0.95rem;
+  }
+  .affiliate-disclosure {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    font-style: italic;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+    margin: var(--space-4) 0;
+  }
+  .faq-item {
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+    overflow: hidden;
+  }
+  .faq-item summary {
+    padding: var(--space-4) var(--space-5);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-item summary::after {
+    content: "+";
+    font-size: 1.2rem;
+    color: var(--c-primary);
+    flex-shrink: 0;
+  }
+  .faq-item[open] summary::after { content: "−"; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item p {
+    padding: 0 var(--space-5) var(--space-4);
+    font-size: 0.93rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+  .sources {
+    background: var(--c-surface-1);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+  .sources h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-4);
+  }
+  .sources ul {
+    padding-left: var(--space-5);
+  }
+  .sources li {
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-2);
+  }
+  .disclaimer {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  @media (max-width: 600px) {
+    .redflags-grid { grid-template-columns: 1fr; }
+    .scam-header { flex-direction: column; gap: var(--space-2); }
+  }
+</style>

@@ -1,0 +1,266 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FeeCalculator from "@components/FeeCalculator.astro";
+import { webAppSchema, faqSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Calculadora de Comisiones Bitcoin 2026 – Lightning vs On-chain vs USDT | free-bitcoin.lat";
+const description =
+  "Compara el costo de transacción: Bitcoin on-chain, Lightning Network, USDT TRC-20, USDT ERC-20 y SWIFT. Cuánto pagas de fee en cada red.";
+const canonical = "https://free-bitcoin.lat/calculadoras/comisiones/";
+
+const faqs = [
+  {
+    q: "¿Cuánto cuesta enviar Bitcoin on-chain?",
+    a: "Las comisiones on-chain de Bitcoin varían según la congestión de la red y la urgencia de tu transacción. En periodos de baja actividad pueden ser $0.50–$2 USD. En períodos de alta demanda (bull runs) pueden superar los $50 USD. Para transacciones pequeñas o frecuentes, Lightning Network es mucho más eficiente.",
+  },
+  {
+    q: "¿Qué es Lightning Network y por qué es más barato?",
+    a: "Lightning Network es una capa 2 sobre Bitcoin que permite transacciones instantáneas con comisiones de fracciones de centavo. Funciona abriendo 'canales de pago' entre usuarios. Las transacciones ocurren fuera de la blockchain principal (off-chain) y solo se liquidan on-chain al cerrar el canal. Ideal para pagos cotidianos y remesas.",
+  },
+  {
+    q: "¿USDT TRC-20 o USDT ERC-20? ¿Cuál tiene menores comisiones?",
+    a: "USDT TRC-20 (red Tron) tiene comisiones de centavos ($0.01–$1) y es el estándar en los exchanges de LatAm. USDT ERC-20 (red Ethereum) puede costar entre $1 y $30+ dependiendo del gas price. Para remesas y pagos P2P en LatAm, TRC-20 es la opción habitual por su bajo costo. Sin embargo, la red Tron es más centralizada que Ethereum o Bitcoin.",
+  },
+  {
+    q: "¿Cuándo conviene usar SWIFT en lugar de Bitcoin?",
+    a: "SWIFT conviene para transferencias entre instituciones financieras reguladas cuando el destinatario no tiene acceso a crypto. Sus costos son altos ($15–$45 USD por transacción) y demora 1–5 días hábiles. Para montos muy grandes (>$50.000) con entidades bancarias tradicionales, SWIFT sigue siendo el estándar. Para montos medianos hacia LatAm, Bitcoin o USDT son más eficientes.",
+  },
+];
+
+const jsonLd = [
+  webAppSchema({
+    name: "Calculadora de Comisiones Bitcoin y Redes",
+    description,
+    url: canonical,
+  }),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { name: "Inicio", item: "https://free-bitcoin.lat/" },
+    { name: "Calculadoras", item: "https://free-bitcoin.lat/calculadoras/" },
+    { name: "Calculadora Comisiones", item: canonical },
+  ]),
+];
+---
+
+<BaseLayout {title} {description} {canonical} {jsonLd}>
+  <div class="container">
+    <nav class="breadcrumb-nav" aria-label="Miga de pan">
+      <a href="/">Inicio</a> › <a href="/calculadoras/">Calculadoras</a> › <span>Comisiones</span>
+    </nav>
+
+    <p class="last-updated">Actualizado: febrero 2026</p>
+    <h1>Calculadora de Comisiones 2026</h1>
+
+    <p class="lead">
+      Una de las ventajas de Bitcoin es su costo de transferencia. Pero ¿cuánto pagas realmente
+      dependiendo de la red que elijas? Esta calculadora compara Bitcoin on-chain, Lightning
+      Network, USDT TRC-20, USDT ERC-20 y SWIFT para que elijas la opción más eficiente según
+      el monto y el corredor.
+    </p>
+
+    <section class="section" aria-labelledby="calc-heading">
+      <h2 id="calc-heading">Compara costos de transacción</h2>
+      <FeeCalculator />
+    </section>
+
+    <!-- Network explanations -->
+    <section class="section" aria-labelledby="networks-heading">
+      <h2 id="networks-heading">Características de cada red</h2>
+
+      <div class="grid-2 networks-grid">
+        <div class="card network-card">
+          <h3 class="network-title">
+            <span class="network-icon">₿</span> Bitcoin on-chain
+          </h3>
+          <ul class="network-details">
+            <li><strong>Tiempo:</strong> 10–60 minutos (1–6 confirmaciones)</li>
+            <li><strong>Comisión típica:</strong> $0.50–$50 USD según congestión</li>
+            <li><strong>Seguridad:</strong> Máxima (inmutable, descentralizado)</li>
+            <li><strong>Ideal para:</strong> Montos grandes, ahorro a largo plazo</li>
+          </ul>
+        </div>
+
+        <div class="card network-card">
+          <h3 class="network-title">
+            <span class="network-icon">⚡</span> Lightning Network
+          </h3>
+          <ul class="network-details">
+            <li><strong>Tiempo:</strong> &lt; 5 segundos</li>
+            <li><strong>Comisión típica:</strong> $0.001–$0.05 USD</li>
+            <li><strong>Seguridad:</strong> Alta (Bitcoin subyacente)</li>
+            <li><strong>Ideal para:</strong> Micropagos, remesas, pagos cotidianos</li>
+          </ul>
+        </div>
+
+        <div class="card network-card">
+          <h3 class="network-title">
+            <span class="network-icon">T</span> USDT TRC-20 (Tron)
+          </h3>
+          <ul class="network-details">
+            <li><strong>Tiempo:</strong> 1–3 minutos</li>
+            <li><strong>Comisión típica:</strong> $0.01–$1 USD (requiere TRX para fees)</li>
+            <li><strong>Seguridad:</strong> Media (red Tron más centralizada)</li>
+            <li><strong>Ideal para:</strong> Stablecoins en LatAm, P2P, exchanges</li>
+          </ul>
+        </div>
+
+        <div class="card network-card">
+          <h3 class="network-title">
+            <span class="network-icon">Ξ</span> USDT ERC-20 (Ethereum)
+          </h3>
+          <ul class="network-details">
+            <li><strong>Tiempo:</strong> 15 segundos – 5 minutos</li>
+            <li><strong>Comisión típica:</strong> $1–$30 USD (gas variable)</li>
+            <li><strong>Seguridad:</strong> Alta (red Ethereum)</li>
+            <li><strong>Ideal para:</strong> DeFi, exchanges grandes, montos grandes</li>
+          </ul>
+        </div>
+
+        <div class="card network-card">
+          <h3 class="network-title">
+            <span class="network-icon">🏦</span> SWIFT / Transferencia bancaria
+          </h3>
+          <ul class="network-details">
+            <li><strong>Tiempo:</strong> 1–5 días hábiles</li>
+            <li><strong>Comisión típica:</strong> $15–$45 USD + spread cambiario 1–4%</li>
+            <li><strong>Seguridad:</strong> Alta pero reversible (chargeback)</li>
+            <li><strong>Ideal para:</strong> Montos muy grandes entre bancos regulados</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Preguntas frecuentes sobre comisiones</h2>
+      <div class="faq" role="list">
+        {
+          faqs.map((item, i) => (
+            <div class="faq-item" role="listitem">
+              <button class="faq-question" aria-expanded="false" data-faq-trigger aria-controls={`fee-faq-${i}`}>
+                <span>{item.q}</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              <div class="faq-answer" id={`fee-faq-${i}`} role="region" aria-label={item.q} set:html={item.a} />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Las comisiones mostradas son estimaciones basadas en condiciones promedio de la red y pueden
+      variar significativamente. Siempre verifica las tarifas actuales antes de realizar una
+      transacción, especialmente en períodos de alta congestión.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    margin: var(--space-4) 0;
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    margin-bottom: var(--space-4);
+    color: var(--c-primary);
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-6);
+    max-width: 720px;
+  }
+
+  .section {
+    margin: var(--space-10) 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: var(--space-4) 0 var(--space-2);
+  }
+
+  .breadcrumb-nav a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--c-primary);
+  }
+
+  .networks-grid {
+    margin-top: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .network-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .network-title {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    color: var(--c-text);
+  }
+
+  .network-icon {
+    font-size: 1.3rem;
+  }
+
+  .network-details {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  .network-details li {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+  }
+
+  .network-details strong {
+    color: var(--c-text);
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((t) => t.replaceWith(t.cloneNode(true)));
+    document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest(".faq-item");
+        if (!item) return;
+        const isOpen = item.classList.contains("open");
+        const answer = document.getElementById(trigger.getAttribute("aria-controls") ?? "");
+        if (isOpen) {
+          item.classList.remove("open");
+          trigger.setAttribute("aria-expanded", "false");
+          if (answer) answer.style.display = "none";
+        } else {
+          item.classList.add("open");
+          trigger.setAttribute("aria-expanded", "true");
+          if (answer) answer.style.display = "block";
+        }
+      });
+    });
+  }
+  initFAQ();
+  document.addEventListener("astro:page-load", initFAQ);
+</script>

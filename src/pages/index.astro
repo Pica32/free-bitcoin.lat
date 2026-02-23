@@ -1,0 +1,184 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import LivePriceWidget from "@components/LivePriceWidget.astro";
+import { websiteSchema, organizationSchema, breadcrumbSchema } from "@lib/schema";
+
+const title = "Bitcoin en América Latina 2026 | Precio, Guías y Calculadoras";
+const description = "Precio Bitcoin hoy en MXN, BRL, ARS y 12 monedas latinoamericanas. Guías de compra, calculadoras y regulación cripto para 15 países de LatAm. 2026.";
+const canonical = "https://free-bitcoin.lat/";
+
+const jsonLd = [
+  websiteSchema(),
+  organizationSchema(),
+  breadcrumbSchema([{ name: "Inicio", item: "https://free-bitcoin.lat/" }]),
+];
+
+const countries = [
+  { slug: "mx", name: "México", flag: "🇲🇽", currency: "MXN", desc: "SPEI, OXXO, regulación Banxico" },
+  { slug: "br", name: "Brasil", flag: "🇧🇷", currency: "BRL", desc: "PIX, Lei 14.478, IRPF cripto" },
+  { slug: "ar", name: "Argentina", flag: "🇦🇷", currency: "ARS", desc: "Dólar cripto, PSAV CNV, ARCA" },
+  { slug: "ve", name: "Venezuela", flag: "🇻🇪", currency: "VES", desc: "P2P USDT, BCV, SUNACRIP" },
+  { slug: "co", name: "Colombia", flag: "🇨🇴", currency: "COP", desc: "SFC sandbox, Nequi, DIAN" },
+  { slug: "cl", name: "Chile", flag: "🇨🇱", currency: "CLP", desc: "Ley 21.521, CMF, SII" },
+  { slug: "pe", name: "Perú", flag: "🇵🇪", currency: "PEN", desc: "SBS AML, Yape, Plin" },
+  { slug: "sv", name: "El Salvador", flag: "🇸🇻", currency: "USD", desc: "Lightning, Chivo, Ley Bitcoin" },
+  { slug: "gt", name: "Guatemala", flag: "🇬🇹", currency: "GTQ", desc: "Alta adopción, remesas 19% PIB" },
+  { slug: "bo", name: "Bolivia", flag: "🇧🇴", currency: "BOB", desc: "Ban levantado 2024, +530% tx" },
+  { slug: "py", name: "Paraguay", flag: "🇵🇾", currency: "PYG", desc: "Hub minería, energía barata" },
+  { slug: "uy", name: "Uruguay", flag: "🇺🇾", currency: "UYU", desc: "Ley 20.345, BCU, marco claro" },
+  { slug: "ec", name: "Ecuador", flag: "🇪🇨", currency: "USD", desc: "Dolarizado, BCE sin marco" },
+  { slug: "pa", name: "Panamá", flag: "🇵🇦", currency: "USD", desc: "Ley 247 en debate, USD" },
+  { slug: "hn", name: "Honduras", flag: "🇭🇳", currency: "HNL", desc: "Remesas ~20% PIB, CNBS" },
+];
+
+const features = [
+  { icon: "📊", title: "Precio en tiempo real", desc: "BTC en las 15 monedas de América Latina, actualizado cada 5 minutos con fallback automático." },
+  { icon: "⚖️", title: "Regulación actualizada", desc: "Estado legal en cada país: leyes vigentes, cambios recientes y fuentes oficiales." },
+  { icon: "💸", title: "Calculadora de remesas", desc: "Compara costos Lightning vs USDT vs Western Union para 7 corredores principales." },
+  { icon: "📐", title: "Calculadora DCA", desc: "Simula tu inversión periódica y proyecta tu acumulación de Bitcoin." },
+  { icon: "🔒", title: "Guías de seguridad", desc: "Cómo evitar estafas P2P, comparativa de wallets hardware y buenas prácticas." },
+  { icon: "💬", title: "Foro por país", desc: "Comunidad anónima para compartir experiencias, preguntas y alertas de estafas." },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="hero-eyebrow">El recurso #1 de Bitcoin para LatAm</span>
+          <h1>Bitcoin en <span class="accent">América Latina</span> 2026</h1>
+          <p class="hero-sub">Precio en tiempo real, guías locales, calculadoras de remesas y regulación actualizada para 15 países latinoamericanos.</p>
+          <div class="hero-cta">
+            <a href="/calculadoras/" class="btn btn-primary">Calculadoras →</a>
+            <a href="/bitcoin/" class="btn btn-secondary">¿Qué es Bitcoin?</a>
+          </div>
+        </div>
+        <div class="hero-widget">
+          <LivePriceWidget currency="USD" currencySymbol="$" countryName="Internacional" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countries Grid -->
+  <section class="section" aria-labelledby="countries-heading">
+    <div class="container">
+      <h2 id="countries-heading">Elige tu país</h2>
+      <p class="section-sub">Información local: precio en tu moneda, regulación vigente, mejores exchanges y guías paso a paso.</p>
+      <div class="countries-grid">
+        {countries.map((c) => (
+          <a href={`/${c.slug}/`} class="country-card card card-hover">
+            <div class="country-flag">{c.flag}</div>
+            <div class="country-info">
+              <strong>{c.name}</strong>
+              <span class="country-currency">{c.currency}</span>
+              <p class="country-desc">{c.desc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section section-dark" aria-labelledby="features-heading">
+    <div class="container">
+      <h2 id="features-heading">¿Qué encontrarás aquí?</h2>
+      <div class="features-grid">
+        {features.map((f) => (
+          <div class="feature-card card">
+            <div class="feature-icon">{f.icon}</div>
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Remittances CTA -->
+  <section class="section" aria-labelledby="remittances-heading">
+    <div class="container">
+      <div class="cta-block highlight">
+        <div>
+          <h2 id="remittances-heading">¿Envías remesas a Latinoamérica?</h2>
+          <p>Bitcoin Lightning puede ser hasta 50 veces más barato que Western Union o una transferencia bancaria. Compara opciones para tu corredor.</p>
+        </div>
+        <div class="cta-links">
+          <a href="/remesas/us-mx/" class="btn btn-primary">EE.UU. → México</a>
+          <a href="/remesas/us-gt/" class="btn btn-secondary">EE.UU. → Guatemala</a>
+          <a href="/calculadoras/remesas/" class="btn btn-secondary">Todas las rutas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso:</strong> Esto no es asesoría financiera. La información en este sitio es solo con fines educativos e informativos. Bitcoin es un activo volátil; solo invierte lo que puedas permitirte perder. Última actualización: 2026-02-23.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-16) 0 var(--space-12);
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,107,0,0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+  }
+  .hero h1 { margin-bottom: var(--space-4); }
+  .accent { color: var(--c-primary); }
+  .hero-sub { color: var(--c-text-muted); font-size: 1.1rem; margin-bottom: var(--space-6); }
+  .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-8); max-width: 600px; }
+  .section-dark { background: var(--c-surface-1); }
+  .countries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+  .country-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    text-decoration: none;
+    color: var(--c-text);
+  }
+  .country-card:hover { text-decoration: none; }
+  .country-flag { font-size: 1.8rem; flex-shrink: 0; }
+  .country-info strong { display: block; font-family: var(--font-display); font-size: 0.95rem; }
+  .country-currency { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--c-primary); margin-bottom: var(--space-1); }
+  .country-desc { font-size: 0.78rem; color: var(--c-text-muted); margin: 0; line-height: 1.4; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6); }
+  .feature-icon { font-size: 2rem; margin-bottom: var(--space-3); }
+  .feature-card h3 { font-size: 1.05rem; margin-bottom: var(--space-2); }
+  .feature-card p { color: var(--c-text-muted); font-size: 0.9rem; margin: 0; }
+  .cta-block { display: flex; justify-content: space-between; align-items: center; gap: var(--space-8); flex-wrap: wrap; }
+  .cta-links { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .cta-block { flex-direction: column; align-items: flex-start; }
+  }
+</style>

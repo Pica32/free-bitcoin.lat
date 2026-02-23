@@ -1,0 +1,584 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import FAQ from "@components/FAQ.astro";
+import SourcesList from "@components/SourcesList.astro";
+import Breadcrumbs from "@components/Breadcrumbs.astro";
+
+const title = "Impuestos Bitcoin y Criptomonedas en México 2026 – Guía SAT | free-bitcoin.lat";
+const description = "Guía completa de impuestos por Bitcoin y criptomonedas en México 2026. Cómo declarar ante el SAT, tasas aplicables, obligaciones para personas físicas y morales.";
+const canonical = "https://free-bitcoin.lat/mx/impuestos-bitcoin/";
+
+const faqItems = [
+  {
+    q: "¿Tengo que declarar Bitcoin al SAT si solo compré y no vendí?",
+    a: "En principio, la obligación fiscal surge cuando realizas una enajenación (venta, intercambio, uso como pago). Simplemente mantener Bitcoin en tu wallet sin vender no genera un hecho imponible en ISR. Sin embargo, si usas un exchange ITF registrado, la plataforma puede reportar tus saldos al SAT. Se recomienda mantener registro completo de todas tus operaciones, incluso si no vendes, para poder justificar tu historial ante una posible revisión.",
+  },
+  {
+    q: "¿Cómo calculo la ganancia de Bitcoin para el SAT?",
+    a: "La ganancia se calcula como: <strong>Precio de venta − Costo de adquisición</strong>. El costo de adquisición es el precio que pagaste por el BTC (en MXN) más cualquier comisión de compra. El precio de venta es lo que recibiste (en MXN). Si compraste en distintas fechas y a distintos precios, el SAT acepta el método de costo promedio de adquisición. Ejemplo: compraste 0.1 BTC a $1,500,000 MXN = $150,000 de costo. Si los vendes a $200,000 MXN, la ganancia gravable es $50,000 MXN.",
+  },
+  {
+    q: "¿El SAT ya sabe que tengo Bitcoin?",
+    a: "Las ITF registradas ante la CNBV (como Bitso) están obligadas a reportar las operaciones de sus usuarios al SAT, incluyendo montos y frecuencias. Binance y otros exchanges internacionales también pueden compartir información bajo acuerdos fiscales internacionales (CRS, FATCA). En la práctica, el SAT tiene acceso a información de las plataformas reguladas. Por ello, lo más conveniente es declarar voluntariamente y mantener registros.",
+  },
+  {
+    q: "¿El IVA aplica a la compraventa de Bitcoin?",
+    a: "La SHCP ha señalado que la transmisión de activos virtuales entre particulares no causa IVA, ya que Bitcoin no es un bien tangible ni un servicio en el sentido convencional. Sin embargo, si una empresa presta servicios de intermediación o custodia de criptomonedas, esos servicios sí pueden estar sujetos a IVA del 16%. Para el usuario final que compra y vende BTC por su cuenta, el IVA generalmente no aplica.",
+  },
+  {
+    q: "¿Qué pasa si no declaro mis ganancias de Bitcoin al SAT?",
+    a: "Omitir ingresos gravables constituye una infracción fiscal. Las consecuencias pueden incluir: recargos e intereses sobre el impuesto omitido, multas del 55% al 75% del impuesto no declarado, y en casos graves, procedimientos penales por defraudación fiscal (artículo 108 del Código Fiscal de la Federación). El SAT tiene cinco años para ejercer sus facultades de comprobación (diez años en caso de omisión total). Regularizar tu situación de forma voluntaria siempre es más conveniente que esperar una auditoría.",
+  },
+];
+
+const sources = [
+  { label: "SAT – Criterios tributarios no vinculativos", url: "https://www.sat.gob.mx/normatividad/21320/criterios-no-vinculativos-de-las-disposiciones-fiscales-y-aduaneras" },
+  { label: "SHCP – Ley del ISR vigente", url: "https://www.sat.gob.mx/consultas/42024/lee-la-ley-del-impuesto-sobre-la-renta" },
+  { label: "DOF – Ley FinTech (LRITF)", url: "https://www.diputados.gob.mx/LeyesBiblio/pdf/LRITF_090323.pdf" },
+  { label: "SAT – Declaración anual personas físicas", url: "https://www.sat.gob.mx/personas/declaraciones/declaracion-anual" },
+  { label: "Código Fiscal de la Federación – Art. 108", url: "https://www.sat.gob.mx/consultas/42021/conoce-el-codigo-fiscal-de-la-federacion" },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Impuestos Bitcoin y Criptomonedas en México 2026 – Guía SAT",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    datePublished: "2026-02-23",
+    author: { "@type": "Organization", name: "free-bitcoin.lat" },
+    publisher: { "@type": "Organization", name: "free-bitcoin.lat", url: "https://free-bitcoin.lat" },
+    inLanguage: "es",
+    about: [
+      { "@type": "Thing", name: "Impuestos criptomonedas México" },
+      { "@type": "Thing", name: "Bitcoin ISR SAT" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a.replace(/<[^>]+>/g, "") },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "México", item: "https://free-bitcoin.lat/mx/" },
+      { "@type": "ListItem", position: 3, name: "Impuestos Bitcoin", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+
+  <div class="container">
+    <Breadcrumbs items={[
+      { label: "Inicio", href: "/" },
+      { label: "México", href: "/mx/" },
+      { label: "Impuestos Bitcoin" },
+    ]} />
+  </div>
+
+  <!-- Hero -->
+  <section class="tax-hero">
+    <div class="container">
+      <div class="tax-hero-inner">
+        <span class="hero-eyebrow">SAT · ISR · México 2026</span>
+        <h1>Impuestos por Bitcoin en México 2026: guía SAT</h1>
+        <p class="hero-sub">
+          En México, las ganancias por venta o intercambio de Bitcoin son gravables como ingresos por
+          actividades empresariales o como ganancias de capital para personas físicas. El SAT no ha
+          emitido regulación específica de criptomonedas, pero aplica las reglas generales del ISR
+          (Impuesto Sobre la Renta). La obligación de declarar aplica desde que obtienes una ganancia,
+          independientemente de que hayas retirado o no los fondos del exchange.
+        </p>
+        <p class="last-updated">Última actualización: 2026-02-23</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿Qué impuestos aplican? -->
+  <section class="section" aria-labelledby="impuestos-heading">
+    <div class="container">
+      <h2 id="impuestos-heading">¿Qué impuestos aplican al Bitcoin en México?</h2>
+      <p class="section-intro">
+        El tratamiento fiscal de Bitcoin en México se basa en interpretaciones de las leyes tributarias
+        existentes. No existe una ley específica de criptomonedas en materia fiscal, aunque la Ley FinTech
+        establece el marco regulatorio para las plataformas. A continuación, los impuestos relevantes:
+      </p>
+
+      <div class="tax-cards-grid">
+
+        <div class="tax-card card">
+          <div class="tax-card-header">
+            <span class="tax-badge badge badge-red">Aplica</span>
+            <h3>ISR – Impuesto Sobre la Renta</h3>
+          </div>
+          <p>
+            El ISR es el principal impuesto que afecta a las operaciones con Bitcoin. Aplica sobre la
+            <strong>ganancia neta</strong>: la diferencia entre el precio de venta y el costo de adquisición.
+            Para personas físicas, la tasa varía de forma progresiva según el nivel de ingresos totales
+            anuales (ver tabla abajo). Para personas morales, la tasa es del 30% flat sobre la ganancia.
+          </p>
+          <p>
+            La ganancia se realiza en el momento de la <strong>enajenación</strong>: cuando vendes BTC
+            por pesos, cuando intercambias BTC por otra criptomoneda, o cuando usas BTC para pagar
+            bienes o servicios. El simple hecho de mantener BTC sin vender no genera ISR.
+          </p>
+          <ul class="tax-list">
+            <li>Base gravable: precio de venta (MXN) menos costo de adquisición (MXN)</li>
+            <li>Se suma al total de ingresos del año para determinar la tasa aplicable</li>
+            <li>Pérdidas pueden deducirse de ganancias futuras (mismo año fiscal)</li>
+          </ul>
+        </div>
+
+        <div class="tax-card card">
+          <div class="tax-card-header">
+            <span class="tax-badge badge badge-green">No aplica</span>
+            <h3>IVA – Impuesto al Valor Agregado</h3>
+          </div>
+          <p>
+            La Secretaría de Hacienda y Crédito Público (SHCP) ha interpretado que la <strong>transmisión
+            de activos virtuales entre particulares no causa IVA</strong>. Esta postura deriva de que Bitcoin
+            no encaja en ninguna de las categorías de actos gravados por la Ley del IVA (enajenación de
+            bienes, prestación de servicios, uso o goce temporal de bienes, importación).
+          </p>
+          <p>
+            Sin embargo, si eres persona moral que presta servicios de intermediación o custodia de
+            criptomonedas (como una ITF), esos servicios sí están sujetos al IVA del 16%. El usuario
+            final que compra y vende BTC por cuenta propia no genera IVA.
+          </p>
+        </div>
+
+        <div class="tax-card card">
+          <div class="tax-card-header">
+            <span class="tax-badge badge badge-green">No aplica</span>
+            <h3>IEPS – Impuesto Especial sobre Producción y Servicios</h3>
+          </div>
+          <p>
+            El IEPS aplica a bienes específicos como gasolina, alcohol y tabaco. Las criptomonedas no
+            están incluidas en ninguna categoría gravada por el IEPS. No existe ninguna disposición que
+            extienda este impuesto a las operaciones con Bitcoin o activos virtuales en México.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tasas ISR personas físicas -->
+  <section class="section section-dark" aria-labelledby="tasas-heading">
+    <div class="container">
+      <h2 id="tasas-heading">Tasas ISR para personas físicas 2026</h2>
+      <p class="section-sub">
+        El ISR para personas físicas en México es progresivo: a mayores ingresos anuales, mayor es la
+        tasa marginal. Los ingresos por ganancias en Bitcoin se suman al resto de ingresos del año para
+        calcular la tasa aplicable según la tabla del artículo 152 de la LISR.
+      </p>
+
+      <div class="table-wrap">
+        <table aria-label="Tabla ISR personas físicas México 2026">
+          <caption>Tabla del artículo 152 LISR – Tarifas ISR personas físicas (referencia 2025, sujeta a actualización anual)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Límite inferior (MXN)</th>
+              <th scope="col">Límite superior (MXN)</th>
+              <th scope="col">Cuota fija</th>
+              <th scope="col">Tasa marginal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">$0.01</td>
+              <td class="mono">$8,952.49</td>
+              <td class="mono">$0.00</td>
+              <td class="mono highlight-rate">1.92%</td>
+            </tr>
+            <tr>
+              <td class="mono">$8,952.50</td>
+              <td class="mono">$75,984.55</td>
+              <td class="mono">$171.88</td>
+              <td class="mono highlight-rate">6.40%</td>
+            </tr>
+            <tr>
+              <td class="mono">$75,984.56</td>
+              <td class="mono">$133,536.07</td>
+              <td class="mono">$4,461.94</td>
+              <td class="mono highlight-rate">10.88%</td>
+            </tr>
+            <tr>
+              <td class="mono">$133,536.08</td>
+              <td class="mono">$155,229.80</td>
+              <td class="mono">$10,723.55</td>
+              <td class="mono highlight-rate">16.00%</td>
+            </tr>
+            <tr>
+              <td class="mono">$155,229.81</td>
+              <td class="mono">$185,852.57</td>
+              <td class="mono">$14,194.54</td>
+              <td class="mono highlight-rate">17.92%</td>
+            </tr>
+            <tr>
+              <td class="mono">$185,852.58</td>
+              <td class="mono">$374,837.88</td>
+              <td class="mono">$19,682.13</td>
+              <td class="mono highlight-rate">21.36%</td>
+            </tr>
+            <tr>
+              <td class="mono">$374,837.89</td>
+              <td class="mono">$590,795.99</td>
+              <td class="mono">$60,049.40</td>
+              <td class="mono highlight-rate">23.52%</td>
+            </tr>
+            <tr>
+              <td class="mono">$590,796.00</td>
+              <td class="mono">$1,127,926.84</td>
+              <td class="mono">$110,842.74</td>
+              <td class="mono highlight-rate">30.00%</td>
+            </tr>
+            <tr>
+              <td class="mono">$1,127,926.85</td>
+              <td class="mono">$1,503,902.46</td>
+              <td class="mono">$271,981.99</td>
+              <td class="mono highlight-rate">32.00%</td>
+            </tr>
+            <tr>
+              <td class="mono">$1,503,902.47</td>
+              <td class="mono">$4,511,707.37</td>
+              <td class="mono">$392,294.17</td>
+              <td class="mono highlight-rate">34.00%</td>
+            </tr>
+            <tr class="rate-top">
+              <td class="mono">$4,511,707.38</td>
+              <td class="mono">En adelante</td>
+              <td class="mono">$1,417,491.57</td>
+              <td class="mono highlight-rate">35.00%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tax-example card">
+        <h3>Ejemplo práctico de cálculo de ISR</h3>
+        <p>
+          Supongamos que en 2025 obtuviste <strong>$200,000 MXN de ganancia en Bitcoin</strong> y tus
+          demás ingresos anuales (salario, etc.) suman $300,000 MXN. Total de ingresos: $500,000 MXN.
+        </p>
+        <p>
+          Según la tabla, $500,000 MXN cae en el rango de $374,837.89 a $590,795.99 con tasa marginal
+          del 23.52%. El ISR se calcula sobre el excedente del límite inferior más la cuota fija.
+          El resultado neto aproximado del ISR sobre la parte de ganancia cripto sería de entre
+          $35,000 y $50,000 MXN dependiendo de deducciones personales aplicables.
+        </p>
+        <p>
+          Se recomienda usar el simulador oficial del SAT o consultar a un contador público para el
+          cálculo exacto, ya que entran en juego deducciones personales autorizadas (gastos médicos,
+          colegiaturas, donativos, entre otros).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Obligaciones del declarante -->
+  <section class="section" aria-labelledby="obligaciones-heading">
+    <div class="container">
+      <h2 id="obligaciones-heading">Obligaciones anuales del declarante de criptomonedas</h2>
+      <p>
+        Si obtuviste ganancias con Bitcoin u otras criptomonedas en México, tienes las siguientes
+        obligaciones fiscales durante el año y al momento de presentar tu Declaración Anual:
+      </p>
+
+      <div class="obligations-list">
+
+        <div class="obligation-item">
+          <div class="obligation-icon" aria-hidden="true">1</div>
+          <div class="obligation-content">
+            <h3>Llevar registro detallado de cada operación</h3>
+            <p>
+              Debes documentar cada compra y venta de Bitcoin con los siguientes datos: fecha de la
+              operación, cantidad de BTC comprada o vendida, precio en MXN al momento de la operación,
+              nombre de la plataforma o contraparte, y comisión pagada. Los estados de cuenta del
+              exchange son aceptados como comprobante, pero también puedes exportar historial en CSV.
+            </p>
+            <p>
+              Para operaciones de intercambio cripto-a-cripto (por ejemplo, BTC a ETH), el evento
+              imponible ocurre en el momento del intercambio. Debes registrar el valor en MXN de cada
+              criptomoneda al momento del canje.
+            </p>
+          </div>
+        </div>
+
+        <div class="obligation-item">
+          <div class="obligation-icon" aria-hidden="true">2</div>
+          <div class="obligation-content">
+            <h3>Incluir ganancias en la Declaración Anual (abril)</h3>
+            <p>
+              La Declaración Anual para personas físicas se presenta en el mes de <strong>abril del año
+              siguiente</strong> al ejercicio fiscal. Las ganancias por criptomonedas deben incluirse
+              como "Otros ingresos" o bajo el régimen de actividades empresariales según tu situación.
+              El SAT proporciona una plataforma en línea (Mi Declaración Anual) que puede pre-cargar
+              información reportada por los exchanges ITF registrados.
+            </p>
+          </div>
+        </div>
+
+        <div class="obligation-item">
+          <div class="obligation-icon" aria-hidden="true">3</div>
+          <div class="obligation-content">
+            <h3>Pagos provisionales si eres actividad empresarial</h3>
+            <p>
+              Si el SAT te clasifica como persona física con actividad empresarial (por el volumen o
+              frecuencia de tus operaciones), deberás realizar <strong>pagos provisionales mensuales de
+              ISR</strong> antes del 17 de cada mes sobre los ingresos del mes anterior. Un contador
+              puede ayudarte a determinar si tu perfil de operaciones te obliga a este régimen.
+            </p>
+          </div>
+        </div>
+
+        <div class="obligation-item">
+          <div class="obligation-icon" aria-hidden="true">4</div>
+          <div class="obligation-content">
+            <h3>Reportes automáticos de las ITF al SAT</h3>
+            <p>
+              Los exchanges registrados como ITF ante la CNBV (como Bitso) están legalmente obligados
+              a reportar al SAT las operaciones de sus usuarios que superen ciertos umbrales. Esto
+              significa que el SAT puede comparar la información que reporta el exchange con la que tú
+              declaras. Una discrepancia puede generar una notificación de "discrepancia fiscal" o una
+              revisión. Es fundamental que la información que declares coincida con los registros del exchange.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Consecuencias de no declarar -->
+  <section class="section section-dark" aria-labelledby="consecuencias-heading">
+    <div class="container">
+      <h2 id="consecuencias-heading">¿Qué pasa si no declaro Bitcoin al SAT?</h2>
+
+      <div class="consequences-grid">
+        <div class="consequence-card card">
+          <div class="consequence-icon" aria-hidden="true">&#9888;</div>
+          <h3>Multas y recargos</h3>
+          <p>
+            Omitir ingresos gravables genera multas del <strong>55% al 75% del impuesto omitido</strong>,
+            más recargos del 1.13% mensual sobre el impuesto no pagado (tasa actualizada 2025).
+            La multa puede reducirse si el contribuyente regulariza su situación de forma espontánea,
+            antes de que el SAT inicie una revisión.
+          </p>
+        </div>
+        <div class="consequence-card card">
+          <div class="consequence-icon" aria-hidden="true">&#9201;</div>
+          <h3>Plazo de prescripción</h3>
+          <p>
+            El SAT tiene <strong>5 años</strong> para ejercer facultades de comprobación sobre un ejercicio
+            fiscal (artículo 67 del Código Fiscal de la Federación). Este plazo se extiende a
+            <strong>10 años</strong> cuando no presentaste declaración, no llevas contabilidad o declaraste
+            pérdidas. Las operaciones cripto de 2021 pueden ser revisadas hasta 2026 o 2031.
+          </p>
+        </div>
+        <div class="consequence-card card">
+          <div class="consequence-icon" aria-hidden="true">&#9878;</div>
+          <h3>Defraudación fiscal</h3>
+          <p>
+            En casos de omisión deliberada de ingresos superiores a $1,932,080 MXN, el artículo 108 del
+            Código Fiscal de la Federación tipifica la defraudación fiscal como delito, con penas de
+            <strong>3 meses a 9 años de prisión</strong>. Para montos menores, las sanciones son
+            administrativas. La regularización voluntaria evita consecuencias penales.
+          </p>
+        </div>
+        <div class="consequence-card card">
+          <div class="consequence-icon" aria-hidden="true">&#10004;</div>
+          <h3>Regularización espontánea</h3>
+          <p>
+            Si no has declarado ganancias de cripto en años anteriores, puedes presentar declaraciones
+            complementarias o extemporáneas. Al hacerlo de forma espontánea —antes de cualquier
+            requerimiento del SAT— las multas se reducen significativamente (hasta un 80% en algunos casos).
+            Consulta con un contador para determinar el monto a regularizar y los beneficios aplicables.
+          </p>
+        </div>
+      </div>
+
+      <div class="highlight" style="margin-top: var(--space-8)">
+        <strong>Recomendación:</strong> Guarda todos los comprobantes de tus operaciones cripto
+        (historial de exchange, CFDI de compra si aplica, estado de cuenta bancario de los depósitos
+        SPEI). Estos documentos son tu principal defensa ante cualquier revisión del SAT.
+        Considera contratar a un contador con experiencia en activos digitales para tu declaración anual.
+      </div>
+    </div>
+  </section>
+
+  <!-- Escenarios comunes -->
+  <section class="section" aria-labelledby="escenarios-heading">
+    <div class="container">
+      <h2 id="escenarios-heading">Escenarios fiscales comunes con Bitcoin en México</h2>
+
+      <div class="scenarios-list">
+
+        <div class="scenario card">
+          <h3>Escenario 1: Compré BTC y lo sigo guardando (HODL)</h3>
+          <p>
+            No hay hecho imponible. Mantener Bitcoin sin vender no genera ISR. No tienes obligación
+            de declarar nada hasta que realices una venta o intercambio. Sin embargo, es recomendable
+            llevar registro del precio de adquisición para facilitar el cálculo futuro cuando sí vendas.
+          </p>
+          <p class="scenario-result"><strong>Resultado fiscal:</strong> Sin obligación inmediata.</p>
+        </div>
+
+        <div class="scenario card">
+          <h3>Escenario 2: Vendí BTC y obtuve ganancia</h3>
+          <p>
+            Debes incluir la ganancia (precio de venta menos costo de adquisición) en tu Declaración Anual
+            de abril del año siguiente. Si tu ingreso total anual supera el tramo exento (salario mínimo
+            anual × 365), pagas ISR según la tarifa progresiva del artículo 152 LISR.
+          </p>
+          <p class="scenario-result"><strong>Resultado fiscal:</strong> ISR sobre la ganancia neta.</p>
+        </div>
+
+        <div class="scenario card">
+          <h3>Escenario 3: Vendí BTC con pérdida</h3>
+          <p>
+            Las pérdidas de capital por enajenación de activos pueden deducirse de otras ganancias de capital
+            en el mismo ejercicio fiscal. Si las pérdidas superan las ganancias, el saldo puede aplicarse
+            en los siguientes cinco ejercicios fiscales. Esto hace relevante llevar registro de compras incluso
+            cuando el resultado neto es negativo.
+          </p>
+          <p class="scenario-result"><strong>Resultado fiscal:</strong> Deducción de pérdida (aplica restricciones).</p>
+        </div>
+
+        <div class="scenario card">
+          <h3>Escenario 4: Recibí Bitcoin como pago por servicios</h3>
+          <p>
+            Si recibiste BTC como contraprestación por un servicio profesional, el ingreso se valúa en MXN
+            al precio de mercado del día de recepción. Este monto se considera ingreso por honorarios y
+            debes incluirlo en tus ingresos del período, además de emitir CFDI si eres persona física con
+            actividad profesional.
+          </p>
+          <p class="scenario-result"><strong>Resultado fiscal:</strong> ISR sobre el valor en MXN al momento de recepción.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <div class="container">
+    <FAQ items={faqItems} title="Preguntas frecuentes: impuestos cripto en México" />
+  </div>
+
+  <!-- Sources -->
+  <div class="container">
+    <SourcesList sources={sources} title="Fuentes oficiales y normativas" />
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="container">
+    <p class="disclaimer">
+      <strong>Aviso legal importante:</strong> Este contenido es solo informativo y de carácter general.
+      No constituye asesoría fiscal, legal ni contable. La situación fiscal de cada contribuyente es
+      única. Consulta a un contador público certificado o abogado fiscal con experiencia en activos
+      digitales para obtener orientación personalizada sobre tu caso específico. La regulación fiscal
+      puede cambiar. Última verificación de contenido: 2026-02-23.
+    </p>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .tax-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-surface-1) 100%);
+    border-bottom: 1px solid var(--c-border);
+    padding: var(--space-12) 0;
+  }
+  .tax-hero-inner { max-width: 800px; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    margin-bottom: var(--space-4);
+    display: block;
+  }
+  .tax-hero-inner h1 { margin-bottom: var(--space-4); }
+  .hero-sub { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-4); }
+  .last-updated { font-size: 0.8rem; color: var(--c-text-muted); }
+  .section-sub { color: var(--c-text-muted); margin-bottom: var(--space-6); }
+  .section-intro { color: var(--c-text-muted); line-height: 1.75; margin-bottom: var(--space-8); max-width: 760px; }
+  .section-dark { background: var(--c-surface-1); }
+  /* Tax cards */
+  .tax-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+  .tax-card { display: flex; flex-direction: column; gap: var(--space-4); }
+  .tax-card-header { display: flex; flex-direction: column; gap: var(--space-2); }
+  .tax-card-header h3 { font-size: 1rem; margin: 0; }
+  .tax-badge { align-self: flex-start; }
+  .tax-card p { color: var(--c-text-muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+  .tax-list { padding-left: 1.25rem; display: flex; flex-direction: column; gap: var(--space-1); font-size: 0.85rem; color: var(--c-text-muted); }
+  /* ISR table */
+  table caption { font-size: 0.82rem; color: var(--c-text-muted); font-style: italic; text-align: left; margin-bottom: var(--space-3); caption-side: top; }
+  .highlight-rate { color: var(--c-primary); font-weight: 600; }
+  .rate-top { background: rgba(255, 107, 0, 0.06); }
+  .tax-example { padding: var(--space-6); margin-top: var(--space-8); display: flex; flex-direction: column; gap: var(--space-3); }
+  .tax-example h3 { font-size: 1rem; margin: 0; }
+  .tax-example p { color: var(--c-text-muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+  /* Obligations */
+  .obligations-list { display: flex; flex-direction: column; gap: var(--space-6); margin-top: var(--space-6); }
+  .obligation-item { display: flex; gap: var(--space-5); align-items: flex-start; }
+  .obligation-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 107, 0, 0.12);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    color: var(--c-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .obligation-content { flex: 1; }
+  .obligation-content h3 { font-size: 1rem; margin-bottom: var(--space-3); }
+  .obligation-content p { color: var(--c-text-muted); line-height: 1.7; font-size: 0.9rem; margin-bottom: var(--space-3); }
+  .obligation-content p:last-child { margin-bottom: 0; }
+  /* Consequences */
+  .consequences-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-5);
+  }
+  .consequence-card { display: flex; flex-direction: column; gap: var(--space-3); }
+  .consequence-icon { font-size: 1.5rem; }
+  .consequence-card h3 { font-size: 0.95rem; margin: 0; }
+  .consequence-card p { color: var(--c-text-muted); font-size: 0.875rem; line-height: 1.7; margin: 0; }
+  /* Scenarios */
+  .scenarios-list { display: flex; flex-direction: column; gap: var(--space-5); margin-top: var(--space-4); }
+  .scenario { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+  .scenario h3 { font-size: 1rem; margin: 0; }
+  .scenario p { color: var(--c-text-muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+  .scenario-result { color: var(--c-text) !important; font-size: 0.875rem !important; }
+  @media (max-width: 768px) {
+    .obligation-item { flex-direction: column; gap: var(--space-3); }
+  }
+</style>

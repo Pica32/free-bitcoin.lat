@@ -1,0 +1,691 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const title = "Bitcoin no Brasil 2026: Preço, Exchanges e Regulação | free-bitcoin.lat";
+const description = "Tudo sobre Bitcoin no Brasil em 2026: preço BTC/BRL em tempo real, regulação Banco Central, melhores corretoras, imposto de renda cripto e como comprar com PIX.";
+const canonical = "https://free-bitcoin.lat/br/";
+
+const faqItems = [
+  {
+    q: "Bitcoin é legal no Brasil?",
+    a: "Sim, Bitcoin é regulamentado no Brasil. A Lei 14.478/2022 criou o marco legal para criptoativos, e o Banco Central do Brasil supervisiona as exchanges e prestadores de serviços de ativos virtuais (PSAVs) desde 2023.",
+  },
+  {
+    q: "Quanto vale 1 Bitcoin em reais hoje?",
+    a: "O preço do Bitcoin em reais varia a cada segundo. Consulte o widget no topo desta página para o preço BTC/BRL em tempo real, ou acesse nossa página dedicada em /br/preco-bitcoin-brl/ com conversor e histórico completo.",
+  },
+  {
+    q: "Preciso declarar Bitcoin no Imposto de Renda?",
+    a: "Sim. A Instrução Normativa RFB 2.291/2025 (DeCripto) tornou obrigatória a declaração de criptoativos na Receita Federal. Mesmo que não haja lucro, quem possui criptoativos acima de R$ 5.000 deve declarar na ficha 'Bens e Direitos', código 89.",
+  },
+  {
+    q: "Posso comprar Bitcoin com PIX no Brasil?",
+    a: "Sim. Binance, Bybit, Mercado Bitcoin e outras corretoras aceitam depósitos via PIX instantaneamente, 24 horas por dia, 7 dias por semana. O PIX é o método mais rápido e sem taxas para depositar reais em uma exchange.",
+  },
+  {
+    q: "Qual a melhor exchange para comprar Bitcoin no Brasil?",
+    a: "Depende do seu perfil. A Binance oferece maior liquidez global e aceita PIX; o Mercado Bitcoin é 100% brasileira e regulamentada pelo BCB; a Bybit tem boas taxas para traders avançados. Recomendamos comparar taxas e verificar o registro no Banco Central antes de escolher.",
+  },
+  {
+    q: "Bitcoin tem garantia do FGC no Brasil?",
+    a: "Não. Criptoativos não contam com a proteção do Fundo Garantidor de Créditos (FGC), que cobre apenas depósitos em instituições financeiras tradicionais. Em caso de falência de uma exchange, você pode perder seu saldo. Por isso recomendamos transferir Bitcoin para uma carteira própria (cold wallet).",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Bitcoin no Brasil 2026: guia completo",
+    description: description,
+    url: canonical,
+    dateModified: "2026-02-23",
+    inLanguage: "pt-BR",
+    publisher: {
+      "@type": "Organization",
+      name: "free-bitcoin.lat",
+      url: "https://free-bitcoin.lat",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: "https://free-bitcoin.lat/" },
+      { "@type": "ListItem", position: 2, name: "Brasil", item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <div class="container">
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Navegação estrutural">
+      <ol role="list">
+        <li><a href="/">Início</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">Brasil</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-hero">
+      <div class="hero-badges">
+        <span class="badge badge-green">Regulamentado ✓</span>
+        <span class="badge badge-orange">Atualizado 2026</span>
+      </div>
+      <h1>Bitcoin no Brasil 2026: guia completo</h1>
+      <p class="hero-lead">
+        O Brasil é o maior mercado de criptoativos da América Latina. A Lei 14.478/2022 criou o marco legal e o Banco Central emitiu regulamentação em 2025. A Receita Federal exige declaração anual de criptoativos. Em 2024, o volume negociado em exchanges brasileiras superou R$ 50 bilhões.
+      </p>
+    </header>
+
+    <!-- Live Price Widget -->
+    <section class="card price-card" aria-labelledby="preco-titulo">
+      <h2 id="preco-titulo" class="price-card-title">Preço BTC/BRL em tempo real</h2>
+      <div class="price-display" id="btc-brl-display">
+        <span class="price mono" id="btc-brl-price">Carregando...</span>
+        <span class="price-change" id="btc-brl-change"></span>
+      </div>
+      <p class="price-caption">
+        Fonte: CoinGecko &mdash; atualizado a cada 60 segundos &mdash;
+        <a href="/br/preco-bitcoin-brl/">Ver histórico e conversor BTC/BRL &rarr;</a>
+      </p>
+    </section>
+
+    <!-- Regulatory Status Badge -->
+    <div class="reg-status-bar">
+      <span class="reg-badge-green">Marco regulatório aprovado ✓</span>
+      <span class="reg-detail">Lei 14.478/2022 &nbsp;|&nbsp; Banco Central do Brasil</span>
+    </div>
+
+    <!-- Section: Situação regulatória -->
+    <section class="content-section" aria-labelledby="sec-regulacao">
+      <h2 id="sec-regulacao">Situação regulatória do Bitcoin no Brasil em 2026</h2>
+      <p>
+        O Brasil possui um dos marcos regulatórios de criptoativos mais avançados da América Latina. A legislação federal estabelece regras claras tanto para usuários quanto para as empresas que operam no setor.
+      </p>
+
+      <div class="reg-grid">
+        <div class="card reg-card">
+          <h3>Lei 14.478/2022 — Marco Legal dos Criptoativos</h3>
+          <p>
+            Sancionada em dezembro de 2022, a Lei 14.478 é o marco legal dos criptoativos no Brasil. Ela define "ativos virtuais" como representações digitais de valor, estabelece que os prestadores de serviços de ativos virtuais (PSAVs) devem se registrar junto ao Banco Central do Brasil (BCB), e determina penalidades para crimes envolvendo criptoativos — como pirâmides financeiras e lavagem de dinheiro via cripto.
+          </p>
+          <p>
+            Bitcoin não é considerado moeda legal (curso forçado) no Brasil, mas é plenamente regulamentado como ativo virtual. Pessoas físicas e jurídicas podem comprar, vender, guardar e transferir Bitcoin livremente.
+          </p>
+        </div>
+
+        <div class="card reg-card">
+          <h3>Resolução BCB 520/2025 — Requisitos para PSAVs</h3>
+          <p>
+            A Resolução 520/2025 do Banco Central detalha os requisitos operacionais, de capital mínimo, de governança e de prevenção à lavagem de dinheiro (PLD/CFT) que as exchanges e demais prestadores de serviços de ativos virtuais devem cumprir para operar legalmente no Brasil. Exchanges não autorizadas pelo BCB não podem captar clientes no país.
+          </p>
+        </div>
+
+        <div class="card reg-card">
+          <h3>IN RFB 2.291/2025 (DeCripto) — Receita Federal</h3>
+          <p>
+            A Instrução Normativa RFB 2.291/2025 criou o sistema DeCripto, pelo qual exchanges com clientes brasileiros são obrigadas a reportar todas as operações à Receita Federal. Isso inclui compras, vendas, transferências e qualquer operação acima de R$ 30.000. O contribuinte também tem a obrigação de declarar seus criptoativos anualmente no IRPF.
+          </p>
+        </div>
+      </div>
+
+      <p class="last-updated">Última atualização: 2026-02-23</p>
+    </section>
+
+    <!-- Section: Melhores exchanges -->
+    <section class="content-section" aria-labelledby="sec-exchanges">
+      <h2 id="sec-exchanges">Melhores exchanges para comprar Bitcoin no Brasil</h2>
+      <p>
+        Ao escolher uma exchange para operar no Brasil, verifique se ela possui registro ou autorização do Banco Central, aceita PIX para depósitos em reais, e oferece suporte em português.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Exchange</th>
+              <th>Taxa maker/taker</th>
+              <th>Métodos de pagamento</th>
+              <th>KYC</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Binance</strong></td>
+              <td class="mono">0,10% / 0,10%</td>
+              <td>PIX, TED, cartão</td>
+              <td>CPF + selfie</td>
+              <td>
+                <a
+                  href="https://accounts.binance.com/register?ref=346436875"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Abrir conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Bybit</strong></td>
+              <td class="mono">0,10% / 0,10%</td>
+              <td>PIX, P2P</td>
+              <td>CPF + documento</td>
+              <td>
+                <a
+                  href="https://www.bybit.com/en/invite/?ref=NX1PKE"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Abrir conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Kraken</strong></td>
+              <td class="mono">0,16% / 0,26%</td>
+              <td>TED, cartão, cripto</td>
+              <td>CPF + documento</td>
+              <td>
+                <a
+                  href="https://invite.kraken.com/JDNW/aywgmsis"
+                  class="btn btn-primary btn-sm"
+                  rel="noopener sponsored"
+                  target="_blank"
+                >
+                  Abrir conta
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Mercado Bitcoin</strong></td>
+              <td class="mono">0,30% / 0,70%</td>
+              <td>PIX, TED, boleto</td>
+              <td>CPF + selfie</td>
+              <td>
+                <a
+                  href="https://www.mercadobitcoin.com.br/"
+                  class="btn btn-secondary btn-sm"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Ver exchange
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="affiliate-disclosure">
+        Links marcados com "Abrir conta" são links de afiliado. Se você se cadastrar por meio deles, recebemos uma pequena comissão sem custo extra para você. Isso nos ajuda a manter o site gratuito.
+      </p>
+    </section>
+
+    <!-- Section: Como comprar com PIX -->
+    <section class="content-section" aria-labelledby="sec-pix">
+      <h2 id="sec-pix">Como comprar Bitcoin com PIX no Brasil</h2>
+      <p>
+        O PIX é o método mais rápido e prático para comprar Bitcoin no Brasil. Transferências chegam instantaneamente, 24 horas por dia, sem custo para o usuário e sem o prazo de 1 a 3 dias úteis do TED. Binance, Bybit e Mercado Bitcoin aceitam depósitos em BRL via PIX.
+      </p>
+      <a href="/br/como-comprar-bitcoin/" class="btn btn-primary">
+        Guia completo: como comprar Bitcoin com PIX &rarr;
+      </a>
+    </section>
+
+    <!-- Section: Imposto de Renda -->
+    <section class="content-section" aria-labelledby="sec-ir">
+      <h2 id="sec-ir">Imposto de Renda sobre Bitcoin no Brasil</h2>
+      <p>
+        Ganhos de capital com Bitcoin são tributados pela Receita Federal. A alíquota começa em 15% sobre ganhos acima de R$ 35.000 no mês (por tipo de ativo). Abaixo desse limite, a operação é isenta. Além dos ganhos, todos os criptoativos devem ser declarados na ficha "Bens e Direitos" do IRPF anual.
+      </p>
+      <a href="/br/impostos-bitcoin/" class="btn btn-primary">
+        Guia completo: Imposto de Renda sobre Bitcoin &rarr;
+      </a>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq content-section" aria-labelledby="faq-titulo">
+      <h2 id="faq-titulo">Perguntas frequentes sobre Bitcoin no Brasil</h2>
+      <div class="faq-list">
+        {faqItems.map((item) => (
+          <details class="faq-item card">
+            <summary class="faq-question">{item.q}</summary>
+            <p class="faq-answer">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="sources content-section" aria-labelledby="fontes-titulo">
+      <h2 id="fontes-titulo">Fontes e referências</h2>
+      <ul class="sources-list">
+        <li><a href="https://www.bcb.gov.br" rel="noopener noreferrer" target="_blank">Banco Central do Brasil — bcb.gov.br</a></li>
+        <li><a href="https://www.gov.br/receitafederal" rel="noopener noreferrer" target="_blank">Receita Federal do Brasil — gov.br/receitafederal</a></li>
+        <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14478.htm" rel="noopener noreferrer" target="_blank">Lei 14.478/2022 — Planalto</a></li>
+        <li><a href="https://www.gov.br/cvm" rel="noopener noreferrer" target="_blank">Comissão de Valores Mobiliários (CVM) — gov.br/cvm</a></li>
+      </ul>
+    </section>
+
+    <!-- Forum Link -->
+    <div class="forum-cta card">
+      <p>
+        Tem dúvidas sobre Bitcoin no Brasil? Participe do
+        <a href="/foro/?category=br"><strong>Fórum Brasil</strong></a>
+        e troque experiências com outros brasileiros.
+      </p>
+    </div>
+
+    <p class="disclaimer">
+      <strong>Aviso:</strong> Este conteúdo é apenas educacional e não constitui assessoria financeira ou jurídica. Bitcoin é um ativo volátil; invista apenas o que você pode perder. Consulte um contador para obrigações fiscais individuais.
+    </p>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-8) 0 var(--space-6);
+    max-width: 860px;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .badge-orange {
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--c-primary);
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-lead {
+    font-size: 1.1rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    max-width: 740px;
+  }
+
+  /* Price Card */
+  .price-card {
+    margin: var(--space-6) 0;
+    padding: var(--space-6) var(--space-8);
+    border-left: 3px solid var(--c-primary);
+  }
+
+  .price-card-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-3);
+  }
+
+  #btc-brl-price {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  #btc-brl-change {
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  .change-up { color: #22c55e; }
+  .change-down { color: #ef4444; }
+
+  .price-caption {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  /* Regulatory status bar */
+  .reg-status-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    background: rgba(34, 197, 94, 0.06);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-5);
+    margin: var(--space-4) 0 var(--space-8);
+  }
+
+  .reg-badge-green {
+    font-weight: 700;
+    color: #22c55e;
+    font-size: 0.9rem;
+  }
+
+  .reg-detail {
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+  }
+
+  /* Content sections */
+  .content-section {
+    margin: var(--space-12) 0;
+  }
+
+  .content-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--c-border);
+    padding-bottom: var(--space-3);
+  }
+
+  .content-section p {
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+
+  /* Reg grid */
+  .reg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .reg-card {
+    padding: var(--space-6);
+  }
+
+  .reg-card h3 {
+    font-size: 0.95rem;
+    color: var(--c-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .reg-card p {
+    font-size: 0.88rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .last-updated {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin-top: var(--space-6);
+    font-style: italic;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: var(--space-6) 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-surface-1);
+    color: var(--c-text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-text);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .btn-sm {
+    padding: 0.35em 0.9em;
+    font-size: 0.82rem;
+  }
+
+  /* Affiliate disclosure */
+  .affiliate-disclosure {
+    font-size: 0.78rem;
+    color: var(--c-text-muted);
+    background: rgba(255, 107, 0, 0.04);
+    border: 1px solid rgba(255, 107, 0, 0.15);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .faq-item {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .faq-question {
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: "+";
+    color: var(--c-primary);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  details[open] .faq-question::after {
+    content: "−";
+  }
+
+  .faq-answer {
+    margin-top: var(--space-3);
+    font-size: 0.88rem;
+    color: var(--c-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* Sources */
+  .sources-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .sources-list li::before {
+    content: "→ ";
+    color: var(--c-primary);
+  }
+
+  .sources-list a {
+    color: var(--c-text-muted);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .sources-list a:hover {
+    color: var(--c-primary);
+  }
+
+  /* Forum CTA */
+  .forum-cta {
+    padding: var(--space-5) var(--space-6);
+    margin: var(--space-8) 0 var(--space-4);
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--c-text-muted);
+  }
+
+  .forum-cta a {
+    color: var(--c-primary);
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    padding: var(--space-6) 0 var(--space-2);
+  }
+
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--c-text-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs a {
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--c-primary);
+  }
+
+  @media (max-width: 640px) {
+    .price-card {
+      padding: var(--space-4) var(--space-5);
+    }
+    .reg-status-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+  }
+</style>
+
+<script>
+  // BTC/BRL Live Price — CoinGecko with localStorage cache (60s)
+  (function () {
+    const CACHE_KEY = "btc_brl_price_cache";
+    const CACHE_TTL = 60 * 1000;
+    const API_URL =
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=brl&include_24hr_change=true";
+
+    const priceEl = document.getElementById("btc-brl-price");
+    const changeEl = document.getElementById("btc-brl-change");
+
+    function formatBRL(value) {
+      return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(value);
+    }
+
+    function renderPrice(price, change) {
+      if (!priceEl || !changeEl) return;
+      priceEl.textContent = formatBRL(price);
+      const sign = change >= 0 ? "+" : "";
+      changeEl.textContent = `${sign}${change.toFixed(2)}% (24h)`;
+      changeEl.className = "price-change " + (change >= 0 ? "change-up" : "change-down");
+    }
+
+    function fetchPrice() {
+      fetch(API_URL)
+        .then((r) => r.json())
+        .then((data) => {
+          const price = data.bitcoin.brl;
+          const change = data.bitcoin.brl_24h_change;
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ price, change, ts: Date.now() }));
+          renderPrice(price, change);
+        })
+        .catch(() => {
+          if (priceEl) priceEl.textContent = "Indisponível";
+        });
+    }
+
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+      if (cached && Date.now() - cached.ts < CACHE_TTL) {
+        renderPrice(cached.price, cached.change);
+        return;
+      }
+    } catch (_) {}
+
+    fetchPrice();
+  })();
+</script>
